@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		87539B2519DB23F00084658D /* VILogKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 87539B2419DB23F00084658D /* VILogKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		87539B2F19DB23F00084658D /* VILogKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87539B2E19DB23F00084658D /* VILogKitTests.swift */; };
+		87539B3919DB243C0084658D /* VILogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87539B3819DB243C0084658D /* VILogger.swift */; };
+		87539B3A19DB243C0084658D /* VILogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87539B3819DB243C0084658D /* VILogger.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -18,6 +20,7 @@
 		87539B2A19DB23F00084658D /* VILogKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VILogKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		87539B2D19DB23F00084658D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		87539B2E19DB23F00084658D /* VILogKitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VILogKitTests.swift; sourceTree = "<group>"; };
+		87539B3819DB243C0084658D /* VILogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VILogger.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +63,7 @@
 			isa = PBXGroup;
 			children = (
 				87539B2419DB23F00084658D /* VILogKit.h */,
+				87539B3819DB243C0084658D /* VILogger.swift */,
 				87539B2219DB23F00084658D /* Supporting Files */,
 			);
 			path = VILogKit;
@@ -196,6 +200,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				87539B3919DB243C0084658D /* VILogger.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -203,6 +208,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				87539B3A19DB243C0084658D /* VILogger.swift in Sources */,
 				87539B2F19DB23F00084658D /* VILogKitTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -298,6 +304,7 @@
 		87539B3319DB23F00084658D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -307,12 +314,14 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
 		87539B3419DB23F00084658D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
