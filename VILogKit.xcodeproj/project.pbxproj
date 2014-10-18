@@ -7,20 +7,33 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8729A82719EA7DD100F05A5F /* Handler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8729A82619EA7DD100F05A5F /* Handler.swift */; };
+		8729A82919EA7DD800F05A5F /* Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8729A82819EA7DD800F05A5F /* Formatter.swift */; };
 		87539B2519DB23F00084658D /* VILogKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 87539B2419DB23F00084658D /* VILogKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		87539B2F19DB23F00084658D /* VILogKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87539B2E19DB23F00084658D /* VILogKitTests.swift */; };
-		87539B3919DB243C0084658D /* VILogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87539B3819DB243C0084658D /* VILogger.swift */; };
-		87539B3A19DB243C0084658D /* VILogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87539B3819DB243C0084658D /* VILogger.swift */; };
+		87539B3919DB243C0084658D /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87539B3819DB243C0084658D /* Logger.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		870449FC19F22EB100A78D15 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 87539B1619DB23F00084658D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 87539B1E19DB23F00084658D;
+			remoteInfo = VILogKit;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		8729A82619EA7DD100F05A5F /* Handler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Handler.swift; sourceTree = "<group>"; };
+		8729A82819EA7DD800F05A5F /* Formatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Formatter.swift; sourceTree = "<group>"; };
 		87539B1F19DB23F00084658D /* VILogKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = VILogKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		87539B2319DB23F00084658D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		87539B2419DB23F00084658D /* VILogKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VILogKit.h; sourceTree = "<group>"; };
 		87539B2A19DB23F00084658D /* VILogKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VILogKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		87539B2D19DB23F00084658D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		87539B2E19DB23F00084658D /* VILogKitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VILogKitTests.swift; sourceTree = "<group>"; };
-		87539B3819DB243C0084658D /* VILogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VILogger.swift; sourceTree = "<group>"; };
+		87539B3819DB243C0084658D /* Logger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,7 +76,9 @@
 			isa = PBXGroup;
 			children = (
 				87539B2419DB23F00084658D /* VILogKit.h */,
-				87539B3819DB243C0084658D /* VILogger.swift */,
+				87539B3819DB243C0084658D /* Logger.swift */,
+				8729A82619EA7DD100F05A5F /* Handler.swift */,
+				8729A82819EA7DD800F05A5F /* Formatter.swift */,
 				87539B2219DB23F00084658D /* Supporting Files */,
 			);
 			path = VILogKit;
@@ -137,6 +152,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				870449FD19F22EB100A78D15 /* PBXTargetDependency */,
 			);
 			name = VILogKitTests;
 			productName = VILogKitTests;
@@ -200,7 +216,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				87539B3919DB243C0084658D /* VILogger.swift in Sources */,
+				8729A82919EA7DD800F05A5F /* Formatter.swift in Sources */,
+				8729A82719EA7DD100F05A5F /* Handler.swift in Sources */,
+				87539B3919DB243C0084658D /* Logger.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -208,12 +226,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				87539B3A19DB243C0084658D /* VILogger.swift in Sources */,
 				87539B2F19DB23F00084658D /* VILogKitTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		870449FD19F22EB100A78D15 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 87539B1E19DB23F00084658D /* VILogKit */;
+			targetProxy = 870449FC19F22EB100A78D15 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		87539B3019DB23F00084658D /* Debug */ = {
@@ -304,6 +329,7 @@
 		87539B3319DB23F00084658D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -321,6 +347,7 @@
 		87539B3419DB23F00084658D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -383,6 +410,7 @@
 				87539B3419DB23F00084658D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		87539B3519DB23F00084658D /* Build configuration list for PBXNativeTarget "VILogKitTests" */ = {
 			isa = XCConfigurationList;
@@ -391,6 +419,7 @@
 				87539B3719DB23F00084658D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
