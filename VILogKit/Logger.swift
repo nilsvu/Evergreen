@@ -16,7 +16,7 @@ public var logLevel: LogLevel? {
         return Logger.defaultLogger().logLevel
     }
     set {
-        Logger.defaultLogger().logLevel = logLevel
+        Logger.defaultLogger().logLevel = newValue
     }
 }
 
