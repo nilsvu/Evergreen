@@ -10,6 +10,17 @@
 import Foundation
 
 
+/// The default log level
+public var logLevel: LogLevel? {
+    get {
+        return Logger.defaultLogger().logLevel
+    }
+    set {
+        Logger.defaultLogger().logLevel = logLevel
+    }
+}
+
+/// Logs an event using a logger that is appropriate for the caller.
 public func log<M>(message: M, forLevel logLevel: LogLevel? = nil, function: String = __FUNCTION__, file: String = __FILE__, line: Int = __LINE__)
 {
     // TODO: filename processing.. there has to be a better way
@@ -46,7 +57,7 @@ public final class Logger {
             if let parent = self.parent {
                 return parent.effectiveLogLevel
             } else {
-                return logLevel
+                return nil
             }
         }
     }
