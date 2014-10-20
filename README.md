@@ -87,7 +87,7 @@ Every logger has a `key` as well to identify the source of any given event. In i
 
 You can build your own hierarchy, of course, but $MODULE_NAME provides a convenient way for you to utilize this powerful feature:
 
-- The *default logger* is the root of the logger hierarchy and can be retrieved using the `Logger.defaultLogger()` class method. Use it to set a default log level.
+- The *default logger* is the root of the logger hierarchy and can be retrieved using the `Logger.defaultLogger()` class method. Use it to set a default log level. The global variable `$MODULE_NAME.logLevel` also refers to the default logger.
 - Whenever you want to log an event, use the `Logger.loggerForKeyPath:` class method to retrieve an appropriate logger. Provide a key path that describes the part of your software the event is relevant for, such as "MyModule.MyType". This method will always return the same logger for a given key path and establish the logger hierarchy, if it does not yet exist.
 
 It is convenient to use a *Computed Property* to retrieve the appropriate logger for a type:
@@ -113,7 +113,7 @@ self.logger.log("TODO: find cool message", forLevel: .Debug)
 To adjust the logging configuration, you can use the same method:
 
 ```swift
-Logger.defaultLogger().logLevel = .Warning // Set the default log level to .Warning
+$MODULE_NAME.logLevel = .Warning // Set the default log level to .Warning
 Logger.loggerForKeyPath("MyModule").logLevel = .Debug // We are working on this part of the software, so set its log level to .Debug
 ```
 
@@ -128,3 +128,4 @@ Logger.loggerForKeyPath("MyModule").logLevel = .Debug // We are working on this 
 ### TODO's
 
 - Add a method to log details about the app (version, ...)
+- Add support for colors in the console
