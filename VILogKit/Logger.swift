@@ -105,7 +105,16 @@ public final class Logger {
     
     private func handleRecord<M>(record: Record<M>)
     {
-        for handler in handlers {
+        for handler in handlers.filter({ handler in
+            if let handlerLogLevel = handler.logLevel {
+                if let recordLogLevel = record.logLevel {
+                    if recordLogLevel < handlerLogLevel {
+                        return false
+                    }
+                }
+            }
+            return true
+        }) {
             handler.emitRecord(record)
         }
         if shouldPropagate {

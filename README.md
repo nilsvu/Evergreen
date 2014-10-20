@@ -39,7 +39,7 @@ TODO: describe installing submodule
 	
 	log("TODO: find cool message to log")
 
-You can log events without any configuration and see a nicely formatted message show up in the console. This is for very quick and basic use only. Read on to find out about $MODULE_NAME's *log levels* and the *logger hirarchy*.
+You can log events without any configuration and see a nicely formatted message show up in the console. This is for very quick and basic use only. Read on to find out about $MODULE_NAME's *log levels* and the *logger hierarchy*.
 
 ### Using Log Levels
 
@@ -58,9 +58,11 @@ The logger that handles the event has a log level as well. **If the event's log 
 - **All:** All events will be logged.
 - **Off:** No events will be logged.
 
-For a basic configuration, you can adjust the *default logger*'s log level. Read about the *logger hirarchy* below to learn how to control the log level for specific parts of you software.
+> With log levels, you can control the verbosity of your software. A common use case is to use a low log level during development and increase it in a release environment, or to adjust it for specific parts of your software and different logging destinations, such as the console or a file.
 
-	Logger.defaultLogger().logLevel = .Debug
+For a basic configuration, you can adjust $MODULE_NAME's default log level. Read about the *logger hierarchy* below to learn how to control the log level more specifically.
+
+	$MODULE_NAME.logLevel = .Debug
 	
 	// These events will be logged, because their log level is >= .Debug
 	log("debug msg", forLevel: .Debug)
@@ -74,16 +76,16 @@ For a basic configuration, you can adjust the *default logger*'s log level. Read
 
 ### Using the Logger Hirarchy
 
-You usually want to use *loggers* to log events instead of the global `log` function. A logger is always part of a hirarchy and inherits attributes such as the log level from its parent. This way, you can provide a global default configuration and adjust it for specific parts of your software.
+You usually want to use *loggers* to log events instead of the global `log` function. A logger is always part of a hierarchy and inherits attributes, such as the log level, from its parent. This way, you can provide a default configuration and adjust it for specific parts of your software.
 
-> **Note:** This is especially useful during development to lower the log level of the part of your software you are currently working on.
+> This is especially useful during development to lower the log level of the part of your software you are currently working on.
 
-Every logger has a `key` as well to identify the source of any given event. In its hirarchy, the key expands to a dot-separated *key path*, such as "Parent.Child".
+Every logger has a `key` as well to identify the source of any given event. In its hierarchy, the key expands to a dot-separated *key path*, such as "Parent.Child".
 
-You can build your own hirarchy, of course, but $MODULE_NAME provides a convenient way for you to utilize this powerful feature:
+You can build your own hierarchy, of course, but $MODULE_NAME provides a convenient way for you to utilize this powerful feature:
 
-- The *default logger* is the root of the logger hirarchy and can be retrieved using the `Logger.defaultLogger()` class method. Use it to set a default log level.
-- Whenever you want to log an event, use the `Logger.loggerForKeyPath:` class method to retrieve an appropriate logger. Provide a key path that describes the part of your software the event is relevant for, such as "MyModule.MyType". This method will always return the same logger for a given key path and establish the logger hirarchy, if it does not yet exist.
+- The *default logger* is the root of the logger hierarchy and can be retrieved using the `Logger.defaultLogger()` class method. Use it to set a default log level.
+- Whenever you want to log an event, use the `Logger.loggerForKeyPath:` class method to retrieve an appropriate logger. Provide a key path that describes the part of your software the event is relevant for, such as "MyModule.MyType". This method will always return the same logger for a given key path and establish the logger hierarchy, if it does not yet exist.
 
 It is convenient to use a *Computed Property* to retrieve the appropriate logger for a type:
 
@@ -113,3 +115,7 @@ To adjust the logging configuration, you can use the same method:
 ### Using Handlers
 
 ### Formatting
+
+### TODO's
+
+- Add a method to log details about the app (version, ...)
