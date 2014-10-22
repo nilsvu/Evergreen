@@ -195,11 +195,11 @@ public enum LogLevel: Int, Printable, Comparable {
 }
 
 public func == (lhs: LogLevel, rhs: LogLevel) -> Bool {
-    return lhs.toRaw() == rhs.toRaw()
+    return lhs.rawValue == rhs.rawValue
 }
 
 public func < (lhs: LogLevel, rhs: LogLevel) -> Bool {
-    return lhs.toRaw() < rhs.toRaw()
+    return lhs.rawValue < rhs.rawValue
 }
 
 

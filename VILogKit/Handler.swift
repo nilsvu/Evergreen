@@ -60,22 +60,27 @@ public class FileHandler: Handler {
     
     private let file: NSFileHandle
     
-    public init(fileURL: NSURL) {
+    public init?(fileURL: NSURL) {
         let fileManager = NSFileManager.defaultManager()
         if let path = fileURL.filePathURL?.path {
             if fileManager.createFileAtPath(path, contents: nil, attributes: nil) {
-                self.file = NSFileHandle(forWritingAtPath: path)
+                if let file = NSFileHandle(forWritingAtPath: path) {
+                    self.file = file
+                } else {
+                    self.file = NSFileHandle() // TODO: remove
+                    return nil
+                }
             } else {
-                // TOOD
-                self.file = NSFileHandle()
+                self.file = NSFileHandle() // TODO: remove
+                return nil
             }
         } else {
-            // TODO
-            self.file = NSFileHandle()
+            self.file = NSFileHandle() // TODO: remove
+            return nil
         }
     }
 
-    public convenience init(fileURL: NSURL, formatter: Formatter) {
+    public convenience init?(fileURL: NSURL, formatter: Formatter) {
         self.init(fileURL: fileURL)
         self.formatter = formatter
     }
