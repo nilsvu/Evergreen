@@ -65,6 +65,7 @@ public class FileHandler: Handler {
         if let path = fileURL.filePathURL?.path {
             if fileManager.createFileAtPath(path, contents: nil, attributes: nil) {
                 if let file = NSFileHandle(forWritingAtPath: path) {
+                    file.seekToEndOfFile()
                     self.file = file
                 } else {
                     self.file = NSFileHandle() // TODO: remove
