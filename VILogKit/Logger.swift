@@ -10,32 +10,32 @@
 import Foundation
 
 
-/// The default log level
+// MARK: Global Interface
+
+
+/// The default logger singleton
+private let defaultLogger: Logger = {
+    let logger = Logger(key: "Default", parent: nil)
+    logger.handlers.append(ConsoleHandler())
+    return logger
+}()
+
+/// The default logger's log level
 public var logLevel: LogLevel? {
     get {
-        return Logger.defaultLogger().logLevel
+        return defaultLogger.logLevel
     }
     set {
-        Logger.defaultLogger().logLevel = newValue
+        defaultLogger.logLevel = newValue
     }
 }
 
 /// Logs an event using a logger that is appropriate for the caller.
 public func log<M>(message: M, forLevel logLevel: LogLevel? = nil, function: String = __FUNCTION__, file: String = __FILE__, line: Int = __LINE__)
 {
-    // TODO: filename processing.. there has to be a better way
-    let filenameComponents = file.lastPathComponent.componentsSeparatedByString(".")
-    let logger = Logger.loggerForKeyPath(filenameComponents[0])
-    logger.log(message, forLevel: logLevel, function: function, file: file, line: line)
+    Logger.loggerForFile(file: file).log(message, forLevel: logLevel, function: function, file: file, line: line)
 }
 
-
-/// The default logger singleton
-private let _defaultLogger: Logger = {
-    let logger = Logger(key: "Default", parent: nil)
-    logger.handlers.append(ConsoleHandler())
-    return logger
-}()
 
 
 /// The queue used for logging
@@ -82,7 +82,7 @@ public final class Logger {
     public init(key: String, parent: Logger?) {
         self.key = key
         self.parent = parent
-        parent?.children[key.lowercaseString] = self
+        parent?.children[key] = self
     }
     
     
@@ -90,7 +90,13 @@ public final class Logger {
     
     public func log<M>(message: M, forLevel logLevel: LogLevel? = nil, function: String = __FUNCTION__, file: String = __FILE__, line: Int = __LINE__)
     {
-        let record = Record(logger: self, message: message, logLevel: logLevel, date: NSDate(), function: function, file: file, line: line)
+        let record = Record(logger: self, message: message, logLevel: logLevel, date: NSDate(), elapsedTime: nil, function: function, file: file, line: line)
+        self.logRecord(record)
+    }
+    
+    public func logRecord<M>(record: Record<M>)
+    {
+        self.logInitialInfo()
         
         if let effectiveLogLevel = self.effectiveLogLevel {
             if let recordLogLevel = record.logLevel {
@@ -103,6 +109,23 @@ public final class Logger {
         self.handleRecord(record)
     }
     
+    private func logInitialInfo() {
+        if !hasLoggedInitialInfo {
+            if handlers.count > 0 {
+                let record = Record(logger: self, message: "Logging to \(handlers)...", logLevel: .Info, date: NSDate(), elapsedTime: nil, function: __FUNCTION__, file: __FILE__, line: __LINE__)
+                self.handleRecord(record)
+            }
+        }
+        hasLoggedInitialInfo = true
+        if shouldPropagate {
+            if let parent = self.parent {
+                parent.logInitialInfo()
+            }
+        }
+    }
+    
+    private var hasLoggedInitialInfo = false
+
     private func handleRecord<M>(record: Record<M>)
     {
         for handler in handlers.filter({ handler in
@@ -124,29 +147,83 @@ public final class Logger {
         }
     }
     
+    
+    // MARK: Measuring Time
+    
+    private var startDate: NSDate?
+    
+    // TODO: log "Tic..." message by default
+    public func tic<M>(andLog message: M, forLevel logLevel: LogLevel? = nil, function: String = __FUNCTION__, file: String = __FILE__, line: Int = __LINE__)
+    {
+        startDate = NSDate()
+        self.log(message, forLevel: logLevel, function: function, file: file, line: line)
+    }
+    
+    // TODO: log "...Toc" message by default
+    public func toc<M>(andLog message: M, forLevel logLevel: LogLevel? = nil, function: String = __FUNCTION__, file: String = __FILE__, line: Int = __LINE__)
+    {
+        if let startDate = startDate {
+            let elapsedTime = NSDate().timeIntervalSinceDate(startDate)
+            let record = Record(logger: self, message: message, logLevel: logLevel, date: NSDate(), elapsedTime: elapsedTime, function: function, file: file, line: line)
+            self.logRecord(record)
+        }
+    }
 
+    
     // MARK: Logger Hierarchy
     
     /// The default logger is the root of the logger hirarchy.
     public class func defaultLogger() -> Logger {
-        return _defaultLogger
+        return VILogKit.defaultLogger
+    }
+    
+    public class func loggerForFile(file: String = __FILE__) -> Logger {
+        // TODO: filename processing.. there has to be a better way
+        let filename = file.lastPathComponent.componentsSeparatedByString(".").first!
+        return self.loggerForKeyPath(KeyPath(components: [ filename ]))
+    }
+    
+    /// Returns the logger for the specified key path. A key path is a dot-separated string of keys like "MyModule.MyClass" describing the logger hirarchy relative to the default logger. Always returns the same logger object for a given key path. A parent-children relationship is established and can be used to set specific settings like log levels and handlers for only parts of the logger hirarchy.
+    public class func loggerForKeyPath(keyPath: Logger.KeyPath) -> Logger {
+        return self.defaultLogger().childForKeyPath(keyPath)
     }
 
-    /// Returns the logger for the specified key path. A key path is a dot-separated string of keys like "MyModule.MyClass" describing the logger hirarchy relative to the default logger. Always returns the same logger object for a given key path. A parent-children relationship is established and can be used to set specific settings like log levels and handlers for only parts of the logger hirarchy.
-    public class func loggerForKeyPath(keyPath: String) -> Logger {
-        let components = keyPath.componentsSeparatedByString(".")
-        var currentLogger = defaultLogger()
-        for component in components {
-            if component.lowercaseString == defaultLogger().key.lowercaseString {
-                continue
-            }
-            if let componentLogger = currentLogger.children[component.lowercaseString] {
-                currentLogger = componentLogger
-            } else {
-                currentLogger = Logger(key: component, parent: currentLogger)
-            }
+    public func childForKeyPath(keyPath: KeyPath) -> Logger {
+        let (key, remainingKeyPath) = keyPath.popFirst()
+        if let key = key {
+            let child = children[key] ?? Logger(key: key, parent: self)
+            return child.childForKeyPath(remainingKeyPath)
+        } else {
+            return self
         }
-        return currentLogger
+    }
+    
+    // MARK: Key Path Struct
+    
+    public struct KeyPath: StringLiteralConvertible {
+        public let components: [String]
+
+        public init(components: [String]) {
+            self.components = components
+        }
+
+        public typealias ExtendedGraphemeClusterLiteralType = StringLiteralType
+        public init(extendedGraphemeClusterLiteral value: ExtendedGraphemeClusterLiteralType) {
+            self.components = value.componentsSeparatedByString(".")
+        }
+        public typealias UnicodeScalarLiteralType = StringLiteralType
+        public init(unicodeScalarLiteral value: UnicodeScalarLiteralType) {
+            self.components = value.componentsSeparatedByString(".")
+        }
+        public init(stringLiteral value: StringLiteralType) {
+            self.components = value.componentsSeparatedByString(".")
+        }
+        
+        public func popFirst() -> (key: String?, remainingKeyPath: KeyPath) {
+            let key = components.first
+            let remainingKeyPath: KeyPath = (components.count > 1) ? KeyPath(components: Array(components[1..<components.count])) : KeyPath(components: [String]())
+            return (key, remainingKeyPath)
+        }
     }
 
 }
@@ -203,7 +280,7 @@ public func < (lhs: LogLevel, rhs: LogLevel) -> Bool {
 }
 
 
-// MARK: - Log Message Struct
+// MARK: - Log Record Struct
 
 public struct Record<M> {
     
@@ -211,14 +288,15 @@ public struct Record<M> {
     let logger: Logger // TODO: use keyPath instead?
     
     /// The log message
-    public let message: M
+    let message: M
     /// The log level. A logger will only log records with equal or higher log levels than its own. Records that don't specify a log level will always be logged.
-    public let logLevel: LogLevel?
-    public let date: NSDate
+    let logLevel: LogLevel?
+    let date: NSDate
+    let elapsedTime: NSTimeInterval?
     
-    public let function: String
-    public let file: String
-    public let line: Int
+    let function: String
+    let file: String
+    let line: Int
     
 }
 

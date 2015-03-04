@@ -23,6 +23,7 @@ public class Formatter {
         let date = dateFormatter.stringFromDate(record.date)
         let logger = record.logger.description
         let level = "[" + (record.logLevel?.description ?? "Unspecified").uppercaseString + "]"
+
         let function = record.function
         let file = record.file.lastPathComponent
         let line = String(record.line)
@@ -42,6 +43,10 @@ public class Formatter {
             string += ": "
         }
         string += "\(record.message)"
+        
+        if let elapsedTime = record.elapsedTime {
+            string += " [ELAPSED TIME: \(elapsedTime)s]"
+        }
 
         return string
     }

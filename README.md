@@ -22,7 +22,7 @@ For now, let's focus on what the Python people tell us. They seem to know what t
 
 ## Overview
 
-- Instead of using those plain old `print` statements, send events to a `Logger` instance. It will pass the event to its `handlers`.
+- Instead of using those plain old `print` statements, send events to a `Logger`. It will pass the event to its `handlers`.
 - A `Handler` uses its `Formatter` to 
 
 
@@ -41,7 +41,7 @@ import $MODULE_NAME
 log("TODO: find cool message to log")
 ```
 
-You can log events without any configuration and see a nicely formatted message show up in the console. This is for very quick and basic use only. Read on to find out about $MODULE_NAME's *log levels* and the *logger hierarchy*.
+You can log events without any configuration and see a nicely formatted message show up in the console. This is for very quick and basic use only. Read on to learn about $MODULE_NAME's more sophisticated logging.
 
 ### Using Log Levels
 
@@ -51,7 +51,7 @@ TODO: describe these better (http://stackoverflow.com/questions/7839565/logging-
 
 - **Critical:** Events that are unexpected and can cause serious problems. You would want to be called in the middle of the night to deal with these.
 - **Warning:** Events that are unexpected, but will probably not affect the runtime of your software. You would want to investigate these eventually.
-- **Info:** General events that describe the system lifecycle.
+- **Info:** General events that describe the system's lifecycle.
 - **Debug:** Events to give you an understanding about the flow through the system.
 - **Verbose:** Detailed information about the environment.
 
@@ -83,9 +83,9 @@ You usually want to use *loggers* to log events instead of the global `log` func
 
 > This is especially useful during development to lower the log level of the part of your software you are currently working on.
 
-Every logger has a `key` as well to identify the source of any given event. In its hierarchy, the key expands to a dot-separated *key path*, such as "Parent.Child".
+Every logger has a `key` to identify the source of any given event. In its hierarchy, the key expands to a dot-separated *key path*, such as "Parent.Child".
 
-You can build your own hierarchy, of course, but $MODULE_NAME provides a convenient way for you to utilize this powerful feature:
+You can manually build your own hierarchy, of course, but $MODULE_NAME provides a convenient way for you to utilize this powerful feature:
 
 - The *default logger* is the root of the logger hierarchy and can be retrieved using the `Logger.defaultLogger()` class method. Use it to set a default log level. The global variable `$MODULE_NAME.logLevel` also refers to the default logger.
 - Whenever you want to log an event, use the `Logger.loggerForKeyPath:` class method to retrieve an appropriate logger. Provide a key path that describes the part of your software the event is relevant for, such as "MyModule.MyType". This method will always return the same logger for a given key path and establish the logger hierarchy, if it does not yet exist.
