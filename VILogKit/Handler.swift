@@ -16,7 +16,7 @@ public protocol Handler {
     var logLevel: LogLevel? { get set }
     var formatter: Formatter { get set }
     
-    func emitRecord<M>(record: Record<M>)
+    func emitEvent<M>(event: Event<M>)
     
 }
 
@@ -41,10 +41,10 @@ public class ConsoleHandler: Handler {
         self.formatter = formatter
     }
     
-    public func emitRecord<M>(record: Record<M>)
+    public func emitEvent<M>(event: Event<M>)
     {
         // TODO: use debugPrintln?
-        println(self.formatter.stringFromRecord(record))
+        println(self.formatter.stringFromEvent(event))
     }
     
 }
@@ -86,9 +86,9 @@ public class FileHandler: Handler {
         self.formatter = formatter
     }
     
-    public func emitRecord<M>(record: Record<M>) {
-        if let recordData = (self.formatter.stringFromRecord(record) + "\n").dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true) {
-            self.file.writeData(recordData)
+    public func emitEvent<M>(event: Event<M>) {
+        if let eventData = (self.formatter.stringFromEvent(event) + "\n").dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true) {
+            self.file.writeData(eventData)
         } else {
             // TODO
         }

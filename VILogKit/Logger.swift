@@ -47,7 +47,7 @@ public final class Logger {
     
     // MARK: Public Properties
 
-    /// This logger will only log records with equal or higher log levels. If no log level is specified, all records will be logged.
+    /// This logger will only log events with equal or higher log levels. If no log level is specified, all events will be logged.
     public var logLevel: LogLevel?
     /// Returns the effective log level by reaching up the logger hierarchy until a logger specifies a log level.
     public var effectiveLogLevel: LogLevel? {
@@ -62,10 +62,10 @@ public final class Logger {
         }
     }
     
-    /// The handlers provided by this logger to process log records.
+    /// The handlers provided by this logger to process log events.
     public var handlers = [Handler]()
     
-    /// Passes log records up the logger hirarchy if set to true (default)
+    /// Passes log events up the logger hirarchy if set to true (default)
     public var shouldPropagate = true
 
     /// The parent in the logger hirarchy
@@ -74,6 +74,13 @@ public final class Logger {
     
     /// The key used to identify this logger
     public let key: String
+    public var keyPath: KeyPath {
+        if let parent = self.parent {
+            return parent.keyPath.keyPathByAppendingComponent(self.key)
+        } else {
+            return KeyPath(components: [ self.key ])
+        }
+    }
 
 
     // MARK: Initialization
@@ -90,30 +97,30 @@ public final class Logger {
     
     public func log<M>(message: M, forLevel logLevel: LogLevel? = nil, function: String = __FUNCTION__, file: String = __FILE__, line: Int = __LINE__)
     {
-        let record = Record(logger: self, message: message, logLevel: logLevel, date: NSDate(), elapsedTime: nil, function: function, file: file, line: line)
-        self.logRecord(record)
+        let event = Event(keyPath: keyPath, message: message, logLevel: logLevel, date: NSDate(), elapsedTime: nil, function: function, file: file, line: line)
+        self.logEvent(event)
     }
     
-    public func logRecord<M>(record: Record<M>)
+    public func logEvent<M>(event: Event<M>)
     {
         self.logInitialInfo()
         
         if let effectiveLogLevel = self.effectiveLogLevel {
-            if let recordLogLevel = record.logLevel {
-                if recordLogLevel < effectiveLogLevel {
+            if let eventLogLevel = event.logLevel {
+                if eventLogLevel < effectiveLogLevel {
                     return
                 }
             }
         }
         
-        self.handleRecord(record)
+        self.handleEvent(event)
     }
     
     private func logInitialInfo() {
         if !hasLoggedInitialInfo {
             if handlers.count > 0 {
-                let record = Record(logger: self, message: "Logging to \(handlers)...", logLevel: .Info, date: NSDate(), elapsedTime: nil, function: __FUNCTION__, file: __FILE__, line: __LINE__)
-                self.handleRecord(record)
+                let event = Event(keyPath: self.keyPath, message: "Logging to \(handlers)...", logLevel: .Info, date: NSDate(), elapsedTime: nil, function: __FUNCTION__, file: __FILE__, line: __LINE__)
+                self.handleEvent(event)
             }
         }
         hasLoggedInitialInfo = true
@@ -126,23 +133,33 @@ public final class Logger {
     
     private var hasLoggedInitialInfo = false
 
-    private func handleRecord<M>(record: Record<M>)
+    // TODO: necessary?
+    public var handlerHierarchyDescription: String {
+        let handlerDescription = self.key + self.handlers.description
+        if let parent = self.parent {
+            return parent.handlerHierarchyDescription + " > " + handlerDescription
+        } else {
+            return handlerDescription
+        }
+    }
+    
+    private func handleEvent<M>(event: Event<M>)
     {
         for handler in handlers.filter({ handler in
             if let handlerLogLevel = handler.logLevel {
-                if let recordLogLevel = record.logLevel {
-                    if recordLogLevel < handlerLogLevel {
+                if let eventLogLevel = event.logLevel {
+                    if eventLogLevel < handlerLogLevel {
                         return false
                     }
                 }
             }
             return true
         }) {
-            handler.emitRecord(record)
+            handler.emitEvent(event)
         }
         if shouldPropagate {
             if let parent = self.parent {
-                parent.handleRecord(record)
+                parent.handleEvent(event)
             }
         }
     }
@@ -150,22 +167,33 @@ public final class Logger {
     
     // MARK: Measuring Time
     
-    private var startDate: NSDate?
+    private var defaultStartDate: NSDate?
+    private lazy var startDates = [String : NSDate]()
     
     // TODO: log "Tic..." message by default
-    public func tic<M>(andLog message: M, forLevel logLevel: LogLevel? = nil, function: String = __FUNCTION__, file: String = __FILE__, line: Int = __LINE__)
+    public func tic<M>(andLog message: M, forLevel logLevel: LogLevel? = nil, timerKey: String? = nil, function: String = __FUNCTION__, file: String = __FILE__, line: Int = __LINE__)
     {
-        startDate = NSDate()
+        if let timerKey = timerKey {
+            startDates[timerKey] = NSDate()
+        } else {
+            defaultStartDate = NSDate()
+        }
         self.log(message, forLevel: logLevel, function: function, file: file, line: line)
     }
     
     // TODO: log "...Toc" message by default
-    public func toc<M>(andLog message: M, forLevel logLevel: LogLevel? = nil, function: String = __FUNCTION__, file: String = __FILE__, line: Int = __LINE__)
+    public func toc<M>(andLog message: M, forLevel logLevel: LogLevel? = nil, timerKey: String? = nil, function: String = __FUNCTION__, file: String = __FILE__, line: Int = __LINE__)
     {
+        var startDate: NSDate?
+        if let timerKey = timerKey {
+            startDate = startDates[timerKey]
+        } else {
+            startDate = defaultStartDate
+        }
         if let startDate = startDate {
             let elapsedTime = NSDate().timeIntervalSinceDate(startDate)
-            let record = Record(logger: self, message: message, logLevel: logLevel, date: NSDate(), elapsedTime: elapsedTime, function: function, file: file, line: line)
-            self.logRecord(record)
+            let event = Event(keyPath: keyPath, message: message, logLevel: logLevel, date: NSDate(), elapsedTime: elapsedTime, function: function, file: file, line: line)
+            self.logEvent(event)
         }
     }
 
@@ -177,6 +205,10 @@ public final class Logger {
         return VILogKit.defaultLogger
     }
     
+    public class func loggerWithParent(parent: Logger, title: String = __FILE__) -> Logger {
+        return parent.childForKeyPath(KeyPath(string: title))
+    }
+    
     public class func loggerForFile(file: String = __FILE__) -> Logger {
         // TODO: filename processing.. there has to be a better way
         let filename = file.lastPathComponent.componentsSeparatedByString(".").first!
@@ -185,7 +217,16 @@ public final class Logger {
     
     /// Returns the logger for the specified key path. A key path is a dot-separated string of keys like "MyModule.MyClass" describing the logger hirarchy relative to the default logger. Always returns the same logger object for a given key path. A parent-children relationship is established and can be used to set specific settings like log levels and handlers for only parts of the logger hirarchy.
     public class func loggerForKeyPath(keyPath: Logger.KeyPath) -> Logger {
-        return self.defaultLogger().childForKeyPath(keyPath)
+        let (key, remainingKeyPath) = keyPath.popFirst()
+        if let key = key {
+            if key == self.defaultLogger().key {
+                return self.defaultLogger().childForKeyPath(remainingKeyPath)
+            } else {
+                return self.defaultLogger().childForKeyPath(keyPath)
+            }
+        } else {
+            return self.defaultLogger()
+        }
     }
 
     public func childForKeyPath(keyPath: KeyPath) -> Logger {
@@ -200,11 +241,19 @@ public final class Logger {
     
     // MARK: Key Path Struct
     
-    public struct KeyPath: StringLiteralConvertible {
+    public struct KeyPath: StringLiteralConvertible, Printable {
         public let components: [String]
 
         public init(components: [String]) {
             self.components = components
+        }
+        
+        public init(string: String) {
+            self.components = string.componentsSeparatedByString(".")
+        }
+
+        public func keyPathByAppendingComponent(component: String) -> KeyPath {
+            return KeyPath(components: components + [ component ])
         }
 
         public typealias ExtendedGraphemeClusterLiteralType = StringLiteralType
@@ -223,6 +272,14 @@ public final class Logger {
             let key = components.first
             let remainingKeyPath: KeyPath = (components.count > 1) ? KeyPath(components: Array(components[1..<components.count])) : KeyPath(components: [String]())
             return (key, remainingKeyPath)
+        }
+        
+        public var description: String {
+            return descriptionWithSeparator(".")
+        }
+        
+        public func descriptionWithSeparator(separator: String) -> String {
+            return separator.join(components)
         }
     }
 
@@ -280,16 +337,15 @@ public func < (lhs: LogLevel, rhs: LogLevel) -> Bool {
 }
 
 
-// MARK: - Log Record Struct
+// MARK: - Log Event Struct
 
-public struct Record<M> {
+public struct Event<M> {
     
-    /// The original logger that initiating the logging
-    let logger: Logger // TODO: use keyPath instead?
-    
+    /// The Key Path the Event was originally logged for
+    let keyPath: Logger.KeyPath
     /// The log message
     let message: M
-    /// The log level. A logger will only log records with equal or higher log levels than its own. Records that don't specify a log level will always be logged.
+    /// The log level. A logger will only log events with equal or higher log levels than its own. Events that don't specify a log level will always be logged.
     let logLevel: LogLevel?
     let date: NSDate
     let elapsedTime: NSTimeInterval?

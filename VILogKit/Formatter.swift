@@ -18,15 +18,15 @@ public class Formatter {
         return dateFormatter
     }()
     
-    public func stringFromRecord<M>(record: Record<M>) -> String
+    public func stringFromEvent<M>(event: Event<M>) -> String
     {
-        let date = dateFormatter.stringFromDate(record.date)
-        let logger = record.logger.description
-        let level = "[" + (record.logLevel?.description ?? "Unspecified").uppercaseString + "]"
+        let date = dateFormatter.stringFromDate(event.date)
+        let logger = event.keyPath.descriptionWithSeparator(".")
+        let level = "[" + (event.logLevel?.description ?? "Unspecified").uppercaseString + "]"
 
-        let function = record.function
-        let file = record.file.lastPathComponent
-        let line = String(record.line)
+        let function = event.function
+        let file = event.file.lastPathComponent
+        let line = String(event.line)
         
         let components = [date, level, logger]
         var string = ""
@@ -42,9 +42,9 @@ public class Formatter {
         if !string.isEmpty {
             string += ": "
         }
-        string += "\(record.message)"
+        string += "\(event.message)"
         
-        if let elapsedTime = record.elapsedTime {
+        if let elapsedTime = event.elapsedTime {
             string += " [ELAPSED TIME: \(elapsedTime)s]"
         }
 
