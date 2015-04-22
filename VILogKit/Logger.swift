@@ -65,10 +65,10 @@ public final class Logger {
     /// The handlers provided by this logger to process log events.
     public var handlers = [Handler]()
     
-    /// Passes log events up the logger hirarchy if set to true (default)
+    /// Passes log events up the logger hierarchy if set to true (default)
     public var shouldPropagate = true
 
-    /// The parent in the logger hirarchy
+    /// The parent in the logger hierarchy
     public let parent: Logger?
     private var children = [ String : Logger]()
     
@@ -85,7 +85,7 @@ public final class Logger {
 
     // MARK: Initialization
     
-    /// Creates a new logger. If you don't specify a parent, the logger is detached from the logger hirarchy and will not have any handlers.
+    /// Creates a new logger. If you don't specify a parent, the logger is detached from the logger hierarchy and will not have any handlers.
     public init(key: String, parent: Logger?) {
         self.key = key
         self.parent = parent
@@ -200,7 +200,7 @@ public final class Logger {
     
     // MARK: Logger Hierarchy
     
-    /// The default logger is the root of the logger hirarchy.
+    /// The default logger is the root of the logger hierarchy.
     public class func defaultLogger() -> Logger {
         return VILogKit.defaultLogger
     }
@@ -215,7 +215,7 @@ public final class Logger {
         return self.loggerForKeyPath(KeyPath(components: [ filename ]))
     }
     
-    /// Returns the logger for the specified key path. A key path is a dot-separated string of keys like "MyModule.MyClass" describing the logger hirarchy relative to the default logger. Always returns the same logger object for a given key path. A parent-children relationship is established and can be used to set specific settings like log levels and handlers for only parts of the logger hirarchy.
+    /// Returns the logger for the specified key path. A key path is a dot-separated string of keys like "MyModule.MyClass" describing the logger hierarchy relative to the default logger. Always returns the same logger object for a given key path. A parent-children relationship is established and can be used to set specific settings like log levels and handlers for only parts of the logger hierarchy.
     public class func loggerForKeyPath(keyPath: Logger.KeyPath) -> Logger {
         let (key, remainingKeyPath) = keyPath.popFirst()
         if let key = key {
