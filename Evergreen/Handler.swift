@@ -1,6 +1,6 @@
 //
 //  Handler.swift
-//  VILogKit
+//  Evergreen
 //
 //  Created by Nils Fischer on 12.10.14.
 //  Copyright (c) 2014 viWiD Webdesign & iOS Development. All rights reserved.

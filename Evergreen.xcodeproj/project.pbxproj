@@ -7,11 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		8729A82719EA7DD100F05A5F /* Handler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8729A82619EA7DD100F05A5F /* Handler.swift */; };
-		8729A82919EA7DD800F05A5F /* Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8729A82819EA7DD800F05A5F /* Formatter.swift */; };
-		87539B2519DB23F00084658D /* VILogKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 87539B2419DB23F00084658D /* VILogKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		87539B2F19DB23F00084658D /* VILogKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87539B2E19DB23F00084658D /* VILogKitTests.swift */; };
-		87539B3919DB243C0084658D /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87539B3819DB243C0084658D /* Logger.swift */; };
+		87CA7F811AE7291C008D2DA0 /* Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87CA7F7C1AE7291C008D2DA0 /* Formatter.swift */; };
+		87CA7F821AE7291C008D2DA0 /* Handler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87CA7F7D1AE7291C008D2DA0 /* Handler.swift */; };
+		87CA7F841AE7291C008D2DA0 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87CA7F7F1AE7291C008D2DA0 /* Logger.swift */; };
+		87CA7F851AE7291C008D2DA0 /* Evergreen.h in Headers */ = {isa = PBXBuildFile; fileRef = 87CA7F801AE7291C008D2DA0 /* Evergreen.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		87CA7F891AE7295A008D2DA0 /* EvergreenTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87CA7F871AE7295A008D2DA0 /* EvergreenTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -25,15 +25,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		8729A82619EA7DD100F05A5F /* Handler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Handler.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		8729A82819EA7DD800F05A5F /* Formatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Formatter.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		87539B1F19DB23F00084658D /* VILogKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = VILogKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		87539B2319DB23F00084658D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		87539B2419DB23F00084658D /* VILogKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VILogKit.h; sourceTree = "<group>"; };
-		87539B2A19DB23F00084658D /* VILogKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VILogKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		87539B2D19DB23F00084658D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		87539B2E19DB23F00084658D /* VILogKitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VILogKitTests.swift; sourceTree = "<group>"; };
-		87539B3819DB243C0084658D /* Logger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
+		87539B1F19DB23F00084658D /* Evergreen.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Evergreen.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		87539B2A19DB23F00084658D /* EvergreenTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EvergreenTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		87CA7F7C1AE7291C008D2DA0 /* Formatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Formatter.swift; path = Evergreen/Formatter.swift; sourceTree = SOURCE_ROOT; };
+		87CA7F7D1AE7291C008D2DA0 /* Handler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Handler.swift; path = Evergreen/Handler.swift; sourceTree = SOURCE_ROOT; };
+		87CA7F7E1AE7291C008D2DA0 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Evergreen/Info.plist; sourceTree = SOURCE_ROOT; };
+		87CA7F7F1AE7291C008D2DA0 /* Logger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Logger.swift; path = Evergreen/Logger.swift; sourceTree = SOURCE_ROOT; };
+		87CA7F801AE7291C008D2DA0 /* Evergreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Evergreen.h; path = Evergreen/Evergreen.h; sourceTree = SOURCE_ROOT; };
+		87CA7F861AE7295A008D2DA0 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = EvergreenTests/Info.plist; sourceTree = SOURCE_ROOT; };
+		87CA7F871AE7295A008D2DA0 /* EvergreenTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EvergreenTests.swift; path = EvergreenTests/EvergreenTests.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,8 +57,8 @@
 		87539B1519DB23F00084658D = {
 			isa = PBXGroup;
 			children = (
-				87539B2119DB23F00084658D /* VILogKit */,
-				87539B2B19DB23F00084658D /* VILogKitTests */,
+				87539B2119DB23F00084658D /* Evergreen */,
+				87539B2B19DB23F00084658D /* EvergreenTests */,
 				87539B2019DB23F00084658D /* Products */,
 			);
 			sourceTree = "<group>";
@@ -66,45 +66,47 @@
 		87539B2019DB23F00084658D /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				87539B1F19DB23F00084658D /* VILogKit.framework */,
-				87539B2A19DB23F00084658D /* VILogKitTests.xctest */,
+				87539B1F19DB23F00084658D /* Evergreen.framework */,
+				87539B2A19DB23F00084658D /* EvergreenTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		87539B2119DB23F00084658D /* VILogKit */ = {
+		87539B2119DB23F00084658D /* Evergreen */ = {
 			isa = PBXGroup;
 			children = (
-				87539B2419DB23F00084658D /* VILogKit.h */,
-				87539B3819DB243C0084658D /* Logger.swift */,
-				8729A82619EA7DD100F05A5F /* Handler.swift */,
-				8729A82819EA7DD800F05A5F /* Formatter.swift */,
+				87CA7F801AE7291C008D2DA0 /* Evergreen.h */,
+				87CA7F7C1AE7291C008D2DA0 /* Formatter.swift */,
+				87CA7F7D1AE7291C008D2DA0 /* Handler.swift */,
+				87CA7F7F1AE7291C008D2DA0 /* Logger.swift */,
 				87539B2219DB23F00084658D /* Supporting Files */,
 			);
+			name = Evergreen;
 			path = VILogKit;
 			sourceTree = "<group>";
 		};
 		87539B2219DB23F00084658D /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				87539B2319DB23F00084658D /* Info.plist */,
+				87CA7F7E1AE7291C008D2DA0 /* Info.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		87539B2B19DB23F00084658D /* VILogKitTests */ = {
+		87539B2B19DB23F00084658D /* EvergreenTests */ = {
 			isa = PBXGroup;
 			children = (
-				87539B2E19DB23F00084658D /* VILogKitTests.swift */,
+				87CA7F871AE7295A008D2DA0 /* EvergreenTests.swift */,
 				87539B2C19DB23F00084658D /* Supporting Files */,
 			);
+			name = EvergreenTests;
 			path = VILogKitTests;
 			sourceTree = "<group>";
 		};
 		87539B2C19DB23F00084658D /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				87539B2D19DB23F00084658D /* Info.plist */,
+				87CA7F861AE7295A008D2DA0 /* Info.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -116,16 +118,16 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				87539B2519DB23F00084658D /* VILogKit.h in Headers */,
+				87CA7F851AE7291C008D2DA0 /* Evergreen.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		87539B1E19DB23F00084658D /* VILogKit */ = {
+		87539B1E19DB23F00084658D /* Evergreen */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 87539B3219DB23F00084658D /* Build configuration list for PBXNativeTarget "VILogKit" */;
+			buildConfigurationList = 87539B3219DB23F00084658D /* Build configuration list for PBXNativeTarget "Evergreen" */;
 			buildPhases = (
 				87539B1A19DB23F00084658D /* Sources */,
 				87539B1B19DB23F00084658D /* Frameworks */,
@@ -136,14 +138,14 @@
 			);
 			dependencies = (
 			);
-			name = VILogKit;
+			name = Evergreen;
 			productName = VILogKit;
-			productReference = 87539B1F19DB23F00084658D /* VILogKit.framework */;
+			productReference = 87539B1F19DB23F00084658D /* Evergreen.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		87539B2919DB23F00084658D /* VILogKitTests */ = {
+		87539B2919DB23F00084658D /* EvergreenTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 87539B3519DB23F00084658D /* Build configuration list for PBXNativeTarget "VILogKitTests" */;
+			buildConfigurationList = 87539B3519DB23F00084658D /* Build configuration list for PBXNativeTarget "EvergreenTests" */;
 			buildPhases = (
 				87539B2619DB23F00084658D /* Sources */,
 				87539B2719DB23F00084658D /* Frameworks */,
@@ -154,9 +156,9 @@
 			dependencies = (
 				870449FD19F22EB100A78D15 /* PBXTargetDependency */,
 			);
-			name = VILogKitTests;
+			name = EvergreenTests;
 			productName = VILogKitTests;
-			productReference = 87539B2A19DB23F00084658D /* VILogKitTests.xctest */;
+			productReference = 87539B2A19DB23F00084658D /* EvergreenTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -176,7 +178,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 87539B1919DB23F00084658D /* Build configuration list for PBXProject "VILogKit" */;
+			buildConfigurationList = 87539B1919DB23F00084658D /* Build configuration list for PBXProject "Evergreen" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -188,8 +190,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				87539B1E19DB23F00084658D /* VILogKit */,
-				87539B2919DB23F00084658D /* VILogKitTests */,
+				87539B1E19DB23F00084658D /* Evergreen */,
+				87539B2919DB23F00084658D /* EvergreenTests */,
 			);
 		};
 /* End PBXProject section */
@@ -216,9 +218,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8729A82919EA7DD800F05A5F /* Formatter.swift in Sources */,
-				8729A82719EA7DD100F05A5F /* Handler.swift in Sources */,
-				87539B3919DB243C0084658D /* Logger.swift in Sources */,
+				87CA7F821AE7291C008D2DA0 /* Handler.swift in Sources */,
+				87CA7F841AE7291C008D2DA0 /* Logger.swift in Sources */,
+				87CA7F811AE7291C008D2DA0 /* Formatter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -226,7 +228,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				87539B2F19DB23F00084658D /* VILogKitTests.swift in Sources */,
+				87CA7F891AE7295A008D2DA0 /* EvergreenTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -235,7 +237,7 @@
 /* Begin PBXTargetDependency section */
 		870449FD19F22EB100A78D15 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 87539B1E19DB23F00084658D /* VILogKit */;
+			target = 87539B1E19DB23F00084658D /* Evergreen */;
 			targetProxy = 870449FC19F22EB100A78D15 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -329,11 +331,12 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = VILogKit/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Evergreen/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Evergreen;
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -346,10 +349,10 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = VILogKit/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Evergreen/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Evergreen;
 				SKIP_INSTALL = YES;
 			};
 			name = Release;
@@ -366,9 +369,9 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = VILogKitTests/Info.plist;
+				INFOPLIST_FILE = EvergreenTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = EvergreenTests;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -381,16 +384,16 @@
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = VILogKitTests/Info.plist;
+				INFOPLIST_FILE = EvergreenTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = EvergreenTests;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		87539B1919DB23F00084658D /* Build configuration list for PBXProject "VILogKit" */ = {
+		87539B1919DB23F00084658D /* Build configuration list for PBXProject "Evergreen" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				87539B3019DB23F00084658D /* Debug */,
@@ -399,7 +402,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		87539B3219DB23F00084658D /* Build configuration list for PBXNativeTarget "VILogKit" */ = {
+		87539B3219DB23F00084658D /* Build configuration list for PBXNativeTarget "Evergreen" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				87539B3319DB23F00084658D /* Debug */,
@@ -408,7 +411,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		87539B3519DB23F00084658D /* Build configuration list for PBXNativeTarget "VILogKitTests" */ = {
+		87539B3519DB23F00084658D /* Build configuration list for PBXNativeTarget "EvergreenTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				87539B3619DB23F00084658D /* Debug */,

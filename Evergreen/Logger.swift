@@ -1,6 +1,6 @@
 //
 //  Logger.swift
-//  VILogKit
+//  Evergreen
 //
 //  Created by Nils Fischer on 19.08.14.
 //  Copyright (c) 2014 viWiD Webdesign & iOS Development. All rights reserved.
@@ -202,7 +202,7 @@ public final class Logger {
     
     /// The default logger is the root of the logger hierarchy.
     public class func defaultLogger() -> Logger {
-        return VILogKit.defaultLogger
+        return Evergreen.defaultLogger
     }
     
     public class func loggerWithParent(parent: Logger, title: String = __FILE__) -> Logger {

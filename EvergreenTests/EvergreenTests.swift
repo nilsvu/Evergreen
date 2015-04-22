@@ -1,15 +1,15 @@
 //
-//  VILogKitTests.swift
-//  VILogKitTests
+//  EvergreenTests.swift
+//  EvergreenTests
 //
 //  Created by Nils Fischer on 30.09.14.
 //  Copyright (c) 2014 viWiD Webdesign & iOS Development. All rights reserved.
 //
 
 import XCTest
-import VILogKit
+import Evergreen
 
-class VILogKitTests: XCTestCase {
+class EvergreenTests: XCTestCase {
     
     func testDefaultLoggerIdentity() {
         let defaultLogger = Logger.defaultLogger()
