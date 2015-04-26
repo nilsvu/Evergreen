@@ -1,6 +1,8 @@
 # Evergreen
 
-Evergreen is a logging framework written in Swift.
+> Most *natural* Swift logging
+
+Evergreen is a logging framework written in Swift. It is designed to work just as you would expect, yet so versatile you can make it work however you wish. And isn't that every developer's dream?
 
 ```swift
 import Evergreen
@@ -48,13 +50,14 @@ The easiest way to integrate Evergreen into your project is via [CocoaPods](http
 
 	pod 'Evergreen'
 	```
+
 3. Let CocoaPods do its magic:
 
 	```sh
 	$ pod install
 	```
 	
-You can use Evergreen in your project now. As usual with CocoaPods, make sure to use the `.xcworkspace` instead of the `.xcodeproj`.
+You can use Evergreen in your project now. As usual with CocoaPods, make sure to use the `Evergreen.xcworkspace` instead of the `Evergreen.xcodeproj`.
 
 ### Manually
 
@@ -75,6 +78,8 @@ You can also integrate Evergreen into you project manually:
 
 ## Usage
 
+> **Note:** Open the `Evergreen.xcworkspace` and have a look at the `Evergreen.playground` for a more interactive tour through Evergreen's functionality. You can also create a Playground in your project's workspace and `import Evergreen` to try for yourself.
+
 ### Logging without configuration
 
 ```swift
@@ -90,11 +95,11 @@ You can log events without any configuration and see a nicely formatted message 
 You can assign an *importance* or *severity* to an event corresponding to one of the following *log levels*:
 
 - **Critical:** Events that are unexpected and can cause serious problems. You would want to be called in the middle of the night to deal with these.
-- **Error:** Events that are unexpected and can cause serious problems. Someone should tell you about these straight away.
+- **Error:** Events that are unexpected and not handled by your software. Someone should tell you about these ASAP.
 - **Warning:** Events that are unexpected, but will probably not affect the runtime of your software. You would want to investigate these eventually.
 - **Info:** General events that document the software's lifecycle.
-- **Debug:** Events to give you an understanding about the flow through the system.
-- **Verbose:** Detailed information about the environment.
+- **Debug:** Events to give you an understanding about the flow through your software, mainly for debugging purposes.
+- **Verbose:** Detailed information about the environment to provide additional context when needed.
 
 The logger that handles the event has a log level as well. **If the event's log level is lower than the logger's, it will not be logged.**
 
@@ -132,33 +137,29 @@ Every logger has a `key` to identify the source of any given event. In its hiera
 You can manually build your own hierarchy, of course, but Evergreen provides a convenient way for you to utilize this powerful feature:
 
 - The *default logger* is the root of the logger hierarchy and can be retrieved using the `Evergreen.defaultLogger` constant. Use it to set a default log level. The global variable `Evergreen.logLevel` also refers to the default logger.
-- Retrieve an appropriate logger using the `childForKeyPath:` instance method or one of various class methods like `Logger.loggerForKeyPath:`. Provide a key path that describes the part of your software the event is relevant for, such as `"MyModule.MyType"`. These methods will always return the same logger instance for a given key path and establish the logger hierarchy, if it does not yet exist.
+- Retrieve an appropriate logger using the global `Evergreen.getLogger()` function or one of various instance and class methods like `logger.childForKeyPath()`. Provide a key path that describes the part of your software the event is relevant for, such as `"MyModule.MyType"`. These methods will always return the same logger instance for a given key path and establish the logger hierarchy, if it does not yet exist.
 
-It is convenient to use a *Computed Property* to retrieve the appropriate logger for a type:
+It is convenient to use a constant stored attribute to make an appropriate logger available for a given type:
 
 ```swift
 import Evergreen
 
-extension MyType {
+class MyType {
 	
-	var logger: Logger {
-		return Logger.loggerForKeyPath("MyModule.MyType")
+	let logger = Evergreen.getLogger("MyModule.MyType")
+	
+	init() {
+		logger.log("Initializing...", forLevel: .Debug)
 	}
 	
 }
 ```
 
-Now, you can easily log events using the type's `logger` property:
+Having established a logger hierarchy, you can adjust the logging configuration for parts of it:
 
 ```swift
-self.logger.log("Initializing...", forLevel: .Debug)
-```
-
-To adjust the logging configuration 
-
-```swift
-Evergreen.logLevel = .Warning // Set the default log level to .Warning
-let logger = Logger.loggerForKeyPath("MyModule") // Retrieve a logger with the key 'MyModule' descending from the default logger
+Evergreen.logLevel = .Warning // Set the defaultLogger's log level to .Warning
+let logger = Evergreen.getLogger("MyModule") // Retrieve the logger with key 'MyModule' directly descending from the default logger
 logger.logLevel = .Debug // We are working on this part of the software, so set its log level to .Debug
 ```
 

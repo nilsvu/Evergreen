@@ -29,6 +29,8 @@ detachedLogger.log("Hello World!", forLevel: .Critical)
 logger.description(keyPathSeparator: ">")
 
 class Tree: Printable {
+    
+    let logger = Evergreen.getLogger("Tree")
 
     private(set) var height: Float = 0
     let maxHeight: Float = 5
@@ -55,10 +57,6 @@ class Tree: Printable {
             symbol = "🌳"
         }
         return "\(symbol) (\(height)m)"
-    }
-    
-    var logger: Logger {
-        return Evergreen.defaultLogger.childForKeyPath("Tree")
     }
     
 }

@@ -35,6 +35,11 @@ public func log<M>(message: M, forLevel logLevel: LogLevel? = nil, function: Str
     Logger.loggerForFile(file: file).log(message, forLevel: logLevel, function: function, file: file, line: line)
 }
 
+/// Returns the logger for the specified key path. See Logger.loggerForKeyPath for further documentation.
+public func getLogger(keyPath: Logger.KeyPath) -> Logger {
+    return Logger.loggerForKeyPath(keyPath)
+}
+
 /// Reads the logging configuration from environment variables. Every environment variable with prefix 'Evergreen' is evaluated as a logger key path and assigned a log level corresponding to its value. Values should match the log level descriptions, e.g. 'Debug'. Valid environment variable declarations would be e.g. 'Evergreen = Debug' or 'Evergreen.MyLogger = Verbose'.
 public func configureFromEnvironment()
 {
