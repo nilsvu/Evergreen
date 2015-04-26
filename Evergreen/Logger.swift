@@ -12,9 +12,8 @@ import Foundation
 
 // MARK: Global Interface
 
-
 /// The default logger singleton
-private let defaultLogger: Logger = {
+public let defaultLogger: Logger = {
     let logger = Logger(key: "Default", parent: nil)
     logger.handlers.append(ConsoleHandler())
     return logger
@@ -36,11 +35,38 @@ public func log<M>(message: M, forLevel logLevel: LogLevel? = nil, function: Str
     Logger.loggerForFile(file: file).log(message, forLevel: logLevel, function: function, file: file, line: line)
 }
 
+/// Reads the logging configuration from environment variables. Every environment variable with prefix 'Evergreen' is evaluated as a logger key path and assigned a log level corresponding to its value. Values should match the log level descriptions, e.g. 'Debug'. Valid environment variable declarations would be e.g. 'Evergreen = Debug' or 'Evergreen.MyLogger = Verbose'.
+public func configureFromEnvironment()
+{
+    let prefix = "Evergreen"
+    if let environmentVariables = NSProcessInfo.processInfo().environment as? [String: String] {
+        var configurations = [(Logger, LogLevel)]()
+        for (key, value) in environmentVariables {
+            if key.hasPrefix(prefix) {
+                let (_, keyPath) = Logger.KeyPath(string: key).popFirst()
+                let logger = Logger.loggerForKeyPath(keyPath)
+                if let logLevel = LogLevel(description: value) {
+                    logger.logLevel = logLevel
+                    configurations.append((logger, logLevel))
+                } else {
+                    log("Invalid Evergreen log level '\(value)' for key path '\(keyPath)' in environment variable.", forLevel: .Warning)
+                }
+            }
+        }
+        if configurations.count > 0 {
+            log("Configured Evergreen logging from environment. Configurations: \(configurations)", forLevel: .Debug)
+        }
+    } else {
+        log("Could not process environment variables. Evergreen logging ist not configured.", forLevel: .Warning)
+    }
+}
 
 
 /// The queue used for logging
 internal let loggingQueue = NSOperationQueue() // TODO: use to fix unordered println output
 
+
+// MARK: Logger
 
 public final class Logger {
     
@@ -65,17 +91,27 @@ public final class Logger {
     /// The handlers provided by this logger to process log events.
     public var handlers = [Handler]()
     
-    /// Passes log events up the logger hierarchy if set to true (default)
+    /// Passes events up the logger hierarchy if set to true (default)
     public var shouldPropagate = true
 
     /// The parent in the logger hierarchy
     public let parent: Logger?
-    private var children = [ String : Logger]()
+    public private(set) var children = [ String : Logger]()
+    public var root: Logger {
+        if let parent = parent {
+            return parent.root
+        } else {
+            return self
+        }
+    }
     
     /// The key used to identify this logger
     public let key: String
     public var keyPath: KeyPath {
-        if let parent = self.parent {
+        return self.keyPath()
+    }
+    public func keyPath(upToParent excludedLogger: Logger? = nil) -> KeyPath {
+        if let parent = self.parent where !(excludedLogger != nil && parent === excludedLogger!) {
             return parent.keyPath.keyPathByAppendingComponent(self.key)
         } else {
             return KeyPath(components: [ self.key ])
@@ -91,13 +127,32 @@ public final class Logger {
         self.parent = parent
         parent?.children[key] = self
     }
+        
+
+    // MARK: Intial Info
     
+    private var hasLoggedInitialInfo: Bool = false
+    public func logInitialInfo() {
+        if !hasLoggedInitialInfo {
+            if handlers.count > 0 {
+                let event = Event(logger: self, message: "Logging to \(handlers)...", logLevel: .Info, date: NSDate(), elapsedTime: nil, function: __FUNCTION__, file: __FILE__, line: __LINE__)
+                self.handleEvent(event)
+            }
+            hasLoggedInitialInfo = true
+        }
+        if shouldPropagate {
+            if let parent = self.parent {
+                parent.logInitialInfo()
+            }
+        }
+    }
+
     
     // MARK: Logging
     
     public func log<M>(message: M, forLevel logLevel: LogLevel? = nil, function: String = __FUNCTION__, file: String = __FILE__, line: Int = __LINE__)
     {
-        let event = Event(keyPath: keyPath, message: message, logLevel: logLevel, date: NSDate(), elapsedTime: nil, function: function, file: file, line: line)
+        let event = Event(logger: self, message: message, logLevel: logLevel, date: NSDate(), elapsedTime: nil, function: function, file: file, line: line)
         self.logEvent(event)
     }
     
@@ -105,61 +160,25 @@ public final class Logger {
     {
         self.logInitialInfo()
         
-        if let effectiveLogLevel = self.effectiveLogLevel {
-            if let eventLogLevel = event.logLevel {
-                if eventLogLevel < effectiveLogLevel {
-                    return
-                }
-            }
-        }
-        
-        self.handleEvent(event)
-    }
-    
-    private func logInitialInfo() {
-        if !hasLoggedInitialInfo {
-            if handlers.count > 0 {
-                let event = Event(keyPath: self.keyPath, message: "Logging to \(handlers)...", logLevel: .Info, date: NSDate(), elapsedTime: nil, function: __FUNCTION__, file: __FILE__, line: __LINE__)
-                self.handleEvent(event)
-            }
-        }
-        hasLoggedInitialInfo = true
-        if shouldPropagate {
-            if let parent = self.parent {
-                parent.logInitialInfo()
-            }
-        }
-    }
-    
-    private var hasLoggedInitialInfo = false
-
-    // TODO: necessary?
-    public var handlerHierarchyDescription: String {
-        let handlerDescription = self.key + self.handlers.description
-        if let parent = self.parent {
-            return parent.handlerHierarchyDescription + " > " + handlerDescription
+        if let effectiveLogLevel = self.effectiveLogLevel, let eventLogLevel = event.logLevel where eventLogLevel < effectiveLogLevel {
+            return
         } else {
-            return handlerDescription
+            self.handleEvent(event)
         }
     }
     
-    private func handleEvent<M>(event: Event<M>)
+    private func handleEvent<M>(event: Event<M>, var wasHandled: Bool = false)
     {
-        for handler in handlers.filter({ handler in
-            if let handlerLogLevel = handler.logLevel {
-                if let eventLogLevel = event.logLevel {
-                    if eventLogLevel < handlerLogLevel {
-                        return false
-                    }
-                }
-            }
-            return true
-        }) {
+        for handler in handlers {
             handler.emitEvent(event)
+            wasHandled = true
         }
-        if shouldPropagate {
-            if let parent = self.parent {
-                parent.handleEvent(event)
+        if let parent = self.parent where shouldPropagate {
+            parent.handleEvent(event, wasHandled: wasHandled)
+        } else {
+            if !wasHandled {
+                // TODO: use println() directly? Using log() will cause an endless loop when defaultLogger does not have any handlers.
+                println("Tried to log an event for logger '\(event.logger)', but no handler was found in the logger hierarchy to emit the event: \(event.file.lastPathComponent):\(event.line) \(event.function)")
             }
         }
     }
@@ -192,7 +211,7 @@ public final class Logger {
         }
         if let startDate = startDate {
             let elapsedTime = NSDate().timeIntervalSinceDate(startDate)
-            let event = Event(keyPath: keyPath, message: message, logLevel: logLevel, date: NSDate(), elapsedTime: elapsedTime, function: function, file: file, line: line)
+            let event = Event(logger: self, message: message, logLevel: logLevel, date: NSDate(), elapsedTime: elapsedTime, function: function, file: file, line: line)
             self.logEvent(event)
         }
     }
@@ -205,14 +224,14 @@ public final class Logger {
         return Evergreen.defaultLogger
     }
     
-    public class func loggerWithParent(parent: Logger, title: String = __FILE__) -> Logger {
-        return parent.childForKeyPath(KeyPath(string: title))
+    public class func loggerForKey(key: String, parent: Logger) -> Logger {
+        return parent.childForKeyPath(KeyPath(components: [ key ]))
     }
     
     public class func loggerForFile(file: String = __FILE__) -> Logger {
         // TODO: filename processing.. there has to be a better way
-        let filename = file.lastPathComponent.componentsSeparatedByString(".").first!
-        return self.loggerForKeyPath(KeyPath(components: [ filename ]))
+        var key = file.lastPathComponent//.componentsSeparatedByString(".").first!
+        return self.loggerForKeyPath(KeyPath(components: [ key ]))
     }
     
     /// Returns the logger for the specified key path. A key path is a dot-separated string of keys like "MyModule.MyClass" describing the logger hierarchy relative to the default logger. Always returns the same logger object for a given key path. A parent-children relationship is established and can be used to set specific settings like log levels and handlers for only parts of the logger hierarchy.
@@ -242,6 +261,7 @@ public final class Logger {
     // MARK: Key Path Struct
     
     public struct KeyPath: StringLiteralConvertible, Printable {
+        
         public let components: [String]
 
         public init(components: [String]) {
@@ -249,23 +269,26 @@ public final class Logger {
         }
         
         public init(string: String) {
-            self.components = string.componentsSeparatedByString(".")
+            self.components = string.componentsSeparatedByString(".").filter { !$0.isEmpty }
         }
 
+        public func keyPathByPrependingComponent(component: String) -> KeyPath {
+            return KeyPath(components: [ component ] + components)
+        }
         public func keyPathByAppendingComponent(component: String) -> KeyPath {
             return KeyPath(components: components + [ component ])
         }
 
         public typealias ExtendedGraphemeClusterLiteralType = StringLiteralType
         public init(extendedGraphemeClusterLiteral value: ExtendedGraphemeClusterLiteralType) {
-            self.components = value.componentsSeparatedByString(".")
+            self.components = value.componentsSeparatedByString(".").filter { !$0.isEmpty }
         }
         public typealias UnicodeScalarLiteralType = StringLiteralType
         public init(unicodeScalarLiteral value: UnicodeScalarLiteralType) {
-            self.components = value.componentsSeparatedByString(".")
+            self.components = value.componentsSeparatedByString(".").filter { !$0.isEmpty }
         }
         public init(stringLiteral value: StringLiteralType) {
-            self.components = value.componentsSeparatedByString(".")
+            self.components = value.componentsSeparatedByString(".").filter { !$0.isEmpty }
         }
         
         public func popFirst() -> (key: String?, remainingKeyPath: KeyPath) {
@@ -275,11 +298,11 @@ public final class Logger {
         }
         
         public var description: String {
-            return descriptionWithSeparator(".")
+            return description()
         }
         
-        public func descriptionWithSeparator(separator: String) -> String {
-            return separator.join(components)
+        public func description(separator: String? = nil) -> String {
+            return (separator ?? ".").join(components)
         }
     }
 
@@ -289,21 +312,17 @@ public final class Logger {
 // MARK: - Printable
 
 extension Logger: Printable {
-
+    
     public var description: String {
-        if let parent = self.parent {
-            if parent === Logger.defaultLogger() {
-                return key
-            } else {
-                return parent.description + "." + key
-            }
-        } else {
-            if self === Logger.defaultLogger() {
-                return key
-            } else {
-                return "DETACHED." + key
-            }
+        return self.description()
+    }
+    
+    public func description(keyPathSeparator: String? = nil) -> String {
+        var keyPath = self.keyPath(upToParent: defaultLogger)
+        if self.root !== defaultLogger {
+            keyPath = keyPath.keyPathByPrependingComponent("DETACHED")
         }
+        return keyPath.description(separator: keyPathSeparator)
     }
 
 }
@@ -313,7 +332,7 @@ extension Logger: Printable {
 
 public enum LogLevel: Int, Printable, Comparable {
 
-    case All = 0, Verbose, Debug, Info, Warning, Critical, Off
+    case All = 0, Verbose, Debug, Info, Warning, Error, Critical, Off
 
     public var description: String {
         switch self {
@@ -322,9 +341,23 @@ public enum LogLevel: Int, Printable, Comparable {
             case .Debug: return "Debug"
             case .Info: return "Info"
             case .Warning: return "Warning"
+            case .Error: return "Error"
             case .Critical: return "Critical"
             case .Off: return "Off"
         }
+    }
+    
+    public init?(var description: String) {
+        description = description.lowercaseString
+        var i = 0
+        while let logLevel = LogLevel(rawValue: i) {
+            if logLevel.description.lowercaseString == description {
+                self = logLevel
+                return
+            }
+            i++
+        }
+        return nil
     }
 }
 
@@ -341,8 +374,8 @@ public func < (lhs: LogLevel, rhs: LogLevel) -> Bool {
 
 public struct Event<M> {
     
-    /// The Key Path the Event was originally logged for
-    let keyPath: Logger.KeyPath
+    /// The logger that originally logged the event
+    let logger: Logger
     /// The log message
     let message: M
     /// The log level. A logger will only log events with equal or higher log levels than its own. Events that don't specify a log level will always be logged.

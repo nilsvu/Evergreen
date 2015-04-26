@@ -2,6 +2,15 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:README.md">
+   </FileRef>
+   <FileRef
       location = "container:Evergreen.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:Evergreen.playground">
+   </FileRef>
+   <FileRef
+      location = "group:iOS Example/iOS Example.xcodeproj">
    </FileRef>
 </Workspace>

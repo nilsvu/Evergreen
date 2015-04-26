@@ -12,21 +12,54 @@ import Evergreen
 class EvergreenTests: XCTestCase {
     
     func testDefaultLoggerIdentity() {
-        let defaultLogger = Logger.defaultLogger()
-        println(defaultLogger.keyPath)
-        XCTAssert(defaultLogger === Logger.defaultLogger(), "Subsequent default logger queries return different objects")
+        let defaultLogger = Evergreen.defaultLogger
+        XCTAssert(defaultLogger === Evergreen.defaultLogger, "Subsequent default logger queries return different objects")
+        XCTAssert(defaultLogger === Logger.defaultLogger(), "Logger.defaultLogger() class method does not return Evergreen.defaultLogger object")
         XCTAssert(defaultLogger === Logger.loggerForKeyPath(defaultLogger.keyPath), "Key path query does not return default logger object")
-        XCTAssert(defaultLogger === Logger.loggerForKeyPath("Default"), "Query with key path string Default does not return default logger object")
+        for keyPath in ["Default", "", "."] {
+            XCTAssert(defaultLogger === Logger.loggerForKeyPath(Logger.KeyPath(string: keyPath)), "Query with key path string '\(keyPath)' does not return default logger object")
+        }
+        XCTAssert(defaultLogger === Logger.loggerForKeyPath(Logger.KeyPath(components: [])), "Query with empty key path does not return default logger object")
     }
     
     func testHierarchy() {
-        let defaultLogger = Logger.defaultLogger()
-        let parentLogger = Logger.loggerForKeyPath("Parent")
-        XCTAssert(parentLogger.parent === defaultLogger, "Top level logger is not a child of the default logger")
+        let defaultLogger = Evergreen.defaultLogger
+        for keyPath in ["Default.FirstParent", "SecondParent", ".ThirdParent"] {
+            XCTAssert(Logger.loggerForKeyPath(Logger.KeyPath(string: keyPath)).parent === defaultLogger, "Logger for key path string '\(keyPath)' is not a child of the default logger")
+        }
+        let parentLogger = defaultLogger.childForKeyPath("Parent")
+        XCTAssert(parentLogger.parent === defaultLogger, "childForKeyPath() instance method does not establish parent relationship.")
         defaultLogger.logLevel = .None
-        XCTAssert(parentLogger.effectiveLogLevel == defaultLogger.logLevel, "logger with no explicit log level does not inherit parent's log level")
+        XCTAssert(parentLogger.effectiveLogLevel == defaultLogger.logLevel, "Logger with no explicit log level does not inherit parent's log level")
         let childLogger = Logger.loggerForKeyPath("Parent.Child")
-        XCTAssert(childLogger.parent === parentLogger, "Child logger created by key path Parent.Child is not a child of Parent logger")
+        XCTAssert(childLogger.parent === parentLogger, "Child logger created by key path 'Parent.Child' is not a child of 'Parent' logger")
+    }
+    
+    func testDetachedLogger() {
+        let detachedLogger = Logger(key: "Detached", parent: nil)
+        XCTAssert(detachedLogger.parent == nil, "Newly initialized logger is not detached from logger hierarchy.")
+    }
+    
+    func testLogLevels() {
+        let debug = LogLevel.Debug
+        for description in ["debug", "DEBUG", "Debug"] {
+            let logLevelFromDescription = LogLevel(description: description)
+            XCTAssert(logLevelFromDescription != nil, "Can't initialize log level from description \(description).")
+            XCTAssert(logLevelFromDescription == debug, "Log level \(logLevelFromDescription!) initialized from description \(description) does not match \(debug).")
+        }
+        var logLevels: [LogLevel] = []
+        var i = 0
+        while let logLevel = LogLevel(rawValue: i) {
+            logLevels.append(logLevel)
+            let logLevelFromDescription = LogLevel(description: logLevel.description)
+            XCTAssert(logLevelFromDescription != nil, "Can't initialize log level from description \(logLevel.description).")
+            XCTAssert(logLevelFromDescription == logLevel, "Log level \(logLevelFromDescription!) initialized from description \(logLevel.description) does not match \(logLevel).")
+            let logLevelFromUppercaseDescription = LogLevel(description: logLevel.description.uppercaseString)
+            XCTAssert(logLevelFromUppercaseDescription != nil, "Can't initialize log level from description \(logLevel.description.uppercaseString).")
+            XCTAssert(logLevelFromUppercaseDescription == logLevel, "Log level \(logLevelFromUppercaseDescription!) initialized from description \(logLevel.description) does not match \(logLevel).")
+            i++
+        }
+        XCTAssert(logLevels.sorted(<) == logLevels, "Log levels initialized by sequencial raw values are not ordered by comparison operator.")
     }
     
 }

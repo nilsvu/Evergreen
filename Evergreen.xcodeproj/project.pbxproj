@@ -76,9 +76,9 @@
 			isa = PBXGroup;
 			children = (
 				87CA7F801AE7291C008D2DA0 /* Evergreen.h */,
-				87CA7F7C1AE7291C008D2DA0 /* Formatter.swift */,
-				87CA7F7D1AE7291C008D2DA0 /* Handler.swift */,
 				87CA7F7F1AE7291C008D2DA0 /* Logger.swift */,
+				87CA7F7D1AE7291C008D2DA0 /* Handler.swift */,
+				87CA7F7C1AE7291C008D2DA0 /* Formatter.swift */,
 				87539B2219DB23F00084658D /* Supporting Files */,
 			);
 			name = Evergreen;
