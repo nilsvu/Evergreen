@@ -33,7 +33,43 @@ For now, let's focus on what the Python people tell us. They seem to know what t
 
 ### CocoaPods
 
+The easiest way to integrate Evergreen into your project is via [CocoaPods](http://cocoapods.org):
+
+1. Install CocoaPods:
+
+	```sh
+	$ gem install cocoapods
+	```
+
+2. Create a `Podfile` in you project's directory or add Evergreen to your existing `Podfile`:
+
+	```
+	source 'https://github.com/CocoaPods/Specs.git'
+	platform :ios, '8.0'
+	use_frameworks!
+
+	pod 'Evergreen'
+	```
+3. Let CocoaPods do its magic:
+
+	```sh
+	$ pod install
+	```
+	
+You can use Evergreen in your project now. As usual with CocoaPods, make sure to use the `.xcworkspace` instead of the `.xcodeproj`.
+
 ### Manually
+
+You can also integrate Evergreen into you project manually:
+
+1. Add Evergreen as a [submodule](http://git-scm.com/docs/git-submodule):
+
+	```sh
+	$ git submodule add https://github.com/viWiD/Evergreen.git
+	```
+
+2. Drag `Evergreen.xcodeproj` into the file navigator of your project.
+3. In the target configuration under *General*, add `Evergreen.framework` to the *Embedded Binaries*
 
 
 ---
