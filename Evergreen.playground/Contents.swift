@@ -72,3 +72,12 @@ var 🌳: Tree
 🌳 = Tree()
 🌳.logger.logLevel = .Verbose
 🌳.grow()
+
+
+logger.tic(andLog: "Starting expensive operation...", forLevel: .Debug, timerKey: "expensiveOperation")
+for var i=0; i<10; i++ {
+    logger.tic(andLog: "\(i). iteration...", forLevel: .Debug, timerKey: "iteration")
+    // ...
+    logger.toc(andLog: "Done!", forLevel: .Info, timerKey: "iteration")
+}
+logger.toc(andLog: "Completed expensive operation!", forLevel: .Info, timerKey: "expensiveOperation")

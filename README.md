@@ -1,5 +1,3 @@
-> This is a preliminary document and this framework is still under heavy development. Feel to give it a try and let me know your thoughts.
-
 # Evergreen
 
 Evergreen is a logging framework written in Swift.
@@ -168,11 +166,75 @@ logger.logLevel = .Debug // We are working on this part of the software, so set 
 
 ### Using Environment Variables for Configuration
 
+The preferred way to conveniently configure the logger hierarchy is using environment variables. In Xcode, choose your target from the dropdown in the toolbar, select `Edit Scheme...` `>` `Run` `>` `Arguments` and add environment variables to the list.
+
+Every environment variable prefixed `Evergreen` is evaluated as a logger key path and assigned a log level corresponding to the variable's value. Values should match the log level descriptions, e.g. `Debug` or `Warning`. These are some examples for valid environment variable declarations:
+
+Valid environment variable declarations would be e.g. `Evergreen = Debug` or `Evergreen.MyLogger = Verbose`.
+
+
+### Measuring Time
+
+Easily measure the time between two events:
+
+```swift
+let logger = Evergreen.defaultLogger
+logger.tic(andLog: "Starting expensive operation...", forLevel: .Debug)
+// ...
+logger.toc(andLog: "Completed expensive operation!", forLevel: .Info)
+```
+
+```sh
+[Default|DEBUG] Starting expensive operation...
+[Default|INFO] Completed expensive operation! [ELAPSED TIME: 0.0435580015182495s]
+```
+
+You can also use the `timerKey` argument for nested timing:
+
+```swift
+let logger = Evergreen.defaultLogger
+logger.tic(andLog: "Starting expensive operation...", forLevel: .Debug, timerKey: "expensiveOperation")
+for var i=0; i<10; i++ {
+	logger.tic(andLog: "\(i+1). iteration...", forLevel: .Verbose, timerKey: "iteration")
+	// ...
+	logger.toc(andLog: "Done!", forLevel: .Verbose, timerKey: "iteration")
+}
+logger.toc(andLog: "Completed expensive operation!", forLevel: .Info, timerKey: "expensiveOperation")
+```
+
 ## Advanced Usage
 
 ### Using Handlers
 
+When a logger determines that an event should be handled, it will pass it to its *handlers*. A handler uses its *formatter* to retrieve a human-readable *record* from the event and then *emits* the record. Subclasses of `Handler` emit records in different ways:
+
+- A `ConsoleHandler: Handler` prints the record to the console.
+- A `FileHandler: Handler` writes the records to a file.
+- A `StenographyHandler: Handler` appends the record to an array in memory.
+
+> You can override `emitRecord:` in you own subclass to implement any custom behaviour you like, e.g. send it to a server.
+
+Evergreen's `defaultLogger` has a `ConsoleHandler` attached by default, so every event in its hierarchy will be logged to the console. You can easily add additional handlers, by appending them to an appropriate logger's `handlers: [Handler]` array:
+
+```swift
+let logger = Evergreen.defaultLogger
+let stenographyHandler = StenographyHandler()
+logger.handlers.append(stenographyHandler)
+```
+
+You can also set a handler's `logLevel`, to add an additional level of filtering.
+
 ### Formatting
+
+Evergreen's `Formatter` class implements a convenient way for you to adjust the format of log records.
+
+The default implementation of the `recordFromEvent:` method, that you can also override in a subclass, of course, uses a list `components: [Formatter.Component]` to construct a record from an event using instances of the `Formatter.Component` enumeration:
+
+```swift
+let simpleFormatter = Formatter(components: [ .Text("["), .Logger, .Text("|"), .LogLevel, .Text("] "), .Message ])
+let consoleHandler = ConsoleHandler(formatter: simpleFormatter)
+Evergreen.defaultLogger.handlers = [ consoleHandler ]
+```
 
 
 ---
@@ -182,13 +244,18 @@ logger.logLevel = .Debug // We are working on this part of the software, so set 
 
 Evergreen was created by [Nils Fischer](http://www.viwid.com).
 
+## Roadmap
+
+This framework is still under heavy development and there is much to do.
+
+- [ ] Add support for colors in the console
+- [ ] Implement additional handlers, e.g. to send records to a server or via Email
+- [ ] Use `@autoclosure` for logging expensive operations
+- [ ] Extend configuration from environment variables, possibly alternatives like a `.plist` file
+- [ ] Add aliases for `log:forLevel:` named after the log levels, e.g. `debug:`, `warning:`, ...
+- [ ] Add a way to log details about the app, e.g. version, build, ...
+- [ ] Never stop adding tests
+
 ## License
 
 Evergreen is released under the MIT license. See LICENSE for details.
-
-## TODOs
-
-- [ ] Add a way to log details about the app, e.g. version, build, ...
-- [ ] Add support for colors in the console
-- [ ] Implement additional handlers, e.g. to send records to a server or via Email
-- [ ] Never stop adding tests
