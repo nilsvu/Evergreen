@@ -35,6 +35,12 @@ public func log<M>(message: M, forLevel logLevel: LogLevel? = nil, function: Str
     Logger.loggerForFile(file: file).log(message, forLevel: logLevel, function: function, file: file, line: line)
 }
 
+
+/// Returns an appropriate logger for the given file.
+public func getLoggerForFile(file: String = __FILE__) -> Logger {
+    return Logger.loggerForFile(file: file)
+}
+
 /// Returns the logger for the specified key path. See Logger.loggerForKeyPath for further documentation.
 public func getLogger(keyPath: Logger.KeyPath) -> Logger {
     return Logger.loggerForKeyPath(keyPath)
@@ -60,6 +66,8 @@ public func configureFromEnvironment()
         }
         if configurations.count > 0 {
             log("Configured Evergreen logging from environment. Configurations: \(configurations)", forLevel: .Debug)
+        } else {
+            log("Tried to configure Evergreen logging from environment, but no valid configuration was found.", forLevel: .Warning)
         }
     } else {
         log("Could not process environment variables. Evergreen logging ist not configured.", forLevel: .Warning)
