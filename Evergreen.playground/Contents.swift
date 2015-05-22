@@ -5,7 +5,7 @@
 import Evergreen
 
 
-log("Hello World!")
+log("Hello World!") // Look at the console output!
 
 
 Evergreen.logLevel = .Debug
@@ -18,6 +18,9 @@ log("Critical", forLevel: .Critical)
 
 // These events will not be logged, because their log level is < .Debug
 log("Verbose", forLevel: .Verbose)
+
+// Each log level has a corresponding log function alias for convenience
+debug("Debug")
 
 let logger = Evergreen.defaultLogger.childForKeyPath("MyLogger")
 logger.logLevel = .Verbose

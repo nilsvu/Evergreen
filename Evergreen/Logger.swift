@@ -30,9 +30,28 @@ public var logLevel: LogLevel? {
 }
 
 /// Logs an event using a logger that is appropriate for the caller.
-public func log<M>(message: M, forLevel logLevel: LogLevel? = nil, function: String = __FUNCTION__, file: String = __FILE__, line: Int = __LINE__)
+public func log<M>(@autoclosure(escaping) message: () -> M, forLevel logLevel: LogLevel? = nil, function: String = __FUNCTION__, file: String = __FILE__, line: Int = __LINE__)
 {
     Logger.loggerForFile(file: file).log(message, forLevel: logLevel, function: function, file: file, line: line)
+}
+
+public func verbose<M>(@autoclosure(escaping) message: () -> M, function: String = __FUNCTION__, file: String = __FILE__, line: Int = __LINE__) {
+    Evergreen.log(message, forLevel: .Verbose, function: function, file: file, line: line)
+}
+public func debug<M>(@autoclosure(escaping) message: () -> M, function: String = __FUNCTION__, file: String = __FILE__, line: Int = __LINE__) {
+    Evergreen.log(message, forLevel: .Debug, function: function, file: file, line: line)
+}
+public func info<M>(@autoclosure(escaping) message: () -> M, function: String = __FUNCTION__, file: String = __FILE__, line: Int = __LINE__) {
+    Evergreen.log(message, forLevel: .Info, function: function, file: file, line: line)
+}
+public func warning<M>(@autoclosure(escaping) message: () -> M, function: String = __FUNCTION__, file: String = __FILE__, line: Int = __LINE__) {
+    Evergreen.log(message, forLevel: .Warning, function: function, file: file, line: line)
+}
+public func error<M>(@autoclosure(escaping) message: () -> M, function: String = __FUNCTION__, file: String = __FILE__, line: Int = __LINE__) {
+    Evergreen.log(message, forLevel: .Error, function: function, file: file, line: line)
+}
+public func critical<M>(@autoclosure(escaping) message: () -> M, function: String = __FUNCTION__, file: String = __FILE__, line: Int = __LINE__) {
+    Evergreen.log(message, forLevel: .Critical, function: function, file: file, line: line)
 }
 
 
@@ -148,7 +167,7 @@ public final class Logger {
     public func logInitialInfo() {
         if !hasLoggedInitialInfo {
             if handlers.count > 0 {
-                let event = Event(logger: self, message: "Logging to \(handlers)...", logLevel: .Info, date: NSDate(), elapsedTime: nil, function: __FUNCTION__, file: __FILE__, line: __LINE__)
+                let event = Event(logger: self, message: { "Logging to \(self.handlers)..." }, logLevel: .Info, date: NSDate(), elapsedTime: nil, function: __FUNCTION__, file: __FILE__, line: __LINE__)
                 self.handleEvent(event)
             }
             hasLoggedInitialInfo = true
@@ -163,10 +182,29 @@ public final class Logger {
     
     // MARK: Logging
     
-    public func log<M>(message: M, forLevel logLevel: LogLevel? = nil, function: String = __FUNCTION__, file: String = __FILE__, line: Int = __LINE__)
+    public func log<M>(@autoclosure(escaping) message: () -> M, forLevel logLevel: LogLevel? = nil, function: String = __FUNCTION__, file: String = __FILE__, line: Int = __LINE__)
     {
         let event = Event(logger: self, message: message, logLevel: logLevel, date: NSDate(), elapsedTime: nil, function: function, file: file, line: line)
         self.logEvent(event)
+    }
+    
+    public func verbose<M>(@autoclosure(escaping) message: () -> M, function: String = __FUNCTION__, file: String = __FILE__, line: Int = __LINE__) {
+        self.log(message, forLevel: .Verbose, function: function, file: file, line: line)
+    }
+    public func debug<M>(@autoclosure(escaping) message: () -> M, function: String = __FUNCTION__, file: String = __FILE__, line: Int = __LINE__) {
+        self.log(message, forLevel: .Debug, function: function, file: file, line: line)
+    }
+    public func info<M>(@autoclosure(escaping) message: () -> M, function: String = __FUNCTION__, file: String = __FILE__, line: Int = __LINE__) {
+        self.log(message, forLevel: .Info, function: function, file: file, line: line)
+    }
+    public func warning<M>(@autoclosure(escaping) message: () -> M, function: String = __FUNCTION__, file: String = __FILE__, line: Int = __LINE__) {
+        self.log(message, forLevel: .Warning, function: function, file: file, line: line)
+    }
+    public func error<M>(@autoclosure(escaping) message: () -> M, function: String = __FUNCTION__, file: String = __FILE__, line: Int = __LINE__) {
+        self.log(message, forLevel: .Error, function: function, file: file, line: line)
+    }
+    public func critical<M>(@autoclosure(escaping) message: () -> M, function: String = __FUNCTION__, file: String = __FILE__, line: Int = __LINE__) {
+        self.log(message, forLevel: .Critical, function: function, file: file, line: line)
     }
     
     public func logEvent<M>(event: Event<M>)
@@ -203,7 +241,7 @@ public final class Logger {
     private lazy var startDates = [String : NSDate]()
     
     // TODO: log "Tic..." message by default
-    public func tic<M>(andLog message: M, forLevel logLevel: LogLevel? = nil, timerKey: String? = nil, function: String = __FUNCTION__, file: String = __FILE__, line: Int = __LINE__)
+    public func tic<M>(@autoclosure(escaping) andLog message: () -> M, forLevel logLevel: LogLevel? = nil, timerKey: String? = nil, function: String = __FUNCTION__, file: String = __FILE__, line: Int = __LINE__)
     {
         if let timerKey = timerKey {
             startDates[timerKey] = NSDate()
@@ -214,7 +252,7 @@ public final class Logger {
     }
     
     // TODO: log "...Toc" message by default
-    public func toc<M>(andLog message: M, forLevel logLevel: LogLevel? = nil, timerKey: String? = nil, function: String = __FUNCTION__, file: String = __FILE__, line: Int = __LINE__)
+    public func toc<M>(@autoclosure(escaping) andLog message: () -> M, forLevel logLevel: LogLevel? = nil, timerKey: String? = nil, function: String = __FUNCTION__, file: String = __FILE__, line: Int = __LINE__)
     {
         var startDate: NSDate?
         if let timerKey = timerKey {
@@ -390,7 +428,7 @@ public struct Event<M> {
     /// The logger that originally logged the event
     let logger: Logger
     /// The log message
-    let message: M
+    let message: () -> M
     /// The log level. A logger will only log events with equal or higher log levels than its own. Events that don't specify a log level will always be logged.
     let logLevel: LogLevel?
     let date: NSDate

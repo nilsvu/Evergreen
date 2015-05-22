@@ -37,7 +37,7 @@ public class Formatter {
             case .LogLevel:
                 return (event.logLevel?.description ?? "Unspecified").uppercaseString
             case .Message:
-                return String(stringInterpolationSegment: event.message)
+                return String(stringInterpolationSegment: event.message())
             case .Function:
                 return event.function
             case .File:

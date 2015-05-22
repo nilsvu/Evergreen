@@ -251,9 +251,7 @@ This framework is still under heavy development and there is much to do.
 
 - [ ] Add support for colors in the console
 - [ ] Implement additional handlers, e.g. to send records to a server or via Email
-- [ ] Use `@autoclosure` for logging expensive operations
 - [ ] Extend configuration from environment variables, possibly alternatives like a `.plist` file
-- [ ] Add aliases for `log:forLevel:` named after the log levels, e.g. `debug:`, `warning:`, ...
 - [ ] Add a way to log details about the app, e.g. version, build, ...
 - [ ] Never stop adding tests
 
