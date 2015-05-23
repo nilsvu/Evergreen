@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "Evergreen"
-  s.version      = "0.4.0"
+  s.version      = "0.4.1"
   s.summary      = "A Swift Logging Framework."
   s.description  = <<-DESC
     Evergreen is a logging framework written in Swift.
@@ -11,6 +11,6 @@ Pod::Spec.new do |s|
   s.license      = { :type => "MIT", :file => "LICENSE.md" }
   s.author       = { "Nils Fischer" => "n.fischer@viwid.com" }
   s.platform     = :ios, "8.0"
-  s.source       = { :git => "https://github.com/viWiD/Evergreen.git", :tag => "v0.4.0" }
+  s.source       = { :git => "https://github.com/viWiD/Evergreen.git", :tag => "v0.4.1" }
   s.source_files = "Evergreen"
 end
