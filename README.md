@@ -2,7 +2,9 @@
 
 > Most *natural* Swift logging
 
-Evergreen is a logging framework written in Swift. It is designed to work just as you would expect, yet so versatile you can make it work however you wish. And isn't that every developer's dream?
+Evergreen is a logging framework written in Swift. It is designed to work just as you would expect, yet so versatile you can make it work however you wish.
+
+Integrate Evergreen logging into your Swift project to replace those plain `println()` statements with calls to Evergreen's versatile logging functions that make it easy to **adjust the verbosity** of the output, log to **multiple destinations** (e.g. a file) with **custom formatting** and even **measure time**.
 
 ```swift
 import Evergreen
@@ -13,6 +15,9 @@ log("Hello World!", forLevel: .Info)
 ```sh
 2015-04-26 01:48:32.415 [AppDelegate.swift|INFO] Hello World!
 ```
+
+> Evergreen logging is great to use in any Swift project, but particularly useful when developing a framework. Give the users of your framework the opportunity to easily adjust the verbosity of the output your framework generates.
+
 
 ## About Logging
 
@@ -57,7 +62,7 @@ The easiest way to integrate Evergreen into your project is via [CocoaPods](http
 	$ pod install
 	```
 	
-You can use Evergreen in your project now. As usual with CocoaPods, make sure to use the `Evergreen.xcworkspace` instead of the `Evergreen.xcodeproj`.
+As usual with CocoaPods, make sure to use the `*.xcworkspace` instead of the `*.xcodeproj`.
 
 ### Manually
 
@@ -149,7 +154,7 @@ class MyType {
 	let logger = Evergreen.getLogger("MyModule.MyType")
 	
 	init() {
-		logger.log("Initializing...", forLevel: .Debug)
+		self.logger.log("Initializing...", forLevel: .Debug)
 	}
 	
 }
@@ -203,19 +208,20 @@ for var i=0; i<10; i++ {
 logger.toc(andLog: "Completed expensive operation!", forLevel: .Info, timerKey: "expensiveOperation")
 ```
 
+
 ## Advanced Usage
 
 ### Using Handlers
 
 When a logger determines that an event should be handled, it will pass it to its *handlers*. A handler uses its *formatter* to retrieve a human-readable *record* from the event and then *emits* the record. Subclasses of `Handler` emit records in different ways:
 
-- A `ConsoleHandler: Handler` prints the record to the console.
-- A `FileHandler: Handler` writes the records to a file.
-- A `StenographyHandler: Handler` appends the record to an array in memory.
+- A `ConsoleHandler` prints the record to the console.
+- A `FileHandler` writes the records to a file.
+- A `StenographyHandler` appends the record to an array in memory.
 
 > You can override `emitRecord:` in you own subclass to implement any custom behaviour you like, e.g. send it to a server.
 
-Evergreen's `defaultLogger` has a `ConsoleHandler` attached by default, so every event in its hierarchy will be logged to the console. You can easily add additional handlers, by appending them to an appropriate logger's `handlers: [Handler]` array:
+Evergreen's `defaultLogger` has a `ConsoleHandler` attached by default, so every event in its hierarchy will be logged to the console. You can easily add additional handlers, by appending them to an appropriate logger's `handlers` array:
 
 ```swift
 let logger = Evergreen.defaultLogger
@@ -240,21 +246,16 @@ Evergreen.defaultLogger.handlers = [ consoleHandler ]
 
 ---
 
-
 ## Contact
 
-Evergreen was created by [Nils Fischer](http://www.viwid.com).
+Evergreen was created and is maintained by [Nils Fischer](http://www.viwid.com) ([@knlyy](https://twitter.com/knlyy)).
 
 ## Roadmap
 
-This framework is still under heavy development and there is much to do.
+The beta status of this framework mostly means that I haven't quite finished writing the documentation yet.
 
-- [ ] Add support for colors in the console
-- [ ] Implement additional handlers, e.g. to send records to a server or via Email
-- [ ] Extend configuration from environment variables, possibly alternatives like a `.plist` file
-- [ ] Add a way to log details about the app, e.g. version, build, ...
-- [ ] Never stop adding tests
+Before finalizing a 1.0 release, I would greatly appreciate some professional opinions on the API and architecture. Any suggestions via Email ([n.fischer@viwid.com](mailto:n.fischer@viwid.com)) or Tweet ([@knlyy](https://twitter.com/knlyy)) are very welcome!
 
 ## License
 
-Evergreen is released under the MIT license. See LICENSE for details.
+Evergreen is released under the MIT license. See LICENSE.md for details.

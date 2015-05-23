@@ -1,6 +1,9 @@
 //: # Evergreen
 
-// TODO: Add plenty of rich text comments!
+/*:
+This playground showcases some basic features of the Evergreen framework. Consult the README.md for a thorough documentation.
+*/
+
 
 import Evergreen
 
@@ -22,24 +25,23 @@ log("Verbose", forLevel: .Verbose)
 // Each log level has a corresponding log function alias for convenience
 debug("Debug")
 
-let logger = Evergreen.defaultLogger.childForKeyPath("MyLogger")
-logger.logLevel = .Verbose
-logger.log("Verbose", forLevel: .Verbose)
 
-let detachedLogger = Logger(key: "MyDetachedLogger", parent: nil)
-detachedLogger.handlers = [ ConsoleHandler(formatter: Formatter(components: [ .Logger, .Text(" says: '"), .Message, .Text("' - True Story!") ])) ]
-detachedLogger.log("Hello World!", forLevel: .Critical)
-logger.description(keyPathSeparator: ">")
+// Use the logger hierarchy to adjust the logging configuration for specific parts of your software
+let fooLogger = Evergreen.getLogger("MyModule.Foo")
+fooLogger.logLevel = .Verbose
+fooLogger.log("Verbose", forLevel: .Verbose)
+
 
 class Tree: Printable {
     
+    // Use constants for convenient access to loggers in the logger hierarchy
     let logger = Evergreen.getLogger("Tree")
 
     private(set) var height: Float = 0
     let maxHeight: Float = 5
     
     init() {
-        logger.log("You planted a tree: \(self)", forLevel: .Info)
+        self.logger.log("You planted a tree: \(self)", forLevel: .Info)
     }
     
     func grow() {
@@ -73,12 +75,3 @@ var 🌳: Tree
 🌳 = Tree()
 🌳.logger.logLevel = .Verbose
 🌳.grow()
-
-
-logger.tic(andLog: "Starting expensive operation...", forLevel: .Debug, timerKey: "expensiveOperation")
-for var i=0; i<10; i++ {
-    logger.tic(andLog: "\(i). iteration...", forLevel: .Debug, timerKey: "iteration")
-    // ...
-    logger.toc(andLog: "Done!", forLevel: .Info, timerKey: "iteration")
-}
-logger.toc(andLog: "Completed expensive operation!", forLevel: .Info, timerKey: "expensiveOperation")
