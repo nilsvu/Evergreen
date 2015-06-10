@@ -7,6 +7,8 @@
 //
 
 import XCTest
+
+@testable
 import Evergreen
 
 class EvergreenTests: XCTestCase {
@@ -59,7 +61,7 @@ class EvergreenTests: XCTestCase {
             XCTAssert(logLevelFromUppercaseDescription == logLevel, "Log level \(logLevelFromUppercaseDescription!) initialized from description \(logLevel.description) does not match \(logLevel).")
             i++
         }
-        XCTAssert(logLevels.sorted(<) == logLevels, "Log levels initialized by sequencial raw values are not ordered by comparison operator.")
+        XCTAssert(logLevels.sort(<) == logLevels, "Log levels initialized by sequencial raw values are not ordered by comparison operator.")
     }
     
 }

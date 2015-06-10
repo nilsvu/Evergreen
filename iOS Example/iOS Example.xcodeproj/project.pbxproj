@@ -110,6 +110,7 @@
 		873767B21AEC52CD009A703F /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 0700;
 				LastUpgradeCheck = 0630;
 				ORGANIZATIONNAME = "viWiD Webdesign & iOS Development";
 				TargetAttributes = {
@@ -305,6 +306,7 @@
 				873767DB1AEC52CD009A703F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

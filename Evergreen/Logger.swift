@@ -36,13 +36,13 @@ public func getLogger(keyPath: Logger.KeyPath) -> Logger {
 
 /// Returns an appropriate logger for the given file. See `Logger.loggerForFile:` for further documentation.
 public func getLoggerForFile(file: String = __FILE__) -> Logger {
-    return Logger.loggerForFile(file: file)
+    return Logger.loggerForFile(file)
 }
 
 /// Logs the event using a logger that is appropriate for the caller. See `Logger.log:forLevel:` for further documentation.
 public func log<M>(@autoclosure(escaping) message: () -> M, forLevel logLevel: LogLevel? = nil, function: String = __FUNCTION__, file: String = __FILE__, line: Int = __LINE__)
 {
-    Logger.loggerForFile(file: file).log(message, forLevel: logLevel, function: function, file: file, line: line)
+    Logger.loggerForFile(file).log(message, forLevel: logLevel, function: function, file: file, line: line)
 }
 
 /// Logs the event with the Verbose log level using a logger that is appropriate for the caller. See `Logger.log:forLevel:` for further documentation.
@@ -74,27 +74,22 @@ public func critical<M>(@autoclosure(escaping) message: () -> M, function: Strin
 public func configureFromEnvironment()
 {
     let prefix = "Evergreen"
-    if let environmentVariables = NSProcessInfo.processInfo().environment as? [String: String] {
-        var configurations = [(Logger, LogLevel)]()
-        for (key, value) in environmentVariables {
-            if key.hasPrefix(prefix) {
-                let (_, keyPath) = Logger.KeyPath(string: key).popFirst()
-                let logger = Logger.loggerForKeyPath(keyPath)
-                if let logLevel = LogLevel(description: value) {
-                    logger.logLevel = logLevel
-                    configurations.append((logger, logLevel))
-                } else {
-                    log("Invalid Evergreen log level '\(value)' for key path '\(keyPath)' in environment variable.", forLevel: .Warning)
-                }
-            }
-        }
-        if configurations.count > 0 {
-            log("Configured Evergreen logging from environment. Configurations: \(configurations)", forLevel: .Debug)
+    let environmentVariables = NSProcessInfo.processInfo().environment
+    var configurations = [(Logger, LogLevel)]()
+    for (key, value) in environmentVariables where key.hasPrefix(prefix) {
+        let (_, keyPath) = Logger.KeyPath(string: key).popFirst()
+        let logger = Logger.loggerForKeyPath(keyPath)
+        if let logLevel = LogLevel(description: value) {
+            logger.logLevel = logLevel
+            configurations.append((logger, logLevel))
         } else {
-            log("Tried to configure Evergreen logging from environment, but no valid configuration was found.", forLevel: .Warning)
+            log("Invalid Evergreen log level '\(value)' for key path '\(keyPath)' in environment variable.", forLevel: .Warning)
         }
+    }
+    if configurations.count > 0 {
+        log("Configured Evergreen logging from environment. Configurations: \(configurations)", forLevel: .Debug)
     } else {
-        log("Could not process environment variables. Evergreen logging ist not configured.", forLevel: .Warning)
+        log("Tried to configure Evergreen logging from environment, but no valid configuration was found.", forLevel: .Warning)
     }
 }
 
@@ -191,8 +186,8 @@ public final class Logger {
     /**
     Logs the event given by its `message` and additional information that is gathered automatically. The `logLevel` parameter in conjunction with the logger's `effectiveLogLevel` determines, if the event will be handled or ignored.
     
-    :param: message The message to be logged, provided by an autoclosure. The closure will not be evaluated if the event is not going to be emitted, so it can contain expensive operations only needed for logging purposes.
-    :param: logLevel If the event's log level is lower than the receiving logger's `effectiveLogLevel`, the event will not be logged. The event will always be logged, if no log level is provided for either the event or the logger's `effectiveLogLevel`.
+    - parameter message: The message to be logged, provided by an autoclosure. The closure will not be evaluated if the event is not going to be emitted, so it can contain expensive operations only needed for logging purposes.
+    - parameter logLevel: If the event's log level is lower than the receiving logger's `effectiveLogLevel`, the event will not be logged. The event will always be logged, if no log level is provided for either the event or the logger's `effectiveLogLevel`.
     */
     public func log<M>(@autoclosure(escaping) message: () -> M, forLevel logLevel: LogLevel? = nil, function: String = __FUNCTION__, file: String = __FILE__, line: Int = __LINE__)
     {
@@ -249,7 +244,7 @@ public final class Logger {
         } else {
             if !wasHandled {
                 // TODO: use println() directly? Using log() will cause an endless loop when defaultLogger does not have any handlers.
-                println("Tried to log an event for logger '\(event.logger)', but no handler was found in the logger hierarchy to emit the event: \(event.file.lastPathComponent):\(event.line) \(event.function)")
+                print("Tried to log an event for logger '\(event.logger)', but no handler was found in the logger hierarchy to emit the event: \(event.file.lastPathComponent):\(event.line) \(event.function)")
             }
         }
     }
@@ -264,9 +259,9 @@ public final class Logger {
     /**
     Log the given event and start tracking the time until the next call to `toc:`.
 
-    :param: message The message to be logged, provided by an autoclosure for lazy evaluation (see `log:forLevel:`)
-    :param: logLevel The event's log level (see `log:forLevel:`)
-    :param: timerKey Provide as an identifier in nested calls to `tic:` and `toc:`.
+    - parameter message: The message to be logged, provided by an autoclosure for lazy evaluation (see `log:forLevel:`)
+    - parameter logLevel: The event's log level (see `log:forLevel:`)
+    - parameter timerKey: Provide as an identifier in nested calls to `tic:` and `toc:`.
     */
     public func tic<M>(@autoclosure(escaping) andLog message: () -> M, forLevel logLevel: LogLevel? = nil, timerKey: String? = nil, function: String = __FUNCTION__, file: String = __FILE__, line: Int = __LINE__)
     {
@@ -305,8 +300,7 @@ public final class Logger {
     
     /// Returns an appropriate logger for the given file. Generally, the logger's key will be the file name and it will be a direct child of the default logger.
     public class func loggerForFile(file: String = __FILE__) -> Logger {
-        // TODO: filename processing.. there has to be a better way
-        var key = file.lastPathComponent//.componentsSeparatedByString(".").first!
+        let key = file.lastPathComponent
         return self.loggerForKeyPath(KeyPath(components: [ key ]))
     }
     
@@ -338,7 +332,7 @@ public final class Logger {
     // MARK: Key Path Struct
     
     /// Encapsulates a hierarchical structure of keys used to identify a logger's position in the logger hierarchy.
-    public struct KeyPath: StringLiteralConvertible, Printable {
+    public struct KeyPath: StringLiteralConvertible, CustomStringConvertible {
         
         public let components: [String]
 
@@ -379,7 +373,7 @@ public final class Logger {
             return description()
         }
         
-        public func description(separator: String? = nil) -> String {
+        public func description(separator separator: String? = nil) -> String {
             return (separator ?? ".").join(components)
         }
     }
@@ -389,7 +383,7 @@ public final class Logger {
 
 // MARK: - Printable
 
-extension Logger: Printable {
+extension Logger: CustomStringConvertible {
     
     public var description: String {
         return self.description()
@@ -425,7 +419,7 @@ In addition to the log levels above, a logger can have one of the following log 
 - **All:** All events will be logged.
 - **Off:** No events will be logged.
 */
-public enum LogLevel: Int, Printable, Comparable {
+public enum LogLevel: Int, CustomStringConvertible, Comparable {
 
     case All = 0, Verbose, Debug, Info, Warning, Error, Critical, Off
 
@@ -484,10 +478,3 @@ public struct Event<M> {
     let line: Int
     
 }
-
-
-// MARK: - Loggable Protocol
-
-// TODO: define Loggable protocol as a constraint for generic message type M.
-//public typealias Loggable = DebugPrintable
-

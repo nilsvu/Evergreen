@@ -167,7 +167,8 @@
 		87539B1619DB23F00084658D /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0600;
+				LastSwiftUpdateCheck = 0700;
+				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "viWiD Webdesign & iOS Development";
 				TargetAttributes = {
 					87539B1E19DB23F00084658D = {
@@ -262,6 +263,7 @@
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -334,6 +336,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/Evergreen/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.viwid.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = Evergreen;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -352,6 +355,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/Evergreen/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.viwid.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = Evergreen;
 				SKIP_INSTALL = YES;
 			};
@@ -371,6 +375,7 @@
 				);
 				INFOPLIST_FILE = EvergreenTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.viwid.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = EvergreenTests;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -386,6 +391,7 @@
 				);
 				INFOPLIST_FILE = EvergreenTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.viwid.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = EvergreenTests;
 			};
 			name = Release;

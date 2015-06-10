@@ -32,7 +32,7 @@ fooLogger.logLevel = .Verbose
 fooLogger.log("Verbose", forLevel: .Verbose)
 
 
-class Tree: Printable {
+class Tree: CustomStringConvertible {
     
     // Use constants for convenient access to loggers in the logger hierarchy
     let logger = Evergreen.getLogger("Tree")
