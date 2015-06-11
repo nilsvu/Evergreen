@@ -11,18 +11,32 @@ import Foundation
 
 public class Formatter {
     
-    public lazy var components: [Component] = {
-        let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss.SSS"
-        return [ .Date(formatter: dateFormatter), .Text(" ["), .Logger, .Text("|"), .LogLevel, .Text("] "), .Message ]
-    }()
-
-    public init() {}
+    public let components: [Component]
     
     public init(components: [Component]) {
         self.components = components
     }
+
+    public enum Style {
+        case Default, Simple, Full
+    }
     
+    /// Creates a formatter from any of the predefined styles.
+    public convenience init(style: Style) {
+        let components: [Component]
+        switch style {
+        case .Default:
+            components = [ .Text("["), .Logger, .Text("|"), .LogLevel, .Text("] "), .Message ]
+        case .Simple:
+            components = [ .Message ]
+        case .Full:
+            let dateFormatter = NSDateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss.SSS"
+            components = [ .Date(formatter: dateFormatter), .Text(" ["), .Logger, .Text("|"), .LogLevel, .Text("] "), .Message ]
+        }
+        self.init(components: components)
+    }
+
     public enum Component {
         case Text(String), Date(formatter: NSDateFormatter), Logger, LogLevel, Message, Function, File, Line//, Any(stringForEvent: (event: Event<M>) -> String)
         
@@ -48,6 +62,11 @@ public class Formatter {
         }
     }
     
+    /// Produces a record from a given event. The record can be subsequently emitted by a handler.
+    public final func recordFromEvent<M>(event: Event<M>) -> Record {
+        return Record(date: event.date, description: self.stringFromEvent(event))
+    }
+
     public func stringFromEvent<M>(event: Event<M>) -> String
     {
         var string = "".join(components.map { $0.stringForEvent(event) })
@@ -57,10 +76,6 @@ public class Formatter {
         }
 
         return string
-    }
-    
-    public func recordFromEvent<M>(event: Event<M>) -> Record {
-        return Record(date: event.date, description: self.stringFromEvent(event))
     }
     
 }
