@@ -24,17 +24,14 @@ public struct Record: Printable {
 public class Handler {
     
     public var logLevel: LogLevel?
-    public var formatter: Formatter = Formatter()
+    public var formatter: Formatter
     
-    public init() {}
-    
-    public convenience init(formatter: Formatter) {
-        self.init()
+    public init(formatter: Formatter) {
         self.formatter = formatter
     }
     
-    /// Called by a logger to handle an event. By default, the event's log level is checked against the handler's and the given formatter is used to obtain a record from the event. Subsequently, emitRecord is called to produce the output. In most cases, subclasses should override emitRecord instead and leave this method to its default implementation.
-    public func emitEvent<M>(event: Event<M>) {
+    /// Called by a logger to handle an event. The event's log level is checked against the handler's and the given formatter is used to obtain a record from the event. Subsequently, `emitRecord` is called to produce the output.
+    public final func emitEvent<M>(event: Event<M>) {
         if let handlerLogLevel = self.logLevel, let eventLogLevel = event.logLevel where eventLogLevel < handlerLogLevel {
             return
         } else {
@@ -55,6 +52,10 @@ public class Handler {
 /// A handler that writes log records to the console.
 public class ConsoleHandler: Handler {
     
+    public convenience init() {
+        self.init(formatter: Formatter(style: .Default))
+    }
+    
     override public func emitRecord(record: Record) {
         // TODO: use debugPrintln?
         println(record)
@@ -71,7 +72,11 @@ public class FileHandler: Handler, Printable {
     private let file: NSFileHandle
     private let fileURL: NSURL
     
-    public init?(fileURL: NSURL) {
+    public convenience init?(fileURL: NSURL) {
+        self.init(fileURL: fileURL, formatter: Formatter(style: .Full))
+    }
+
+    public init?(fileURL: NSURL, formatter: Formatter) {
         self.fileURL = fileURL
         let fileManager = NSFileManager.defaultManager()
         if let path = fileURL.filePathURL?.path {
@@ -81,25 +86,20 @@ public class FileHandler: Handler, Printable {
                     self.file = file
                 } else {
                     self.file = NSFileHandle() // TODO: remove
-                    super.init()
+                    super.init(formatter: formatter)
                     return nil
                 }
             } else {
                 self.file = NSFileHandle() // TODO: remove
-                super.init()
+                super.init(formatter: formatter)
                 return nil
             }
         } else {
             self.file = NSFileHandle() // TODO: remove
-            super.init()
+            super.init(formatter: formatter)
             return nil
         }
-        super.init()
-    }
-
-    public convenience init?(fileURL: NSURL, formatter: Formatter) {
-        self.init(fileURL: fileURL)
-        self.formatter = formatter
+        super.init(formatter: formatter)
     }
     
     override public func emitRecord(record: Record) {
