@@ -32,9 +32,9 @@ public class Handler {
     
     /// Called by a logger to handle an event. The event's log level is checked against the handler's and the given formatter is used to obtain a record from the event. Subsequently, `emitRecord` is called to produce the output.
     public final func emitEvent<M>(event: Event<M>) {
-        guard let handlerLogLevel = self.logLevel,
+        if let handlerLogLevel = self.logLevel,
             let eventLogLevel = event.logLevel
-            where eventLogLevel < handlerLogLevel else {
+            where eventLogLevel < handlerLogLevel {
             return
         }
         self.emitRecord(self.formatter.recordFromEvent(event))
