@@ -36,7 +36,7 @@ class RecordListViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let record = stenographyHandler.records.reverse()[indexPath.row]
-        let cell = tableView.dequeueReusableCellWithIdentifier("recordCell", forIndexPath: indexPath) as! UITableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("recordCell", forIndexPath: indexPath) 
         cell.textLabel?.text = record.description
         return cell
     }

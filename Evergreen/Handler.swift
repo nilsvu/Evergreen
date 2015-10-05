@@ -118,6 +118,10 @@ public class StenographyHandler: Handler {
     /// All records logged to this handler
     public private(set) var records: [Record] = []
     
+    public convenience init() {
+        self.init(formatter: Formatter(style: .Default))
+    }
+
     override public func emitRecord(record: Record) {
         self.records.append(record)
     }

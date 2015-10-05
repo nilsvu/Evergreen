@@ -4,7 +4,7 @@
 
 Evergreen is a logging framework written in Swift. It is designed to work just as you would expect, yet so versatile you can make it work however you wish.
 
-Integrate Evergreen logging into your Swift project to replace those plain `println()` statements with calls to Evergreen's versatile logging functions that make it easy to **adjust the verbosity** of the output, log to **multiple destinations** (e.g. a file) with **custom formatting** and even **measure time**.
+Integrate Evergreen logging into your Swift project to replace those plain `print()` statements with calls to Evergreen's versatile logging functions that make it easy to **adjust the verbosity** of the output, log to **multiple destinations** (e.g. a file) with **custom formatting** and even **measure time**.
 
 ```swift
 import Evergreen

@@ -244,7 +244,7 @@ public final class Logger {
         } else {
             if !wasHandled {
                 // TODO: use println() directly? Using log() will cause an endless loop when defaultLogger does not have any handlers.
-                print("Tried to log an event for logger '\(event.logger)', but no handler was found in the logger hierarchy to emit the event: \(event.file.lastPathComponent):\(event.line) \(event.function)")
+                print("Tried to log an event for logger '\(event.logger)', but no handler was found in the logger hierarchy to emit the event: \(event.file):\(event.line) \(event.function)")
             }
         }
     }
@@ -300,7 +300,9 @@ public final class Logger {
     
     /// Returns an appropriate logger for the given file. Generally, the logger's key will be the file name and it will be a direct child of the default logger.
     public class func loggerForFile(file: String = __FILE__) -> Logger {
-        let key = file.lastPathComponent
+        guard let fileURL = NSURL(string: file), let key = fileURL.lastPathComponent else {
+            return Evergreen.defaultLogger
+        }
         return self.loggerForKeyPath(KeyPath(components: [ key ]))
     }
     
@@ -374,7 +376,7 @@ public final class Logger {
         }
         
         public func description(separator separator: String? = nil) -> String {
-            return (separator ?? ".").join(components)
+            return components.joinWithSeparator(separator ?? ".")
         }
     }
 

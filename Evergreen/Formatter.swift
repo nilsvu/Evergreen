@@ -69,7 +69,7 @@ public class Formatter {
 
     public func stringFromEvent<M>(event: Event<M>) -> String
     {
-        var string = "".join(components.map { $0.stringForEvent(event) })
+        var string = components.map({ $0.stringForEvent(event) }).joinWithSeparator("")
         
         if let elapsedTime = event.elapsedTime {
             string += " [ELAPSED TIME: \(elapsedTime)s]"

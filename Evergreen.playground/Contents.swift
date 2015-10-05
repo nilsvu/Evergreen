@@ -7,7 +7,6 @@ This playground showcases some basic features of the Evergreen framework. Consul
 
 import Evergreen
 
-
 log("Hello World!") // Look at the console output!
 
 

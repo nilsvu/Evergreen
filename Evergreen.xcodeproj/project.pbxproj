@@ -167,6 +167,7 @@
 		87539B1619DB23F00084658D /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftMigration = 0700;
 				LastSwiftUpdateCheck = 0700;
 				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "viWiD Webdesign & iOS Development";
