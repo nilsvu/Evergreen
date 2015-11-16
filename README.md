@@ -131,9 +131,18 @@ log("Critical", forLevel: .Critical)
 log("Verbose", forLevel: .Verbose)
 ```
 
+Every log level has a corresponding log function for convenience:
+
+```swift
+debug("Debug") // equivalent to log("Debug", forLevel: .Debug)
+info("Info") // equivalent to log("Info", forLevel: .Info)
+// ...
+```
+
+
 ### Using the Logger Hierarchy
 
-You usually want to use *loggers* to log events instead of the global `log` function. A logger is always part of a hierarchy and inherits attributes, such as the log level, from its parent. This way, you can provide a default configuration and adjust it for specific parts of your software.
+You usually want to use *loggers* to log events instead of the global functions. A logger is always part of a hierarchy and inherits attributes, such as the log level, from its parent. This way, you can provide a default configuration and adjust it for specific parts of your software.
 
 > This is particularly useful during development to lower the log level of the part of your software you are currently working on.
 
@@ -154,7 +163,7 @@ class MyType {
 	let logger = Evergreen.getLogger("MyModule.MyType")
 	
 	init() {
-		self.logger.log("Initializing...", forLevel: .Debug)
+		self.logger.debug("Initializing...")
 	}
 	
 }
@@ -168,15 +177,26 @@ let logger = Evergreen.getLogger("MyModule") // Retrieve the logger with key 'My
 logger.logLevel = .Debug // We are working on this part of the software, so set its log level to .Debug
 ```
 
-> **Note:** A good place to do this configuration is in the `AppDelegate`'s `application:didFinishLaunchingWithOptions:` method.
+> **Note:** A good place to do this configuration is in the `AppDelegate`'s `application:didFinishLaunchingWithOptions:` method. Temporary log level adjustments are best configured as environment variables as described in the following section.
+
 
 ### Using Environment Variables for Configuration
 
 The preferred way to conveniently configure the logger hierarchy is using environment variables. In Xcode, choose your target from the dropdown in the toolbar, select `Edit Scheme...` `>` `Run` `>` `Arguments` and add environment variables to the list.
 
-Every environment variable prefixed `Evergreen` is evaluated as a logger key path and assigned a log level corresponding to the variable's value. Values should match the log level descriptions, e.g. `Debug` or `Warning`. These are some examples for valid environment variable declarations:
+Every environment variable prefixed `Evergreen` is evaluated as a logger key path and assigned a log level corresponding to the variable's value. Values should match the log level descriptions, e.g. `Debug` or `Warning`.
 
 Valid environment variable declarations would be e.g. `Evergreen = Debug` or `Evergreen.MyLogger = Verbose`.
+
+
+### Logging `ErrorType` errors alongside your events
+
+You can pass any error conforming to Swift's `ErrorType`, such as `NSError`, to Evergreen's logging functions, either as the message or in the separate `error:` argument:
+
+```swift
+let error: ErrorType // some error
+debug("Something unexpected happened here!", error: error)
+```
 
 
 ### Measuring Time

@@ -51,7 +51,12 @@ public class Formatter {
             case .LogLevel:
                 return (event.logLevel?.description ?? "Unspecified").uppercaseString
             case .Message:
-                return String(stringInterpolationSegment: event.message())
+                switch event.message() {
+                case let error as NSError:
+                    return error.localizedDescription
+                case let message:
+                    return String(message)
+                }
             case .Function:
                 return event.function
             case .File:
@@ -73,6 +78,17 @@ public class Formatter {
         
         if let elapsedTime = event.elapsedTime {
             string += " [ELAPSED TIME: \(elapsedTime)s]"
+        }
+        
+        if let error = event.error {
+            let errorMessage: String
+            switch error {
+            case let error as NSError:
+                errorMessage = error.localizedDescription
+            default:
+                errorMessage = String(error)
+            }
+            string += " [ERROR: \(errorMessage)]"
         }
 
         return string

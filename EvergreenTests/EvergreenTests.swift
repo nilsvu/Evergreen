@@ -64,4 +64,9 @@ class EvergreenTests: XCTestCase {
         XCTAssert(logLevels.sort(<) == logLevels, "Log levels initialized by sequencial raw values are not ordered by comparison operator.")
     }
     
+    func testErrorTypeLogging() {
+        let error = NSError(domain: "error_domain", code: 0, userInfo: nil)
+        Evergreen.verbose("Something failed", error: error)
+    }
+    
 }

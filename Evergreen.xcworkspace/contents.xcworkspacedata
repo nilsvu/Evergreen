@@ -5,6 +5,9 @@
       location = "group:README.md">
    </FileRef>
    <FileRef
+      location = "group:Evergreen.podspec">
+   </FileRef>
+   <FileRef
       location = "container:Evergreen.xcodeproj">
    </FileRef>
    <FileRef

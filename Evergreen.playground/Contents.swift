@@ -13,17 +13,21 @@ log("Hello World!") // Look at the console output!
 Evergreen.logLevel = .Debug
 
 // These events will be logged, because their log level is >= .Debug
-log("Debug", forLevel: .Debug)
-log("Info", forLevel: .Info)
-log("Warning", forLevel: .Warning)
-log("Critical", forLevel: .Critical)
+Evergreen.log("Debug", forLevel: .Debug)
+Evergreen.log("Info", forLevel: .Info)
+Evergreen.log("Warning", forLevel: .Warning)
+Evergreen.log("Critical", forLevel: .Critical)
 
 // These events will not be logged, because their log level is < .Debug
-log("Verbose", forLevel: .Verbose)
+Evergreen.log("Verbose", forLevel: .Verbose)
 
 // Each log level has a corresponding log function alias for convenience
-debug("Debug")
+Evergreen.debug("Debug")
 
+// Easily log errors
+let error = NSError(domain: "error_domain", code: 0, userInfo: [ NSLocalizedDescriptionKey: "This was unexpected."])
+Evergreen.critical(error)
+Evergreen.debug("Some nasty error occured!", error: error)
 
 // Use the logger hierarchy to adjust the logging configuration for specific parts of your software
 let fooLogger = Evergreen.getLogger("MyModule.Foo")

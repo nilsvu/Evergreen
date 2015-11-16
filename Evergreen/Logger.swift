@@ -40,34 +40,34 @@ public func getLoggerForFile(file: String = __FILE__) -> Logger {
 }
 
 /// Logs the event using a logger that is appropriate for the caller. See `Logger.log:forLevel:` for further documentation.
-public func log<M>(@autoclosure(escaping) message: () -> M, forLevel logLevel: LogLevel? = nil, function: String = __FUNCTION__, file: String = __FILE__, line: Int = __LINE__)
+public func log<M>(@autoclosure(escaping) message: () -> M, error: ErrorType? = nil, forLevel logLevel: LogLevel? = nil, function: String = __FUNCTION__, file: String = __FILE__, line: Int = __LINE__)
 {
-    Logger.loggerForFile(file).log(message, forLevel: logLevel, function: function, file: file, line: line)
+    Logger.loggerForFile(file).log(message, error: error, forLevel: logLevel, function: function, file: file, line: line)
 }
 
 /// Logs the event with the Verbose log level using a logger that is appropriate for the caller. See `Logger.log:forLevel:` for further documentation.
-public func verbose<M>(@autoclosure(escaping) message: () -> M, function: String = __FUNCTION__, file: String = __FILE__, line: Int = __LINE__) {
-    Evergreen.log(message, forLevel: .Verbose, function: function, file: file, line: line)
+public func verbose<M>(@autoclosure(escaping) message: () -> M, error: ErrorType? = nil, function: String = __FUNCTION__, file: String = __FILE__, line: Int = __LINE__) {
+    Evergreen.log(message, error: error, forLevel: .Verbose, function: function, file: file, line: line)
 }
 /// Logs the event with the Debug log level using a logger that is appropriate for the caller. See `Logger.log:forLevel:` for further documentation.
-public func debug<M>(@autoclosure(escaping) message: () -> M, function: String = __FUNCTION__, file: String = __FILE__, line: Int = __LINE__) {
-    Evergreen.log(message, forLevel: .Debug, function: function, file: file, line: line)
+public func debug<M>(@autoclosure(escaping) message: () -> M, error: ErrorType? = nil, function: String = __FUNCTION__, file: String = __FILE__, line: Int = __LINE__) {
+    Evergreen.log(message, error: error, forLevel: .Debug, function: function, file: file, line: line)
 }
 /// Logs the event with the Info log level using a logger that is appropriate for the caller. See `Logger.log:forLevel:` for further documentation.
-public func info<M>(@autoclosure(escaping) message: () -> M, function: String = __FUNCTION__, file: String = __FILE__, line: Int = __LINE__) {
-    Evergreen.log(message, forLevel: .Info, function: function, file: file, line: line)
+public func info<M>(@autoclosure(escaping) message: () -> M, error: ErrorType? = nil, function: String = __FUNCTION__, file: String = __FILE__, line: Int = __LINE__) {
+    Evergreen.log(message, error: error, forLevel: .Info, function: function, file: file, line: line)
 }
 /// Logs the event with the Warning log level using a logger that is appropriate for the caller. See `Logger.log:forLevel:` for further documentation.
-public func warning<M>(@autoclosure(escaping) message: () -> M, function: String = __FUNCTION__, file: String = __FILE__, line: Int = __LINE__) {
-    Evergreen.log(message, forLevel: .Warning, function: function, file: file, line: line)
+public func warning<M>(@autoclosure(escaping) message: () -> M, error: ErrorType? = nil, function: String = __FUNCTION__, file: String = __FILE__, line: Int = __LINE__) {
+    Evergreen.log(message, error: error, forLevel: .Warning, function: function, file: file, line: line)
 }
 /// Logs the event with the Error log level using a logger that is appropriate for the caller. See `Logger.log:forLevel:` for further documentation.
-public func error<M>(@autoclosure(escaping) message: () -> M, function: String = __FUNCTION__, file: String = __FILE__, line: Int = __LINE__) {
-    Evergreen.log(message, forLevel: .Error, function: function, file: file, line: line)
+public func error<M>(@autoclosure(escaping) message: () -> M, error: ErrorType? = nil, function: String = __FUNCTION__, file: String = __FILE__, line: Int = __LINE__) {
+    Evergreen.log(message, error: error, forLevel: .Error, function: function, file: file, line: line)
 }
 /// Logs the event with the Critical log level using a logger that is appropriate for the caller. See `Logger.log:forLevel:` for further documentation.
-public func critical<M>(@autoclosure(escaping) message: () -> M, function: String = __FUNCTION__, file: String = __FILE__, line: Int = __LINE__) {
-    Evergreen.log(message, forLevel: .Critical, function: function, file: file, line: line)
+public func critical<M>(@autoclosure(escaping) message: () -> M, error: ErrorType? = nil, function: String = __FUNCTION__, file: String = __FILE__, line: Int = __LINE__) {
+    Evergreen.log(message, error: error, forLevel: .Critical, function: function, file: file, line: line)
 }
 
 /// Reads the logging configuration from environment variables. Every environment variable with prefix 'Evergreen' is evaluated as a logger key path and assigned a log level corresponding to its value. Values should match the log level descriptions, e.g. 'Debug'. Valid environment variable declarations would be e.g. 'Evergreen = Debug' or 'Evergreen.MyLogger = Verbose'.
@@ -168,7 +168,7 @@ public final class Logger {
     private func logInitialInfo() {
         if !hasLoggedInitialInfo {
             if handlers.count > 0 {
-                let event = Event(logger: self, message: { "Logging to \(self.handlers)..." }, logLevel: .Info, date: NSDate(), elapsedTime: nil, function: __FUNCTION__, file: __FILE__, line: __LINE__)
+                let event = Event(logger: self, message: { "Logging to \(self.handlers)..." }, error: nil, logLevel: .Info, date: NSDate(), elapsedTime: nil, function: __FUNCTION__, file: __FILE__, line: __LINE__)
                 self.handleEvent(event)
             }
             hasLoggedInitialInfo = true
@@ -189,35 +189,35 @@ public final class Logger {
     - parameter message: The message to be logged, provided by an autoclosure. The closure will not be evaluated if the event is not going to be emitted, so it can contain expensive operations only needed for logging purposes.
     - parameter logLevel: If the event's log level is lower than the receiving logger's `effectiveLogLevel`, the event will not be logged. The event will always be logged, if no log level is provided for either the event or the logger's `effectiveLogLevel`.
     */
-    public func log<M>(@autoclosure(escaping) message: () -> M, forLevel logLevel: LogLevel? = nil, function: String = __FUNCTION__, file: String = __FILE__, line: Int = __LINE__)
+    public func log<M>(@autoclosure(escaping) message: () -> M, error: ErrorType? = nil, forLevel logLevel: LogLevel? = nil, function: String = __FUNCTION__, file: String = __FILE__, line: Int = __LINE__)
     {
-        let event = Event(logger: self, message: message, logLevel: logLevel, date: NSDate(), elapsedTime: nil, function: function, file: file, line: line)
+        let event = Event(logger: self, message: message, error: error, logLevel: logLevel, date: NSDate(), elapsedTime: nil, function: function, file: file, line: line)
         self.logEvent(event)
     }
     
     /// Logs the event with the Verbose log level. See `log:forLevel:` for further documentation.
-    public func verbose<M>(@autoclosure(escaping) message: () -> M, function: String = __FUNCTION__, file: String = __FILE__, line: Int = __LINE__) {
-        self.log(message, forLevel: .Verbose, function: function, file: file, line: line)
+    public func verbose<M>(@autoclosure(escaping) message: () -> M, error: ErrorType? = nil, function: String = __FUNCTION__, file: String = __FILE__, line: Int = __LINE__) {
+        self.log(message, error: error, forLevel: .Verbose, function: function, file: file, line: line)
     }
     /// Logs the event with the Debug log level. See `log:forLevel:` for further documentation.
-    public func debug<M>(@autoclosure(escaping) message: () -> M, function: String = __FUNCTION__, file: String = __FILE__, line: Int = __LINE__) {
-        self.log(message, forLevel: .Debug, function: function, file: file, line: line)
+    public func debug<M>(@autoclosure(escaping) message: () -> M, error: ErrorType? = nil, function: String = __FUNCTION__, file: String = __FILE__, line: Int = __LINE__) {
+        self.log(message, error: error, forLevel: .Debug, function: function, file: file, line: line)
     }
     /// Logs the event with the Info log level. See `log:forLevel:` for further documentation.
-    public func info<M>(@autoclosure(escaping) message: () -> M, function: String = __FUNCTION__, file: String = __FILE__, line: Int = __LINE__) {
-        self.log(message, forLevel: .Info, function: function, file: file, line: line)
+    public func info<M>(@autoclosure(escaping) message: () -> M, error: ErrorType? = nil, function: String = __FUNCTION__, file: String = __FILE__, line: Int = __LINE__) {
+        self.log(message, error: error, forLevel: .Info, function: function, file: file, line: line)
     }
     /// Logs the event with the Warning log level. See `log:forLevel:` for further documentation.
-    public func warning<M>(@autoclosure(escaping) message: () -> M, function: String = __FUNCTION__, file: String = __FILE__, line: Int = __LINE__) {
-        self.log(message, forLevel: .Warning, function: function, file: file, line: line)
+    public func warning<M>(@autoclosure(escaping) message: () -> M, error: ErrorType? = nil, function: String = __FUNCTION__, file: String = __FILE__, line: Int = __LINE__) {
+        self.log(message, error: error, forLevel: .Warning, function: function, file: file, line: line)
     }
     /// Logs the event with the Error log level. See `log:forLevel:` for further documentation.
-    public func error<M>(@autoclosure(escaping) message: () -> M, function: String = __FUNCTION__, file: String = __FILE__, line: Int = __LINE__) {
-        self.log(message, forLevel: .Error, function: function, file: file, line: line)
+    public func error<M>(@autoclosure(escaping) message: () -> M, error: ErrorType? = nil, function: String = __FUNCTION__, file: String = __FILE__, line: Int = __LINE__) {
+        self.log(message, error: error, forLevel: .Error, function: function, file: file, line: line)
     }
     /// Logs the event with the Critical log level. See `log:forLevel:` for further documentation.
-    public func critical<M>(@autoclosure(escaping) message: () -> M, function: String = __FUNCTION__, file: String = __FILE__, line: Int = __LINE__) {
-        self.log(message, forLevel: .Critical, function: function, file: file, line: line)
+    public func critical<M>(@autoclosure(escaping) message: () -> M, error: ErrorType? = nil, function: String = __FUNCTION__, file: String = __FILE__, line: Int = __LINE__) {
+        self.log(message, error: error, forLevel: .Critical, function: function, file: file, line: line)
     }
     
     /// Logs the given event. Use `log:forLevel:` for convenience.
@@ -285,7 +285,7 @@ public final class Logger {
         }
         if let startDate = startDate {
             let elapsedTime = NSDate().timeIntervalSinceDate(startDate)
-            let event = Event(logger: self, message: message, logLevel: logLevel, date: NSDate(), elapsedTime: elapsedTime, function: function, file: file, line: line)
+            let event = Event(logger: self, message: message, error: nil, logLevel: logLevel, date: NSDate(), elapsedTime: elapsedTime, function: function, file: file, line: line)
             self.logEvent(event)
         }
     }
@@ -470,6 +470,8 @@ public struct Event<M> {
     let logger: Logger
     /// The log message
     let message: () -> M
+    /// An error that occured alongside the event
+    let error: ErrorType?
     /// The log level. A logger will only log events with equal or higher log levels than its own. Events that don't specify a log level will always be logged.
     let logLevel: LogLevel?
     let date: NSDate
