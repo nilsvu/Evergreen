@@ -177,12 +177,12 @@ let logger = Evergreen.getLogger("MyModule") // Retrieve the logger with key 'My
 logger.logLevel = .Debug // We are working on this part of the software, so set its log level to .Debug
 ```
 
-> **Note:** A good place to do this configuration is in the `AppDelegate`'s `application:didFinishLaunchingWithOptions:` method. Temporary log level adjustments are best configured as environment variables as described in the following section.
+> **Note:** A good place to do this configuration for production is in the `AppDelegate`'s `application:didFinishLaunchingWithOptions:` method. Temporary log level adjustments are best configured as environment variables as described in the following section.
 
 
 ### Using Environment Variables for Configuration
 
-The preferred way to conveniently configure the logger hierarchy is using environment variables. In Xcode, choose your target from the dropdown in the toolbar, select `Edit Scheme...` `>` `Run` `>` `Arguments` and add environment variables to the list.
+The preferred way to temporarily configure the logger hierarchy is using environment variables. This way, you can conveniently enable more verbose logging for the parts of your software you are currently working on. In Xcode, choose your target from the dropdown in the toolbar, select `Edit Scheme...` `>` `Run` `>` `Arguments` and add environment variables to the list.
 
 Every environment variable prefixed `Evergreen` is evaluated as a logger key path and assigned a log level corresponding to the variable's value. Values should match the log level descriptions, e.g. `Debug` or `Warning`.
 
@@ -191,7 +191,7 @@ Valid environment variable declarations would be e.g. `Evergreen = Debug` or `Ev
 
 ### Logging `ErrorType` errors alongside your events
 
-You can pass any error conforming to Swift's `ErrorType`, such as `NSError`, to Evergreen's logging functions, either as the message or in the separate `error:` argument:
+You can pass any error conforming to Swift's `ErrorType` (such as `NSError`) to Evergreen's logging functions, either as the message or in the separate `error:` argument:
 
 ```swift
 let error: ErrorType // some error
