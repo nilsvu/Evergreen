@@ -12,5 +12,5 @@ Pod::Spec.new do |s|
   s.author       = { "Nils Fischer" => "n.fischer@viwid.com" }
   s.platform     = :ios, "8.0"
   s.source       = { :git => "https://github.com/viWiD/Evergreen.git", :tag => "v0.7.1" }
-  s.source_files = "Evergreen"
+  s.source_files = "Sources"
 end
