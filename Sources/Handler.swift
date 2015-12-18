@@ -103,7 +103,7 @@ public class FileHandler: Handler, CustomStringConvertible {
     }
     
     public var description: String {
-        return "\(_stdlib_getDemangledTypeName(self))(\(fileURL))"
+        return "FileHandler(\(fileURL))"
     }
     
 }

@@ -64,6 +64,22 @@ The easiest way to integrate Evergreen into your project is via [CocoaPods](http
 	
 As usual with CocoaPods, make sure to use the `*.xcworkspace` instead of the `*.xcodeproj`.
 
+### Swift Package Manager (currently in beta)
+
+You can also use the Swift Package Manager included in the [Swift 2.2 beta](https://swift.org/download/). Just add Evergreen as a dependency to your package description, like this:
+
+```swift
+import PackageDescription
+
+let package = Package(
+    name: "HelloWorld",
+    dependencies: [
+        .Package(url: "https://github.com/viWiD/Evergreen.git", majorVersion: 0),
+        // ...
+    ]
+)
+```
+
 ### Manually
 
 You can also integrate Evergreen into you project manually:
