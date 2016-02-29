@@ -44,7 +44,7 @@ class Tree: CustomStringConvertible {
     let maxHeight: Float = 5
     
     init() {
-        self.logger.log("You planted a tree: \(self)", forLevel: .Info)
+        logger.log("You planted a tree: \(self)", forLevel: .Info)
     }
     
     func grow() {
