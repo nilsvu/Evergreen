@@ -20,7 +20,7 @@ class RecordListViewController: UITableViewController {
     }
     
     @IBAction func addButtonPressed(sender: AnyObject) {
-        log(__FUNCTION__, forLevel: .Info)
+        log(#function, forLevel: .Info)
         self.tableView.reloadData()
     }
     
