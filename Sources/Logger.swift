@@ -100,7 +100,7 @@ public final class Logger {
     
     
     // MARK: Public Properties
-
+    
     /// A logger will only log events with equal or higher log levels. If no log level is specified, the `effectiveLogLevel` is used to determine the log level by reaching up the logger hierarchy until a logger specifies a log level.
     public var logLevel: LogLevel?
     /// Returns the effective log level by reaching up the logger hierarchy until a logger specifies a log level.
@@ -121,7 +121,7 @@ public final class Logger {
     
     /// Passes events up the logger hierarchy if set to true (default)
     public var shouldPropagate = true
-
+    
     /// The parent in the logger hierarchy
     public let parent: Logger?
     /// The children in the logger hierarchy
@@ -149,8 +149,8 @@ public final class Logger {
             return KeyPath(components: [ self.key ])
         }
     }
-
-
+    
+    
     // MARK: Initialization
     
     /// Creates a new logger. If you don't specify a parent, the logger is detached from the logger hierarchy and will not have any handlers. For general purposes, use the global getLogger method or the various Logger class and instance methods instead to retrieve appropriate loggers in the logger hierarchy.
@@ -159,8 +159,8 @@ public final class Logger {
         self.parent = parent
         parent?.children[key] = self
     }
-
-
+    
+    
     // MARK: Intial Info
     
     private var hasLoggedInitialInfo: Bool = false
@@ -179,16 +179,16 @@ public final class Logger {
             }
         }
     }
-
+    
     
     // MARK: Logging
     
     /**
-    Logs the event given by its `message` and additional information that is gathered automatically. The `logLevel` parameter in conjunction with the logger's `effectiveLogLevel` determines, if the event will be handled or ignored.
-    
-    - parameter message: The message to be logged, provided by an autoclosure. The closure will not be evaluated if the event is not going to be emitted, so it can contain expensive operations only needed for logging purposes.
-    - parameter logLevel: If the event's log level is lower than the receiving logger's `effectiveLogLevel`, the event will not be logged. The event will always be logged, if no log level is provided for either the event or the logger's `effectiveLogLevel`.
-    */
+     Logs the event given by its `message` and additional information that is gathered automatically. The `logLevel` parameter in conjunction with the logger's `effectiveLogLevel` determines, if the event will be handled or ignored.
+     
+     - parameter message: The message to be logged, provided by an autoclosure. The closure will not be evaluated if the event is not going to be emitted, so it can contain expensive operations only needed for logging purposes.
+     - parameter logLevel: If the event's log level is lower than the receiving logger's `effectiveLogLevel`, the event will not be logged. The event will always be logged, if no log level is provided for either the event or the logger's `effectiveLogLevel`.
+     */
     public func log<M>(@autoclosure(escaping) message: () -> M, error: ErrorType? = nil, forLevel logLevel: LogLevel? = nil, function: String = #function, file: String = #file, line: Int = #line)
     {
         let event = Event(logger: self, message: message, error: error, logLevel: logLevel, date: NSDate(), elapsedTime: nil, function: function, file: file, line: line)
@@ -258,25 +258,25 @@ public final class Logger {
     
     // TODO: log "Tic..." message by default
     /**
-    Log the given event and start tracking the time until the next call to `toc:`.
-
-    - parameter message: The message to be logged, provided by an autoclosure for lazy evaluation (see `log:forLevel:`)
-    - parameter logLevel: The event's log level (see `log:forLevel:`)
-    - parameter timerKey: Provide as an identifier in nested calls to `tic:` and `toc:`.
-    */
-    public func tic<M>(@autoclosure(escaping) andLog message: () -> M, forLevel logLevel: LogLevel? = nil, timerKey: String? = nil, function: String = #function, file: String = #file, line: Int = #line)
+     Log the given event and start tracking the time until the next call to `toc:`.
+     
+     - parameter message: The message to be logged, provided by an autoclosure for lazy evaluation (see `log:forLevel:`)
+     - parameter logLevel: The event's log level (see `log:forLevel:`)
+     - parameter timerKey: Provide as an identifier in nested calls to `tic:` and `toc:`.
+     */
+    public func tic<M>(@autoclosure(escaping) andLog message: () -> M, error: ErrorType? = nil, forLevel logLevel: LogLevel? = nil, timerKey: String? = nil, function: String = #function, file: String = #file, line: Int = #line)
     {
         if let timerKey = timerKey {
             startDates[timerKey] = NSDate()
         } else {
             defaultStartDate = NSDate()
         }
-        self.log(message, forLevel: logLevel, function: function, file: file, line: line)
+        self.log(message, error: error, forLevel: logLevel, function: function, file: file, line: line)
     }
     
     // TODO: log "...Toc" message by default
     /// When called after a preceding call to `tic:`, the elapsed time between both calls will be appended to the record. See `tic:` for documentation and usage of the `timerKey` parameter in nested calls to `tic:` and `toc:`.
-    public func toc<M>(@autoclosure(escaping) andLog message: () -> M, forLevel logLevel: LogLevel? = nil, timerKey: String? = nil, function: String = #function, file: String = #file, line: Int = #line)
+    public func toc<M>(@autoclosure(escaping) andLog message: () -> M, error: ErrorType? = nil, forLevel logLevel: LogLevel? = nil, timerKey: String? = nil, function: String = #function, file: String = #file, line: Int = #line)
     {
         var startDate: NSDate?
         if let timerKey = timerKey {
@@ -286,11 +286,11 @@ public final class Logger {
         }
         if let startDate = startDate {
             let elapsedTime = NSDate().timeIntervalSinceDate(startDate)
-            let event = Event(logger: self, message: message, error: nil, logLevel: logLevel, date: NSDate(), elapsedTime: elapsedTime, function: function, file: file, line: line)
+            let event = Event(logger: self, message: message, error: error, logLevel: logLevel, date: NSDate(), elapsedTime: elapsedTime, function: function, file: file, line: line)
             self.logEvent(event)
         }
     }
-
+    
     
     // MARK: Logger Hierarchy
     
@@ -320,7 +320,7 @@ public final class Logger {
             return self.defaultLogger()
         }
     }
-
+    
     /// Returns a logger with a given key path relative to the receiver.
     public func childForKeyPath(keyPath: KeyPath) -> Logger {
         let (key, remainingKeyPath) = keyPath.popFirst()
@@ -338,7 +338,7 @@ public final class Logger {
     public struct KeyPath: StringLiteralConvertible, CustomStringConvertible {
         
         public let components: [String]
-
+        
         public init(components: [String]) {
             self.components = components
         }
@@ -346,14 +346,14 @@ public final class Logger {
         public init(string: String) {
             self.components = string.componentsSeparatedByString(".").filter { !$0.isEmpty }
         }
-
+        
         public func keyPathByPrependingComponent(component: String) -> KeyPath {
             return KeyPath(components: [ component ] + components)
         }
         public func keyPathByAppendingComponent(component: String) -> KeyPath {
             return KeyPath(components: components + [ component ])
         }
-
+        
         public typealias ExtendedGraphemeClusterLiteralType = StringLiteralType
         public init(extendedGraphemeClusterLiteral value: ExtendedGraphemeClusterLiteralType) {
             self.components = value.componentsSeparatedByString(".").filter { !$0.isEmpty }
@@ -380,7 +380,7 @@ public final class Logger {
             return components.joinWithSeparator(separator ?? ".")
         }
     }
-
+    
 }
 
 
@@ -399,43 +399,43 @@ extension Logger: CustomStringConvertible {
         }
         return keyPath.description(separator: keyPathSeparator)
     }
-
+    
 }
 
 
 // MARK: - Log Levels
 
 /**
-You can assign an *importance* or *severity* to an event corresponding to one of the following *log levels*:
-
-- **Critical:** Events that are unexpected and can cause serious problems. You would want to be called in the middle of the night to deal with these.
-- **Error:** Events that are unexpected and not handled by your software. Someone should tell you about these ASAP.
-- **Warning:** Events that are unexpected, but will probably not affect the runtime of your software. You would want to investigate these eventually.
-- **Info:** General events that document the software's lifecycle.
-- **Debug:** Events to give you an understanding about the flow through your software, mainly for debugging purposes.
-- **Verbose:** Detailed information about the environment to provide additional context when needed.
-
-The logger that handles the event has a log level as well. **If the event's log level is lower than the logger's, it will not be logged.**
-
-In addition to the log levels above, a logger can have one of the following log levels. Assigning these to events only makes sense in specific use cases.
-
-- **All:** All events will be logged.
-- **Off:** No events will be logged.
-*/
+ You can assign an *importance* or *severity* to an event corresponding to one of the following *log levels*:
+ 
+ - **Critical:** Events that are unexpected and can cause serious problems. You would want to be called in the middle of the night to deal with these.
+ - **Error:** Events that are unexpected and not handled by your software. Someone should tell you about these ASAP.
+ - **Warning:** Events that are unexpected, but will probably not affect the runtime of your software. You would want to investigate these eventually.
+ - **Info:** General events that document the software's lifecycle.
+ - **Debug:** Events to give you an understanding about the flow through your software, mainly for debugging purposes.
+ - **Verbose:** Detailed information about the environment to provide additional context when needed.
+ 
+ The logger that handles the event has a log level as well. **If the event's log level is lower than the logger's, it will not be logged.**
+ 
+ In addition to the log levels above, a logger can have one of the following log levels. Assigning these to events only makes sense in specific use cases.
+ 
+ - **All:** All events will be logged.
+ - **Off:** No events will be logged.
+ */
 public enum LogLevel: Int, CustomStringConvertible, Comparable {
-
+    
     case All = 0, Verbose, Debug, Info, Warning, Error, Critical, Off
-
+    
     public var description: String {
         switch self {
-            case .All: return "All"
-            case .Verbose: return "Verbose"
-            case .Debug: return "Debug"
-            case .Info: return "Info"
-            case .Warning: return "Warning"
-            case .Error: return "Error"
-            case .Critical: return "Critical"
-            case .Off: return "Off"
+        case .All: return "All"
+        case .Verbose: return "Verbose"
+        case .Debug: return "Debug"
+        case .Info: return "Info"
+        case .Warning: return "Warning"
+        case .Error: return "Error"
+        case .Critical: return "Critical"
+        case .Off: return "Off"
         }
     }
     
