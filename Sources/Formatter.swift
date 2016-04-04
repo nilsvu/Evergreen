@@ -16,7 +16,7 @@ public class Formatter {
     public init(components: [Component]) {
         self.components = components
     }
-
+    
     public enum Style {
         case Default, Simple, Full
     }
@@ -36,7 +36,7 @@ public class Formatter {
         }
         self.init(components: components)
     }
-
+    
     public enum Component {
         case Text(String), Date(formatter: NSDateFormatter), Logger, LogLevel, Message, Function, File, Line//, Any(stringForEvent: (event: Event<M>) -> String)
         
@@ -71,7 +71,7 @@ public class Formatter {
     public final func recordFromEvent<M>(event: Event<M>) -> Record {
         return Record(date: event.date, description: self.stringFromEvent(event))
     }
-
+    
     public func stringFromEvent<M>(event: Event<M>) -> String
     {
         var string = components.map({ $0.stringForEvent(event) }).joinWithSeparator("")
@@ -83,14 +83,16 @@ public class Formatter {
         if let error = event.error {
             let errorMessage: String
             switch error {
-            case let error as NSError:
-                errorMessage = error.localizedDescription
+            case let error as CustomDebugStringConvertible:
+                errorMessage = error.debugDescription
+            case let error as CustomStringConvertible:
+                errorMessage = error.description
             default:
                 errorMessage = String(error)
             }
             string += " [ERROR: \(errorMessage)]"
         }
-
+        
         return string
     }
     
