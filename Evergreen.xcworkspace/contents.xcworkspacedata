@@ -4,6 +4,9 @@
    <FileRef
       location = "group:README.md">
    </FileRef>
+   <FileRef
+      location = "group:LICENSE.md">
+   </FileRef>
    <Group
       location = "container:"
       name = "Metadata">

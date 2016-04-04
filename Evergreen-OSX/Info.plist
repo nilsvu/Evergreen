@@ -15,11 +15,13 @@
 	<key>CFBundlePackageType</key>
 	<string>FMWK</string>
 	<key>CFBundleShortVersionString</key>
-	<string>0.7.1</string>
+	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<string>1</string>
+	<key>NSHumanReadableCopyright</key>
+	<string>Copyright © 2016 viWiD Webdesign &amp; iOS Development. All rights reserved.</string>
 	<key>NSPrincipalClass</key>
 	<string></string>
 </dict>

@@ -7,13 +7,33 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		87515FCB1CB2ADD500E0120D /* StenographyTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87515FCA1CB2ADD500E0120D /* StenographyTestCase.swift */; };
-		87515FCD1CB2AEDB00E0120D /* LoggingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87515FCC1CB2AEDB00E0120D /* LoggingTests.swift */; };
+		87515FDD1CB2BBA100E0120D /* Evergreen.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87515FD31CB2BBA100E0120D /* Evergreen.framework */; };
+		87515FED1CB2BD8700E0120D /* Evergreen.h in Headers */ = {isa = PBXBuildFile; fileRef = 87C376031C23830000053D87 /* Evergreen.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		87515FEE1CB2BD8D00E0120D /* Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87C376041C23830000053D87 /* Formatter.swift */; };
+		87515FEF1CB2BD8D00E0120D /* Handler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87C376051C23830000053D87 /* Handler.swift */; };
+		87515FF01CB2BD8D00E0120D /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87C376061C23830000053D87 /* Logger.swift */; };
+		875160001CB2BEC500E0120D /* Evergreen.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87515FF61CB2BEC500E0120D /* Evergreen.framework */; };
+		8751601A1CB2C05A00E0120D /* Evergreen.h in Headers */ = {isa = PBXBuildFile; fileRef = 87C376031C23830000053D87 /* Evergreen.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		8751601B1CB2C05B00E0120D /* Evergreen.h in Headers */ = {isa = PBXBuildFile; fileRef = 87C376031C23830000053D87 /* Evergreen.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		8751601C1CB2C06400E0120D /* Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87C376041C23830000053D87 /* Formatter.swift */; };
+		8751601D1CB2C06400E0120D /* Handler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87C376051C23830000053D87 /* Handler.swift */; };
+		8751601E1CB2C06400E0120D /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87C376061C23830000053D87 /* Logger.swift */; };
+		8751601F1CB2C06500E0120D /* Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87C376041C23830000053D87 /* Formatter.swift */; };
+		875160201CB2C06500E0120D /* Handler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87C376051C23830000053D87 /* Handler.swift */; };
+		875160211CB2C06500E0120D /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87C376061C23830000053D87 /* Logger.swift */; };
+		875160281CB2C12F00E0120D /* LoggerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 875160251CB2C12F00E0120D /* LoggerTests.swift */; };
+		875160291CB2C12F00E0120D /* LoggerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 875160251CB2C12F00E0120D /* LoggerTests.swift */; };
+		8751602A1CB2C12F00E0120D /* LoggerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 875160251CB2C12F00E0120D /* LoggerTests.swift */; };
+		8751602B1CB2C12F00E0120D /* LoggingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 875160261CB2C12F00E0120D /* LoggingTests.swift */; };
+		8751602C1CB2C12F00E0120D /* LoggingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 875160261CB2C12F00E0120D /* LoggingTests.swift */; };
+		8751602D1CB2C12F00E0120D /* LoggingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 875160261CB2C12F00E0120D /* LoggingTests.swift */; };
+		8751602E1CB2C12F00E0120D /* StenographyTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 875160271CB2C12F00E0120D /* StenographyTestCase.swift */; };
+		8751602F1CB2C12F00E0120D /* StenographyTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 875160271CB2C12F00E0120D /* StenographyTestCase.swift */; };
+		875160301CB2C12F00E0120D /* StenographyTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 875160271CB2C12F00E0120D /* StenographyTestCase.swift */; };
 		87C376071C23830000053D87 /* Evergreen.h in Headers */ = {isa = PBXBuildFile; fileRef = 87C376031C23830000053D87 /* Evergreen.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		87C376081C23830000053D87 /* Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87C376041C23830000053D87 /* Formatter.swift */; };
 		87C376091C23830000053D87 /* Handler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87C376051C23830000053D87 /* Handler.swift */; };
 		87C3760A1C23830000053D87 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87C376061C23830000053D87 /* Logger.swift */; };
-		87C3760F1C23835100053D87 /* LoggerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87C3760B1C23833700053D87 /* LoggerTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -24,23 +44,84 @@
 			remoteGlobalIDString = 87539B1E19DB23F00084658D;
 			remoteInfo = VILogKit;
 		};
+		87515FDE1CB2BBA100E0120D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 87539B1619DB23F00084658D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 87515FD21CB2BBA100E0120D;
+			remoteInfo = "Evergreen-OSX";
+		};
+		875160011CB2BEC500E0120D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 87539B1619DB23F00084658D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 87515FF51CB2BEC500E0120D;
+			remoteInfo = "Evergreen-tvOS";
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		87515FCA1CB2ADD500E0120D /* StenographyTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StenographyTestCase.swift; path = Tests/StenographyTestCase.swift; sourceTree = SOURCE_ROOT; };
-		87515FCC1CB2AEDB00E0120D /* LoggingTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoggingTests.swift; path = Tests/LoggingTests.swift; sourceTree = SOURCE_ROOT; };
+		87515FD31CB2BBA100E0120D /* Evergreen.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Evergreen.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		87515FD71CB2BBA100E0120D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		87515FDC1CB2BBA100E0120D /* Evergreen-OSX Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Evergreen-OSX Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		87515FE31CB2BBA100E0120D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		87515FF61CB2BEC500E0120D /* Evergreen.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Evergreen.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		87515FFA1CB2BEC500E0120D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		87515FFF1CB2BEC500E0120D /* Evergreen-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Evergreen-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		875160061CB2BEC500E0120D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		875160121CB2C00C00E0120D /* Evergreen.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Evergreen.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		875160161CB2C00C00E0120D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		875160251CB2C12F00E0120D /* LoggerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoggerTests.swift; path = Tests/Evergreen/LoggerTests.swift; sourceTree = SOURCE_ROOT; };
+		875160261CB2C12F00E0120D /* LoggingTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoggingTests.swift; path = Tests/Evergreen/LoggingTests.swift; sourceTree = SOURCE_ROOT; };
+		875160271CB2C12F00E0120D /* StenographyTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StenographyTestCase.swift; path = Tests/Evergreen/StenographyTestCase.swift; sourceTree = SOURCE_ROOT; };
+		875160311CB2C18400E0120D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = "Evergreen-iOSTests/Info.plist"; sourceTree = SOURCE_ROOT; };
+		875160321CB2C1AB00E0120D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = "Evergreen-iOS/Info.plist"; sourceTree = SOURCE_ROOT; };
 		87539B1F19DB23F00084658D /* Evergreen.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Evergreen.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		87539B2A19DB23F00084658D /* EvergreenTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EvergreenTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		87C376011C2382F400053D87 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Sources/Info.plist; sourceTree = SOURCE_ROOT; };
+		87539B2A19DB23F00084658D /* Evergreen-iOS Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Evergreen-iOS Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		87C376031C23830000053D87 /* Evergreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Evergreen.h; path = Sources/Evergreen.h; sourceTree = SOURCE_ROOT; };
 		87C376041C23830000053D87 /* Formatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Formatter.swift; path = Sources/Formatter.swift; sourceTree = SOURCE_ROOT; };
 		87C376051C23830000053D87 /* Handler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Handler.swift; path = Sources/Handler.swift; sourceTree = SOURCE_ROOT; };
 		87C376061C23830000053D87 /* Logger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Logger.swift; path = Sources/Logger.swift; sourceTree = SOURCE_ROOT; };
-		87C3760B1C23833700053D87 /* LoggerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoggerTests.swift; path = Tests/LoggerTests.swift; sourceTree = SOURCE_ROOT; };
-		87C3760C1C23833700053D87 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Tests/Info.plist; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		87515FCF1CB2BBA100E0120D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		87515FD91CB2BBA100E0120D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				87515FDD1CB2BBA100E0120D /* Evergreen.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		87515FF21CB2BEC500E0120D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		87515FFC1CB2BEC500E0120D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				875160001CB2BEC500E0120D /* Evergreen.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8751600E1CB2C00C00E0120D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		87539B1B19DB23F00084658D /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -58,11 +139,60 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		87515FD41CB2BBA100E0120D /* Evergreen-OSX */ = {
+			isa = PBXGroup;
+			children = (
+				87515FD71CB2BBA100E0120D /* Info.plist */,
+			);
+			path = "Evergreen-OSX";
+			sourceTree = "<group>";
+		};
+		87515FE01CB2BBA100E0120D /* Evergreen-OSX Tests */ = {
+			isa = PBXGroup;
+			children = (
+				87515FE31CB2BBA100E0120D /* Info.plist */,
+			);
+			name = "Evergreen-OSX Tests";
+			path = "Evergreen-OSXTests";
+			sourceTree = "<group>";
+		};
+		87515FF71CB2BEC500E0120D /* Evergreen-tvOS */ = {
+			isa = PBXGroup;
+			children = (
+				87515FFA1CB2BEC500E0120D /* Info.plist */,
+			);
+			path = "Evergreen-tvOS";
+			sourceTree = "<group>";
+		};
+		875160031CB2BEC500E0120D /* Evergreen-tvOS Tests */ = {
+			isa = PBXGroup;
+			children = (
+				875160061CB2BEC500E0120D /* Info.plist */,
+			);
+			name = "Evergreen-tvOS Tests";
+			path = "Evergreen-tvOSTests";
+			sourceTree = "<group>";
+		};
+		875160131CB2C00C00E0120D /* Evergreen-watchOS */ = {
+			isa = PBXGroup;
+			children = (
+				875160161CB2C00C00E0120D /* Info.plist */,
+			);
+			path = "Evergreen-watchOS";
+			sourceTree = "<group>";
+		};
 		87539B1519DB23F00084658D = {
 			isa = PBXGroup;
 			children = (
 				87539B2119DB23F00084658D /* Evergreen */,
 				87539B2B19DB23F00084658D /* EvergreenTests */,
+				87539B2219DB23F00084658D /* Evergreen-iOS */,
+				87539B2C19DB23F00084658D /* Evergreen-iOS Tests */,
+				87515FD41CB2BBA100E0120D /* Evergreen-OSX */,
+				87515FE01CB2BBA100E0120D /* Evergreen-OSX Tests */,
+				87515FF71CB2BEC500E0120D /* Evergreen-tvOS */,
+				875160031CB2BEC500E0120D /* Evergreen-tvOS Tests */,
+				875160131CB2C00C00E0120D /* Evergreen-watchOS */,
 				87539B2019DB23F00084658D /* Products */,
 			);
 			sourceTree = "<group>";
@@ -71,7 +201,12 @@
 			isa = PBXGroup;
 			children = (
 				87539B1F19DB23F00084658D /* Evergreen.framework */,
-				87539B2A19DB23F00084658D /* EvergreenTests.xctest */,
+				87539B2A19DB23F00084658D /* Evergreen-iOS Tests.xctest */,
+				87515FD31CB2BBA100E0120D /* Evergreen.framework */,
+				87515FDC1CB2BBA100E0120D /* Evergreen-OSX Tests.xctest */,
+				87515FF61CB2BEC500E0120D /* Evergreen.framework */,
+				87515FFF1CB2BEC500E0120D /* Evergreen-tvOSTests.xctest */,
+				875160121CB2C00C00E0120D /* Evergreen.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -83,43 +218,67 @@
 				87C376041C23830000053D87 /* Formatter.swift */,
 				87C376051C23830000053D87 /* Handler.swift */,
 				87C376061C23830000053D87 /* Logger.swift */,
-				87539B2219DB23F00084658D /* Supporting Files */,
 			);
 			name = Evergreen;
 			path = VILogKit;
 			sourceTree = "<group>";
 		};
-		87539B2219DB23F00084658D /* Supporting Files */ = {
+		87539B2219DB23F00084658D /* Evergreen-iOS */ = {
 			isa = PBXGroup;
 			children = (
-				87C376011C2382F400053D87 /* Info.plist */,
+				875160321CB2C1AB00E0120D /* Info.plist */,
 			);
-			name = "Supporting Files";
+			name = "Evergreen-iOS";
+			path = VILogKit;
 			sourceTree = "<group>";
 		};
 		87539B2B19DB23F00084658D /* EvergreenTests */ = {
 			isa = PBXGroup;
 			children = (
-				87515FCA1CB2ADD500E0120D /* StenographyTestCase.swift */,
-				87C3760B1C23833700053D87 /* LoggerTests.swift */,
-				87515FCC1CB2AEDB00E0120D /* LoggingTests.swift */,
-				87539B2C19DB23F00084658D /* Supporting Files */,
+				875160251CB2C12F00E0120D /* LoggerTests.swift */,
+				875160261CB2C12F00E0120D /* LoggingTests.swift */,
+				875160271CB2C12F00E0120D /* StenographyTestCase.swift */,
 			);
 			name = EvergreenTests;
 			path = VILogKitTests;
 			sourceTree = "<group>";
 		};
-		87539B2C19DB23F00084658D /* Supporting Files */ = {
+		87539B2C19DB23F00084658D /* Evergreen-iOS Tests */ = {
 			isa = PBXGroup;
 			children = (
-				87C3760C1C23833700053D87 /* Info.plist */,
+				875160311CB2C18400E0120D /* Info.plist */,
 			);
-			name = "Supporting Files";
+			name = "Evergreen-iOS Tests";
+			path = VILogKitTests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
+		87515FD01CB2BBA100E0120D /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				87515FED1CB2BD8700E0120D /* Evergreen.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		87515FF31CB2BEC500E0120D /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8751601A1CB2C05A00E0120D /* Evergreen.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8751600F1CB2C00C00E0120D /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8751601B1CB2C05B00E0120D /* Evergreen.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		87539B1C19DB23F00084658D /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -131,9 +290,99 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		87539B1E19DB23F00084658D /* Evergreen */ = {
+		87515FD21CB2BBA100E0120D /* Evergreen-OSX */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 87539B3219DB23F00084658D /* Build configuration list for PBXNativeTarget "Evergreen" */;
+			buildConfigurationList = 87515FE41CB2BBA100E0120D /* Build configuration list for PBXNativeTarget "Evergreen-OSX" */;
+			buildPhases = (
+				87515FCE1CB2BBA100E0120D /* Sources */,
+				87515FCF1CB2BBA100E0120D /* Frameworks */,
+				87515FD01CB2BBA100E0120D /* Headers */,
+				87515FD11CB2BBA100E0120D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Evergreen-OSX";
+			productName = "Evergreen-OSX";
+			productReference = 87515FD31CB2BBA100E0120D /* Evergreen.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		87515FDB1CB2BBA100E0120D /* Evergreen-OSX Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 87515FE71CB2BBA100E0120D /* Build configuration list for PBXNativeTarget "Evergreen-OSX Tests" */;
+			buildPhases = (
+				87515FD81CB2BBA100E0120D /* Sources */,
+				87515FD91CB2BBA100E0120D /* Frameworks */,
+				87515FDA1CB2BBA100E0120D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				87515FDF1CB2BBA100E0120D /* PBXTargetDependency */,
+			);
+			name = "Evergreen-OSX Tests";
+			productName = "Evergreen-OSXTests";
+			productReference = 87515FDC1CB2BBA100E0120D /* Evergreen-OSX Tests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		87515FF51CB2BEC500E0120D /* Evergreen-tvOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 875160071CB2BEC500E0120D /* Build configuration list for PBXNativeTarget "Evergreen-tvOS" */;
+			buildPhases = (
+				87515FF11CB2BEC500E0120D /* Sources */,
+				87515FF21CB2BEC500E0120D /* Frameworks */,
+				87515FF31CB2BEC500E0120D /* Headers */,
+				87515FF41CB2BEC500E0120D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Evergreen-tvOS";
+			productName = "Evergreen-tvOS";
+			productReference = 87515FF61CB2BEC500E0120D /* Evergreen.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		87515FFE1CB2BEC500E0120D /* Evergreen-tvOSTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8751600A1CB2BEC500E0120D /* Build configuration list for PBXNativeTarget "Evergreen-tvOSTests" */;
+			buildPhases = (
+				87515FFB1CB2BEC500E0120D /* Sources */,
+				87515FFC1CB2BEC500E0120D /* Frameworks */,
+				87515FFD1CB2BEC500E0120D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				875160021CB2BEC500E0120D /* PBXTargetDependency */,
+			);
+			name = "Evergreen-tvOSTests";
+			productName = "Evergreen-tvOSTests";
+			productReference = 87515FFF1CB2BEC500E0120D /* Evergreen-tvOSTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		875160111CB2C00C00E0120D /* Evergreen-watchOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 875160171CB2C00C00E0120D /* Build configuration list for PBXNativeTarget "Evergreen-watchOS" */;
+			buildPhases = (
+				8751600D1CB2C00C00E0120D /* Sources */,
+				8751600E1CB2C00C00E0120D /* Frameworks */,
+				8751600F1CB2C00C00E0120D /* Headers */,
+				875160101CB2C00C00E0120D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Evergreen-watchOS";
+			productName = "Evergreen-watchOS";
+			productReference = 875160121CB2C00C00E0120D /* Evergreen.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		87539B1E19DB23F00084658D /* Evergreen-iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 87539B3219DB23F00084658D /* Build configuration list for PBXNativeTarget "Evergreen-iOS" */;
 			buildPhases = (
 				87539B1A19DB23F00084658D /* Sources */,
 				87539B1B19DB23F00084658D /* Frameworks */,
@@ -144,14 +393,14 @@
 			);
 			dependencies = (
 			);
-			name = Evergreen;
+			name = "Evergreen-iOS";
 			productName = VILogKit;
 			productReference = 87539B1F19DB23F00084658D /* Evergreen.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		87539B2919DB23F00084658D /* EvergreenTests */ = {
+		87539B2919DB23F00084658D /* Evergreen-iOS Tests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 87539B3519DB23F00084658D /* Build configuration list for PBXNativeTarget "EvergreenTests" */;
+			buildConfigurationList = 87539B3519DB23F00084658D /* Build configuration list for PBXNativeTarget "Evergreen-iOS Tests" */;
 			buildPhases = (
 				87539B2619DB23F00084658D /* Sources */,
 				87539B2719DB23F00084658D /* Frameworks */,
@@ -162,9 +411,9 @@
 			dependencies = (
 				870449FD19F22EB100A78D15 /* PBXTargetDependency */,
 			);
-			name = EvergreenTests;
+			name = "Evergreen-iOS Tests";
 			productName = VILogKitTests;
-			productReference = 87539B2A19DB23F00084658D /* EvergreenTests.xctest */;
+			productReference = 87539B2A19DB23F00084658D /* Evergreen-iOS Tests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -174,10 +423,25 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftMigration = 0700;
-				LastSwiftUpdateCheck = 0720;
+				LastSwiftUpdateCheck = 0730;
 				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "viWiD Webdesign & iOS Development";
 				TargetAttributes = {
+					87515FD21CB2BBA100E0120D = {
+						CreatedOnToolsVersion = 7.3;
+					};
+					87515FDB1CB2BBA100E0120D = {
+						CreatedOnToolsVersion = 7.3;
+					};
+					87515FF51CB2BEC500E0120D = {
+						CreatedOnToolsVersion = 7.3;
+					};
+					87515FFE1CB2BEC500E0120D = {
+						CreatedOnToolsVersion = 7.3;
+					};
+					875160111CB2C00C00E0120D = {
+						CreatedOnToolsVersion = 7.3;
+					};
 					87539B1E19DB23F00084658D = {
 						CreatedOnToolsVersion = 6.0.1;
 					};
@@ -198,13 +462,53 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				87539B1E19DB23F00084658D /* Evergreen */,
-				87539B2919DB23F00084658D /* EvergreenTests */,
+				87539B1E19DB23F00084658D /* Evergreen-iOS */,
+				87539B2919DB23F00084658D /* Evergreen-iOS Tests */,
+				87515FD21CB2BBA100E0120D /* Evergreen-OSX */,
+				87515FDB1CB2BBA100E0120D /* Evergreen-OSX Tests */,
+				87515FF51CB2BEC500E0120D /* Evergreen-tvOS */,
+				87515FFE1CB2BEC500E0120D /* Evergreen-tvOSTests */,
+				875160111CB2C00C00E0120D /* Evergreen-watchOS */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		87515FD11CB2BBA100E0120D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		87515FDA1CB2BBA100E0120D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		87515FF41CB2BEC500E0120D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		87515FFD1CB2BEC500E0120D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		875160101CB2C00C00E0120D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		87539B1D19DB23F00084658D /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -222,6 +526,56 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		87515FCE1CB2BBA100E0120D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				87515FEF1CB2BD8D00E0120D /* Handler.swift in Sources */,
+				87515FF01CB2BD8D00E0120D /* Logger.swift in Sources */,
+				87515FEE1CB2BD8D00E0120D /* Formatter.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		87515FD81CB2BBA100E0120D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				875160291CB2C12F00E0120D /* LoggerTests.swift in Sources */,
+				8751602F1CB2C12F00E0120D /* StenographyTestCase.swift in Sources */,
+				8751602C1CB2C12F00E0120D /* LoggingTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		87515FF11CB2BEC500E0120D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8751601D1CB2C06400E0120D /* Handler.swift in Sources */,
+				8751601E1CB2C06400E0120D /* Logger.swift in Sources */,
+				8751601C1CB2C06400E0120D /* Formatter.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		87515FFB1CB2BEC500E0120D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8751602A1CB2C12F00E0120D /* LoggerTests.swift in Sources */,
+				875160301CB2C12F00E0120D /* StenographyTestCase.swift in Sources */,
+				8751602D1CB2C12F00E0120D /* LoggingTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8751600D1CB2C00C00E0120D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				875160201CB2C06500E0120D /* Handler.swift in Sources */,
+				875160211CB2C06500E0120D /* Logger.swift in Sources */,
+				8751601F1CB2C06500E0120D /* Formatter.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		87539B1A19DB23F00084658D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -236,9 +590,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				87515FCB1CB2ADD500E0120D /* StenographyTestCase.swift in Sources */,
-				87C3760F1C23835100053D87 /* LoggerTests.swift in Sources */,
-				87515FCD1CB2AEDB00E0120D /* LoggingTests.swift in Sources */,
+				875160281CB2C12F00E0120D /* LoggerTests.swift in Sources */,
+				8751602E1CB2C12F00E0120D /* StenographyTestCase.swift in Sources */,
+				8751602B1CB2C12F00E0120D /* LoggingTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -247,12 +601,255 @@
 /* Begin PBXTargetDependency section */
 		870449FD19F22EB100A78D15 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 87539B1E19DB23F00084658D /* Evergreen */;
+			target = 87539B1E19DB23F00084658D /* Evergreen-iOS */;
 			targetProxy = 870449FC19F22EB100A78D15 /* PBXContainerItemProxy */;
+		};
+		87515FDF1CB2BBA100E0120D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 87515FD21CB2BBA100E0120D /* Evergreen-OSX */;
+			targetProxy = 87515FDE1CB2BBA100E0120D /* PBXContainerItemProxy */;
+		};
+		875160021CB2BEC500E0120D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 87515FF51CB2BEC500E0120D /* Evergreen-tvOS */;
+			targetProxy = 875160011CB2BEC500E0120D /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		87515FE51CB2BBA100E0120D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_VERSION = A;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Evergreen-OSX/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		87515FE61CB2BBA100E0120D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_VERSION = A;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Evergreen-OSX/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		87515FE81CB2BBA100E0120D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Evergreen-OSXTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		87515FE91CB2BBA100E0120D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Evergreen-OSXTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		875160081CB2BEC500E0120D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Evergreen-tvOS/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				SDKROOT = appletvos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 9.0;
+			};
+			name = Debug;
+		};
+		875160091CB2BEC500E0120D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Evergreen-tvOS/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				SDKROOT = appletvos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 9.0;
+			};
+			name = Release;
+		};
+		8751600B1CB2BEC500E0120D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Evergreen-tvOSTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = appletvos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TVOS_DEPLOYMENT_TARGET = 9.2;
+			};
+			name = Debug;
+		};
+		8751600C1CB2BEC500E0120D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Evergreen-tvOSTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = appletvos;
+				TVOS_DEPLOYMENT_TARGET = 9.2;
+			};
+			name = Release;
+		};
+		875160181CB2C00C00E0120D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Evergreen-watchOS/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 2.2;
+			};
+			name = Debug;
+		};
+		875160191CB2C00C00E0120D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Evergreen-watchOS/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 2.2;
+			};
+			name = Release;
+		};
 		87539B3019DB23F00084658D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -270,7 +867,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 0.8;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -289,6 +886,9 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.viwid.$(TARGET_NAME:rfc1034identifier)";
+				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)";
+				PRODUCT_NAME = Evergreen;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -314,7 +914,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 0.8;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -325,6 +925,9 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.viwid.$(TARGET_NAME:rfc1034identifier)";
+				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)";
+				PRODUCT_NAME = Evergreen;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -342,11 +945,9 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "$(SRCROOT)/Sources/Info.plist";
+				INFOPLIST_FILE = "Evergreen-iOS/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.viwid.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = Evergreen;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -361,11 +962,9 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "$(SRCROOT)/Sources/Info.plist";
+				INFOPLIST_FILE = "Evergreen-iOS/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.viwid.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = Evergreen;
 				SKIP_INSTALL = YES;
 			};
 			name = Release;
@@ -382,10 +981,9 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = Tests/Info.plist;
+				INFOPLIST_FILE = "Evergreen-iOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.viwid.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = EvergreenTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -398,16 +996,60 @@
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = Tests/Info.plist;
+				INFOPLIST_FILE = "Evergreen-iOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.viwid.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = EvergreenTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		87515FE41CB2BBA100E0120D /* Build configuration list for PBXNativeTarget "Evergreen-OSX" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				87515FE51CB2BBA100E0120D /* Debug */,
+				87515FE61CB2BBA100E0120D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		87515FE71CB2BBA100E0120D /* Build configuration list for PBXNativeTarget "Evergreen-OSX Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				87515FE81CB2BBA100E0120D /* Debug */,
+				87515FE91CB2BBA100E0120D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		875160071CB2BEC500E0120D /* Build configuration list for PBXNativeTarget "Evergreen-tvOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				875160081CB2BEC500E0120D /* Debug */,
+				875160091CB2BEC500E0120D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8751600A1CB2BEC500E0120D /* Build configuration list for PBXNativeTarget "Evergreen-tvOSTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8751600B1CB2BEC500E0120D /* Debug */,
+				8751600C1CB2BEC500E0120D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		875160171CB2C00C00E0120D /* Build configuration list for PBXNativeTarget "Evergreen-watchOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				875160181CB2C00C00E0120D /* Debug */,
+				875160191CB2C00C00E0120D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		87539B1919DB23F00084658D /* Build configuration list for PBXProject "Evergreen" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -417,7 +1059,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		87539B3219DB23F00084658D /* Build configuration list for PBXNativeTarget "Evergreen" */ = {
+		87539B3219DB23F00084658D /* Build configuration list for PBXNativeTarget "Evergreen-iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				87539B3319DB23F00084658D /* Debug */,
@@ -426,7 +1068,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		87539B3519DB23F00084658D /* Build configuration list for PBXNativeTarget "EvergreenTests" */ = {
+		87539B3519DB23F00084658D /* Build configuration list for PBXNativeTarget "Evergreen-iOS Tests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				87539B3619DB23F00084658D /* Debug */,
