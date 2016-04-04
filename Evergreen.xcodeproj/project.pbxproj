@@ -7,11 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		87515FCB1CB2ADD500E0120D /* StenographyTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87515FCA1CB2ADD500E0120D /* StenographyTestCase.swift */; };
+		87515FCD1CB2AEDB00E0120D /* LoggingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87515FCC1CB2AEDB00E0120D /* LoggingTests.swift */; };
 		87C376071C23830000053D87 /* Evergreen.h in Headers */ = {isa = PBXBuildFile; fileRef = 87C376031C23830000053D87 /* Evergreen.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		87C376081C23830000053D87 /* Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87C376041C23830000053D87 /* Formatter.swift */; };
 		87C376091C23830000053D87 /* Handler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87C376051C23830000053D87 /* Handler.swift */; };
 		87C3760A1C23830000053D87 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87C376061C23830000053D87 /* Logger.swift */; };
-		87C3760F1C23835100053D87 /* EvergreenTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87C3760B1C23833700053D87 /* EvergreenTests.swift */; };
+		87C3760F1C23835100053D87 /* LoggerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87C3760B1C23833700053D87 /* LoggerTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -25,6 +27,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		87515FCA1CB2ADD500E0120D /* StenographyTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StenographyTestCase.swift; path = Tests/StenographyTestCase.swift; sourceTree = SOURCE_ROOT; };
+		87515FCC1CB2AEDB00E0120D /* LoggingTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoggingTests.swift; path = Tests/LoggingTests.swift; sourceTree = SOURCE_ROOT; };
 		87539B1F19DB23F00084658D /* Evergreen.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Evergreen.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		87539B2A19DB23F00084658D /* EvergreenTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EvergreenTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		87C376011C2382F400053D87 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Sources/Info.plist; sourceTree = SOURCE_ROOT; };
@@ -32,7 +36,7 @@
 		87C376041C23830000053D87 /* Formatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Formatter.swift; path = Sources/Formatter.swift; sourceTree = SOURCE_ROOT; };
 		87C376051C23830000053D87 /* Handler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Handler.swift; path = Sources/Handler.swift; sourceTree = SOURCE_ROOT; };
 		87C376061C23830000053D87 /* Logger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Logger.swift; path = Sources/Logger.swift; sourceTree = SOURCE_ROOT; };
-		87C3760B1C23833700053D87 /* EvergreenTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EvergreenTests.swift; path = Tests/EvergreenTests.swift; sourceTree = SOURCE_ROOT; };
+		87C3760B1C23833700053D87 /* LoggerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoggerTests.swift; path = Tests/LoggerTests.swift; sourceTree = SOURCE_ROOT; };
 		87C3760C1C23833700053D87 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Tests/Info.plist; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -96,7 +100,9 @@
 		87539B2B19DB23F00084658D /* EvergreenTests */ = {
 			isa = PBXGroup;
 			children = (
-				87C3760B1C23833700053D87 /* EvergreenTests.swift */,
+				87515FCA1CB2ADD500E0120D /* StenographyTestCase.swift */,
+				87C3760B1C23833700053D87 /* LoggerTests.swift */,
+				87515FCC1CB2AEDB00E0120D /* LoggingTests.swift */,
 				87539B2C19DB23F00084658D /* Supporting Files */,
 			);
 			name = EvergreenTests;
@@ -230,7 +236,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				87C3760F1C23835100053D87 /* EvergreenTests.swift in Sources */,
+				87515FCB1CB2ADD500E0120D /* StenographyTestCase.swift in Sources */,
+				87C3760F1C23835100053D87 /* LoggerTests.swift in Sources */,
+				87515FCD1CB2AEDB00E0120D /* LoggingTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

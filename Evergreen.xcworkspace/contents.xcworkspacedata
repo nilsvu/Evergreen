@@ -2,14 +2,18 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:Package.swift">
-   </FileRef>
-   <FileRef
       location = "group:README.md">
    </FileRef>
-   <FileRef
-      location = "group:Evergreen.podspec">
-   </FileRef>
+   <Group
+      location = "container:"
+      name = "Metadata">
+      <FileRef
+         location = "group:Package.swift">
+      </FileRef>
+      <FileRef
+         location = "group:Evergreen.podspec">
+      </FileRef>
+   </Group>
    <FileRef
       location = "container:Evergreen.xcodeproj">
    </FileRef>

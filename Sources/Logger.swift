@@ -39,36 +39,59 @@ public func getLoggerForFile(file: String = #file) -> Logger {
     return Logger.loggerForFile(file)
 }
 
-/// Logs the event using a logger that is appropriate for the caller. See `Logger.log:forLevel:` for further documentation.
+/// Logs the event using a logger that is appropriate for the caller.
+/// - seealso: `Logger.log(_:, forLevel:)`
 public func log<M>(@autoclosure(escaping) message: () -> M, error: ErrorType? = nil, forLevel logLevel: LogLevel? = nil, function: String = #function, file: String = #file, line: Int = #line)
 {
     Logger.loggerForFile(file).log(message, error: error, forLevel: logLevel, function: function, file: file, line: line)
 }
 
-/// Logs the event with the Verbose log level using a logger that is appropriate for the caller. See `Logger.log:forLevel:` for further documentation.
+/// Logs the event with the Verbose log level using a logger that is appropriate for the caller.
+/// - seealso: `Logger.log(_:, forLevel:)`
 public func verbose<M>(@autoclosure(escaping) message: () -> M, error: ErrorType? = nil, function: String = #function, file: String = #file, line: Int = #line) {
     Evergreen.log(message, error: error, forLevel: .Verbose, function: function, file: file, line: line)
 }
-/// Logs the event with the Debug log level using a logger that is appropriate for the caller. See `Logger.log:forLevel:` for further documentation.
+/// Logs the event with the Debug log level using a logger that is appropriate for the caller.
+/// - seealso: `Logger.log(_:, forLevel:)`
 public func debug<M>(@autoclosure(escaping) message: () -> M, error: ErrorType? = nil, function: String = #function, file: String = #file, line: Int = #line) {
     Evergreen.log(message, error: error, forLevel: .Debug, function: function, file: file, line: line)
 }
-/// Logs the event with the Info log level using a logger that is appropriate for the caller. See `Logger.log:forLevel:` for further documentation.
+/// Logs the event with the Info log level using a logger that is appropriate for the caller.
+/// - seealso: `Logger.log(_:, forLevel:)`
 public func info<M>(@autoclosure(escaping) message: () -> M, error: ErrorType? = nil, function: String = #function, file: String = #file, line: Int = #line) {
     Evergreen.log(message, error: error, forLevel: .Info, function: function, file: file, line: line)
 }
-/// Logs the event with the Warning log level using a logger that is appropriate for the caller. See `Logger.log:forLevel:` for further documentation.
+/// Logs the event with the Warning log level using a logger that is appropriate for the caller.
+/// - seealso: `Logger.log(_:, forLevel:)`
 public func warning<M>(@autoclosure(escaping) message: () -> M, error: ErrorType? = nil, function: String = #function, file: String = #file, line: Int = #line) {
     Evergreen.log(message, error: error, forLevel: .Warning, function: function, file: file, line: line)
 }
-/// Logs the event with the Error log level using a logger that is appropriate for the caller. See `Logger.log:forLevel:` for further documentation.
+/// Logs the event with the Error log level using a logger that is appropriate for the caller.
+/// - seealso: `Logger.log(_:, forLevel:)`
 public func error<M>(@autoclosure(escaping) message: () -> M, error: ErrorType? = nil, function: String = #function, file: String = #file, line: Int = #line) {
     Evergreen.log(message, error: error, forLevel: .Error, function: function, file: file, line: line)
 }
-/// Logs the event with the Critical log level using a logger that is appropriate for the caller. See `Logger.log:forLevel:` for further documentation.
+/// Logs the event with the Critical log level using a logger that is appropriate for the caller.
+/// - seealso: `Logger.log(_:, forLevel:)`
 public func critical<M>(@autoclosure(escaping) message: () -> M, error: ErrorType? = nil, function: String = #function, file: String = #file, line: Int = #line) {
     Evergreen.log(message, error: error, forLevel: .Critical, function: function, file: file, line: line)
 }
+
+
+/// Alias for `Logger.tic` for a logger that is appropriate for the caller.
+/// - seealso: `Logger.tic`
+public func tic<M>(@autoclosure(escaping) andLog message: () -> M, error: ErrorType? = nil, forLevel logLevel: LogLevel? = nil, timerKey: String? = nil, function: String = #function, file: String = #file, line: Int = #line)
+{
+    Logger.loggerForFile(file).tic(andLog: message, error: error, forLevel: logLevel, timerKey: timerKey, function: function, file: file, line: line)
+}
+
+/// Alias for `Logger.toc` for a logger that is appropriate for the caller.
+/// - seealso: `Logger.toc`
+public func toc<M>(@autoclosure(escaping) andLog message: () -> M, error: ErrorType? = nil, forLevel logLevel: LogLevel? = nil, timerKey: String? = nil, function: String = #function, file: String = #file, line: Int = #line)
+{
+    Logger.loggerForFile(file).toc(andLog: message, error: error, forLevel: logLevel, timerKey: timerKey, function: function, file: file, line: line)
+}
+
 
 /// Reads the logging configuration from environment variables. Every environment variable with prefix 'Evergreen' is evaluated as a logger key path and assigned a log level corresponding to its value. Values should match the log level descriptions, e.g. 'Debug'. Valid environment variable declarations would be e.g. 'Evergreen = Debug' or 'Evergreen.MyLogger = Verbose'.
 public func configureFromEnvironment()

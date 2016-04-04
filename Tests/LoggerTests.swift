@@ -7,11 +7,10 @@
 //
 
 import XCTest
+@testable import Evergreen
 
-@testable
-import Evergreen
 
-class EvergreenTests: XCTestCase {
+class LoggerTests: StenographyTestCase {
     
     func testDefaultLoggerIdentity() {
         let defaultLogger = Evergreen.defaultLogger
@@ -59,7 +58,7 @@ class EvergreenTests: XCTestCase {
             let logLevelFromUppercaseDescription = LogLevel(description: logLevel.description.uppercaseString)
             XCTAssert(logLevelFromUppercaseDescription != nil, "Can't initialize log level from description \(logLevel.description.uppercaseString).")
             XCTAssert(logLevelFromUppercaseDescription == logLevel, "Log level \(logLevelFromUppercaseDescription!) initialized from description \(logLevel.description) does not match \(logLevel).")
-            i++
+            i += 1
         }
         XCTAssert(logLevels.sort(<) == logLevels, "Log levels initialized by sequencial raw values are not ordered by comparison operator.")
     }
