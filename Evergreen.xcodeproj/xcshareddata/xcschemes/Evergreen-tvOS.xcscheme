@@ -33,8 +33,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "87515FFE1CB2BEC500E0120D"
-               BuildableName = "Evergreen-tvOSTests.xctest"
-               BlueprintName = "Evergreen-tvOSTests"
+               BuildableName = "Evergreen-tvOS Tests.xctest"
+               BlueprintName = "Evergreen-tvOS Tests"
                ReferencedContainer = "container:Evergreen.xcodeproj">
             </BuildableReference>
          </TestableReference>

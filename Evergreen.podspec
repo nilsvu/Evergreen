@@ -1,4 +1,5 @@
 Pod::Spec.new do |s|
+
   s.name         = "Evergreen"
   s.version      = "0.8"
   s.summary      = "A Swift Logging Framework."
@@ -10,7 +11,13 @@ Pod::Spec.new do |s|
   s.homepage     = "http://github.com/viWiD/Evergreen"
   s.license      = { :type => "MIT", :file => "LICENSE.md" }
   s.author       = { "Nils Fischer" => "n.fischer@viwid.com" }
-  s.platform     = :ios, "8.0"
+
   s.source       = { :git => "https://github.com/viWiD/Evergreen.git", :tag => "v" + s.version.to_s }
-  s.source_files = "Sources"
+  s.source_files = "Sources/Evergreen"
+
+  s.ios.deployment_target = '8.0'
+  s.osx.deployment_target = '10.9'
+  s.tvos.deployment_target = '9.0'
+  s.watchos.deployment_target = '2.0'
+
 end
