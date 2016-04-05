@@ -114,7 +114,7 @@ public class FileHandler: Handler, CustomStringConvertible {
 /// A handler that appends log records to an array.
 public class StenographyHandler: Handler {
     
-    // TODO: make sure there is no memory problem when this array becomes to large
+    // TODO: make sure there is no memory problem when this array becomes too large
     /// All records logged to this handler
     public private(set) var records: [Record] = []
     

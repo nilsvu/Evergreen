@@ -29,12 +29,14 @@ public var logLevel: LogLevel? {
     }
 }
 
-/// Returns the logger for the specified key path. See `Logger.loggerForKeyPath:` for further documentation.
+/// Returns the logger for the specified key path.
+/// - seealso: `Logger.loggerForKeyPath(_:)`
 public func getLogger(keyPath: Logger.KeyPath) -> Logger {
     return Logger.loggerForKeyPath(keyPath)
 }
 
-/// Returns an appropriate logger for the given file. See `Logger.loggerForFile:` for further documentation.
+/// Returns an appropriate logger for the given file.
+/// - seealso: `Logger.loggerForFile(_:)`
 public func getLoggerForFile(file: String = #file) -> Logger {
     return Logger.loggerForFile(file)
 }
@@ -93,7 +95,13 @@ public func toc<M>(@autoclosure(escaping) andLog message: () -> M, error: ErrorT
 }
 
 
-/// Reads the logging configuration from environment variables. Every environment variable with prefix 'Evergreen' is evaluated as a logger key path and assigned a log level corresponding to its value. Values should match the log level descriptions, e.g. 'Debug'. Valid environment variable declarations would be e.g. 'Evergreen = Debug' or 'Evergreen.MyLogger = Verbose'.
+/**
+ Reads the logging configuration from environment variables.
+ 
+ Every environment variable with prefix `Evergreen` is evaluated as a logger key path and assigned a log level corresponding to its value. Values should match the log level descriptions, e.g. `Debug`.
+ 
+ Valid environment variable declarations would be e.g. `Evergreen = Debug` or `Evergreen.MyLogger = Verbose`.
+*/
 public func configureFromEnvironment()
 {
     let prefix = "Evergreen"
@@ -124,9 +132,18 @@ public final class Logger {
     
     // MARK: Public Properties
     
-    /// A logger will only log events with equal or higher log levels. If no log level is specified, the `effectiveLogLevel` is used to determine the log level by reaching up the logger hierarchy until a logger specifies a log level.
+    /**
+     The verbosity threshold for this logger.
+ 
+     A logger will only log events with equal or higher log levels. If no log level is specified, the `effectiveLogLevel` is used to determine the log level by reaching up the logger hierarchy until a logger specifies a log level.
+    */
     public var logLevel: LogLevel?
-    /// Returns the effective log level by reaching up the logger hierarchy until a logger specifies a log level.
+    
+    /**
+     The effective verbosity threshold for this logger in its hierarchy.
+ 
+     Determined by reaching up the logger hierarchy until a logger specifies a log level.
+    */
     public var effectiveLogLevel: LogLevel? {
         if let logLevel = self.logLevel {
             return logLevel
@@ -139,10 +156,20 @@ public final class Logger {
         }
     }
     
-    /// The handlers provided by this logger to process log events.
+    /**
+     The handlers provided by this logger to process log events.
+ 
+     Assign handlers such as a `ConsoleHandler` or `FileHandler` to this array to make them emit events passed to the logger.
+    */
     public var handlers = [Handler]()
     
-    /// Passes events up the logger hierarchy if set to true (default)
+    /**
+     Whether to pass events up the logger hierarchy.
+    
+     If set to `true`, events this logger received from logging calls or from children in its hierarchy are passed on to its parent after they were handled.
+     
+     Defaults to `true`.
+    */
     public var shouldPropagate = true
     
     /// The parent in the logger hierarchy
@@ -176,7 +203,11 @@ public final class Logger {
     
     // MARK: Initialization
     
-    /// Creates a new logger. If you don't specify a parent, the logger is detached from the logger hierarchy and will not have any handlers. For general purposes, use the global getLogger method or the various Logger class and instance methods instead to retrieve appropriate loggers in the logger hierarchy.
+    /**
+     Creates a new logger. For general purposes, use the global `getLogger` method or the various Logger class and instance methods instead to retrieve appropriate loggers in the logger hierarchy.
+     
+     - warning: If you don't specify a parent, the logger is detached from the logger hierarchy and will not have any handlers.
+    */
     public init(key: String, parent: Logger?) {
         self.key = key
         self.parent = parent
@@ -186,22 +217,23 @@ public final class Logger {
     
     // MARK: Intial Info
     
-    private var hasLoggedInitialInfo: Bool = false
-    /// Logs appropriate information about the logging setup automatically when the first logging call occurs.
-    private func logInitialInfo() {
-        if !hasLoggedInitialInfo {
-            if handlers.count > 0 {
-                let event = Event(logger: self, message: { "Logging to \(self.handlers)..." }, error: nil, logLevel: .Info, date: NSDate(), elapsedTime: nil, function: #function, file: #file, line: #line)
-                self.handleEvent(event)
-            }
-            hasLoggedInitialInfo = true
-        }
-        if shouldPropagate {
-            if let parent = self.parent {
-                parent.logInitialInfo()
-            }
-        }
-    }
+    // TODO: Decide, whether this is useful or not. Clients can just log information about the handlers they set up themselves, e.g. the log file name of a FileHandler.
+//    private var hasLoggedInitialInfo: Bool = false
+//    /// Logs appropriate information about the logging setup automatically when the first logging call occurs.
+//    private func logInitialInfo() {
+//        if !hasLoggedInitialInfo {
+//            if handlers.count > 0 {
+//                let event = Event(logger: self, message: { "Logging to \(self.handlers)..." }, error: nil, logLevel: .Info, date: NSDate(), elapsedTime: nil, function: #function, file: #file, line: #line)
+//                self.handleEvent(event)
+//            }
+//            hasLoggedInitialInfo = true
+//        }
+//        if shouldPropagate {
+//            if let parent = self.parent {
+//                parent.logInitialInfo()
+//            }
+//        }
+//    }
     
     
     // MARK: Logging
@@ -210,6 +242,7 @@ public final class Logger {
      Logs the event given by its `message` and additional information that is gathered automatically. The `logLevel` parameter in conjunction with the logger's `effectiveLogLevel` determines, if the event will be handled or ignored.
      
      - parameter message: The message to be logged, provided by an autoclosure. The closure will not be evaluated if the event is not going to be emitted, so it can contain expensive operations only needed for logging purposes.
+     - parameter error: An error that occured and should be logged alongside the event.
      - parameter logLevel: If the event's log level is lower than the receiving logger's `effectiveLogLevel`, the event will not be logged. The event will always be logged, if no log level is provided for either the event or the logger's `effectiveLogLevel`.
      */
     public func log<M>(@autoclosure(escaping) message: () -> M, error: ErrorType? = nil, forLevel logLevel: LogLevel? = nil, function: String = #function, file: String = #file, line: Int = #line)
@@ -218,35 +251,41 @@ public final class Logger {
         self.logEvent(event)
     }
     
-    /// Logs the event with the Verbose log level. See `log:forLevel:` for further documentation.
+    /// Logs the event with the Verbose log level. 
+    /// - seealso: `log(_:, forLevel:)`
     public func verbose<M>(@autoclosure(escaping) message: () -> M, error: ErrorType? = nil, function: String = #function, file: String = #file, line: Int = #line) {
         self.log(message, error: error, forLevel: .Verbose, function: function, file: file, line: line)
     }
-    /// Logs the event with the Debug log level. See `log:forLevel:` for further documentation.
+    /// Logs the event with the Debug log level.
+    /// - seealso: `log(_:, forLevel:)`
     public func debug<M>(@autoclosure(escaping) message: () -> M, error: ErrorType? = nil, function: String = #function, file: String = #file, line: Int = #line) {
         self.log(message, error: error, forLevel: .Debug, function: function, file: file, line: line)
     }
-    /// Logs the event with the Info log level. See `log:forLevel:` for further documentation.
+    /// Logs the event with the Info log level.
+    /// - seealso: `log(_:, forLevel:)`
     public func info<M>(@autoclosure(escaping) message: () -> M, error: ErrorType? = nil, function: String = #function, file: String = #file, line: Int = #line) {
         self.log(message, error: error, forLevel: .Info, function: function, file: file, line: line)
     }
-    /// Logs the event with the Warning log level. See `log:forLevel:` for further documentation.
+    /// Logs the event with the Warning log level.
+    /// - seealso: `log(_:, forLevel:)`
     public func warning<M>(@autoclosure(escaping) message: () -> M, error: ErrorType? = nil, function: String = #function, file: String = #file, line: Int = #line) {
         self.log(message, error: error, forLevel: .Warning, function: function, file: file, line: line)
     }
-    /// Logs the event with the Error log level. See `log:forLevel:` for further documentation.
+    /// Logs the event with the Error log level.
+    /// - seealso: `log(_:, forLevel:)`
     public func error<M>(@autoclosure(escaping) message: () -> M, error: ErrorType? = nil, function: String = #function, file: String = #file, line: Int = #line) {
         self.log(message, error: error, forLevel: .Error, function: function, file: file, line: line)
     }
-    /// Logs the event with the Critical log level. See `log:forLevel:` for further documentation.
+    /// Logs the event with the Critical log level.
+    /// - seealso: `log(_:, forLevel:)`
     public func critical<M>(@autoclosure(escaping) message: () -> M, error: ErrorType? = nil, function: String = #function, file: String = #file, line: Int = #line) {
         self.log(message, error: error, forLevel: .Critical, function: function, file: file, line: line)
     }
     
-    /// Logs the given event. Use `log:forLevel:` for convenience.
+    /// Logs the given event. Use `log(_:, forLevel:)` instead for convenience.
     public func logEvent<M>(event: Event<M>)
     {
-        self.logInitialInfo()
+        // self.logInitialInfo()
         
         if let effectiveLogLevel = self.effectiveLogLevel, let eventLogLevel = event.logLevel where eventLogLevel < effectiveLogLevel {
             return
@@ -281,11 +320,12 @@ public final class Logger {
     
     // TODO: log "Tic..." message by default
     /**
-     Log the given event and start tracking the time until the next call to `toc:`.
+     Logs the given event and starts tracking the time until the next call to `toc`.
      
-     - parameter message: The message to be logged, provided by an autoclosure for lazy evaluation (see `log:forLevel:`)
-     - parameter logLevel: The event's log level (see `log:forLevel:`)
-     - parameter timerKey: Provide as an identifier in nested calls to `tic:` and `toc:`.
+     - parameter timerKey: Provide as an identifier in nested calls to `tic` and `toc`.
+     
+     - seealso: `log(_:, forLevel:)`
+     - seealso: `toc`
      */
     public func tic<M>(@autoclosure(escaping) andLog message: () -> M, error: ErrorType? = nil, forLevel logLevel: LogLevel? = nil, timerKey: String? = nil, function: String = #function, file: String = #file, line: Int = #line)
     {
@@ -298,7 +338,11 @@ public final class Logger {
     }
     
     // TODO: log "...Toc" message by default
-    /// When called after a preceding call to `tic:`, the elapsed time between both calls will be appended to the record. See `tic:` for documentation and usage of the `timerKey` parameter in nested calls to `tic:` and `toc:`.
+    /**
+     Call after a preceding `tic` to log the elapsed time between both calls alongside the event.
+     
+     - seealso: `tic`
+    */
     public func toc<M>(@autoclosure(escaping) andLog message: () -> M, error: ErrorType? = nil, forLevel logLevel: LogLevel? = nil, timerKey: String? = nil, function: String = #function, file: String = #file, line: Int = #line)
     {
         var startDate: NSDate?
@@ -322,7 +366,11 @@ public final class Logger {
         return Evergreen.defaultLogger
     }
     
-    /// Returns an appropriate logger for the given file. Generally, the logger's key will be the file name and it will be a direct child of the default logger.
+    /**
+     Returns an appropriate logger for the given file.
+ 
+     Generally, the logger's key will be the file name and it will be a direct child of the default logger.
+    */
     public class func loggerForFile(file: String = #file) -> Logger {
         guard let fileURL = NSURL(string: file), let key = fileURL.lastPathComponent else {
             return Evergreen.defaultLogger
@@ -330,7 +378,13 @@ public final class Logger {
         return self.loggerForKeyPath(KeyPath(components: [ key ]))
     }
     
-    /// Returns the logger for the specified key path. A key path is a dot-separated string of keys like `"MyModule.MyClass"` describing the logger hierarchy relative to the default logger. Always returns the same logger object for a given key path. A parent-children relationship is established and can be used to set specific settings like log levels and handlers for only parts of the logger hierarchy.
+    /**
+     Always returns the same logger object for a given key path.
+ 
+     A key path is a dot-separated string of keys like `"MyModule.MyClass"` describing the logger hierarchy relative to the default logger.
+  
+     A parent-child relationship is established and can be used to set specific settings such as log levels and handlers for only parts of the logger hierarchy.
+    */
     public class func loggerForKeyPath(keyPath: Logger.KeyPath) -> Logger {
         let (key, remainingKeyPath) = keyPath.popFirst()
         if let key = key {
