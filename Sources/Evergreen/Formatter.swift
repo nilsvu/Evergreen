@@ -93,6 +93,10 @@ public class Formatter {
             string += " [ERROR: \(errorMessage)]"
         }
         
+        if event.once {
+            string += " [ONLY LOGGED ONCE]"
+        }
+        
         return string
     }
     

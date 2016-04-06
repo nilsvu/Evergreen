@@ -18,7 +18,7 @@ log("Hello World!", forLevel: .Info)
 ```
 
 ```sh
-2015-04-26 01:48:32.415 [AppDelegate.swift|INFO] Hello World!
+[AppDelegate.swift|INFO] Hello World!
 ```
 
 > Evergreen logging is great to use in any Swift project, but particularly useful when developing a framework. Give the users of your framework the opportunity to easily adjust the verbosity of the output your framework generates.
@@ -210,7 +210,7 @@ Every environment variable prefixed `Evergreen` is evaluated as a logger key pat
 Valid environment variable declarations would be e.g. `Evergreen = Debug` or `Evergreen.MyLogger = Verbose`.
 
 
-### Logging `ErrorType` errors alongside your events
+### Logging `ErrorType` Errors alongside your Events
 
 You can pass any error conforming to Swift's `ErrorType` (such as `NSError`) to Evergreen's logging functions, either as the message or in the separate `error:` argument:
 
@@ -225,10 +225,9 @@ debug("Something unexpected happened here!", error: error)
 Easily measure the time between two events:
 
 ```swift
-let logger = Evergreen.defaultLogger
-logger.tic(andLog: "Starting expensive operation...", forLevel: .Debug)
+tic(andLog: "Starting expensive operation...", forLevel: .Debug)
 // ...
-logger.toc(andLog: "Completed expensive operation!", forLevel: .Info)
+toc(andLog: "Completed expensive operation!", forLevel: .Info)
 ```
 
 ```sh
@@ -239,14 +238,21 @@ logger.toc(andLog: "Completed expensive operation!", forLevel: .Info)
 You can also use the `timerKey` argument for nested timing:
 
 ```swift
-let logger = Evergreen.defaultLogger
-logger.tic(andLog: "Starting expensive operation...", forLevel: .Debug, timerKey: "expensiveOperation")
+tic(andLog: "Starting expensive operation...", forLevel: .Debug, timerKey: "expensiveOperation")
 for var i=0; i<10; i++ {
-	logger.tic(andLog: "\(i+1). iteration...", forLevel: .Verbose, timerKey: "iteration")
+	tic(andLog: "\(i+1). iteration...", forLevel: .Verbose, timerKey: "iteration")
 	// ...
-	logger.toc(andLog: "Done!", forLevel: .Verbose, timerKey: "iteration")
+	toc(andLog: "Done!", forLevel: .Verbose, timerKey: "iteration")
 }
-logger.toc(andLog: "Completed expensive operation!", forLevel: .Info, timerKey: "expensiveOperation")
+toc(andLog: "Completed expensive operation!", forLevel: .Info, timerKey: "expensiveOperation")
+```
+
+### Logging Events only once
+
+You can keep similar events from being logged in excessive amounts by associating a `key` with them in any logging call, e.g.:
+
+```swift
+debug("Announcing this once!", onceForKey: "announcement")
 ```
 
 
