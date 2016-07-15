@@ -69,7 +69,7 @@ public class Formatter {
     
     /// Produces a record from a given event. The record can be subsequently emitted by a handler.
     public final func recordFromEvent<M>(event: Event<M>) -> Record {
-        return Record(date: event.date, description: self.stringFromEvent(event))
+        return Record(date: event.date, logLevel: event.logLevel, description: self.stringFromEvent(event))
     }
     
     public func stringFromEvent<M>(event: Event<M>) -> String
