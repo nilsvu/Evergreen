@@ -14,6 +14,7 @@ import Foundation
 public struct Record: CustomStringConvertible {
 
     public let date: NSDate
+    public let logLevel: LogLevel?
     public let description: String
     
 }
