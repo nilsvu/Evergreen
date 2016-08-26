@@ -71,7 +71,7 @@ As usual with CocoaPods, make sure to use the `*.xcworkspace` instead of the `*.
 
 ### Swift Package Manager (currently in beta)
 
-You can also use the Swift Package Manager included in the [Swift 2.2 beta](https://swift.org/download/). Just add Evergreen as a dependency to your package description, like this:
+You can also use the Swift Package Manager included in the [Xcode 8 beta 6](https://developer.apple.com/xcode). Just add Evergreen as a dependency to your package description, like this:
 
 ```swift
 import PackageDescription
