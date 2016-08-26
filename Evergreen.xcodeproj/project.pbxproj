@@ -25,15 +25,15 @@
 		87189B931CB325A200EB3284 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87189B831CB325A200EB3284 /* Logger.swift */; };
 		87515FDD1CB2BBA100E0120D /* Evergreen.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87515FD31CB2BBA100E0120D /* Evergreen.framework */; };
 		875160001CB2BEC500E0120D /* Evergreen.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87515FF61CB2BEC500E0120D /* Evergreen.framework */; };
-		875160281CB2C12F00E0120D /* LoggerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 875160251CB2C12F00E0120D /* LoggerTests.swift */; };
-		875160291CB2C12F00E0120D /* LoggerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 875160251CB2C12F00E0120D /* LoggerTests.swift */; };
-		8751602A1CB2C12F00E0120D /* LoggerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 875160251CB2C12F00E0120D /* LoggerTests.swift */; };
-		8751602B1CB2C12F00E0120D /* LoggingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 875160261CB2C12F00E0120D /* LoggingTests.swift */; };
-		8751602C1CB2C12F00E0120D /* LoggingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 875160261CB2C12F00E0120D /* LoggingTests.swift */; };
-		8751602D1CB2C12F00E0120D /* LoggingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 875160261CB2C12F00E0120D /* LoggingTests.swift */; };
-		8751602E1CB2C12F00E0120D /* StenographyTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 875160271CB2C12F00E0120D /* StenographyTestCase.swift */; };
-		8751602F1CB2C12F00E0120D /* StenographyTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 875160271CB2C12F00E0120D /* StenographyTestCase.swift */; };
-		875160301CB2C12F00E0120D /* StenographyTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 875160271CB2C12F00E0120D /* StenographyTestCase.swift */; };
+		D5C1AA6D1D701E3F0015363F /* LoggerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C1AA6A1D701E3F0015363F /* LoggerTests.swift */; };
+		D5C1AA6E1D701E3F0015363F /* LoggerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C1AA6A1D701E3F0015363F /* LoggerTests.swift */; };
+		D5C1AA6F1D701E3F0015363F /* LoggerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C1AA6A1D701E3F0015363F /* LoggerTests.swift */; };
+		D5C1AA701D701E3F0015363F /* LoggingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C1AA6B1D701E3F0015363F /* LoggingTests.swift */; };
+		D5C1AA711D701E3F0015363F /* LoggingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C1AA6B1D701E3F0015363F /* LoggingTests.swift */; };
+		D5C1AA721D701E3F0015363F /* LoggingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C1AA6B1D701E3F0015363F /* LoggingTests.swift */; };
+		D5C1AA731D701E3F0015363F /* StenographyTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C1AA6C1D701E3F0015363F /* StenographyTestCase.swift */; };
+		D5C1AA741D701E3F0015363F /* StenographyTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C1AA6C1D701E3F0015363F /* StenographyTestCase.swift */; };
+		D5C1AA751D701E3F0015363F /* StenographyTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C1AA6C1D701E3F0015363F /* StenographyTestCase.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,11 +70,11 @@
 		87515FF61CB2BEC500E0120D /* Evergreen.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Evergreen.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		87515FFF1CB2BEC500E0120D /* Evergreen-tvOS Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Evergreen-tvOS Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		875160121CB2C00C00E0120D /* Evergreen.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Evergreen.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		875160251CB2C12F00E0120D /* LoggerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoggerTests.swift; path = Tests/Evergreen/LoggerTests.swift; sourceTree = SOURCE_ROOT; };
-		875160261CB2C12F00E0120D /* LoggingTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoggingTests.swift; path = Tests/Evergreen/LoggingTests.swift; sourceTree = SOURCE_ROOT; };
-		875160271CB2C12F00E0120D /* StenographyTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StenographyTestCase.swift; path = Tests/Evergreen/StenographyTestCase.swift; sourceTree = SOURCE_ROOT; };
 		87539B1F19DB23F00084658D /* Evergreen.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Evergreen.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		87539B2A19DB23F00084658D /* Evergreen-iOS Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Evergreen-iOS Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D5C1AA6A1D701E3F0015363F /* LoggerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoggerTests.swift; path = Tests/EvergreenTests/LoggerTests.swift; sourceTree = SOURCE_ROOT; };
+		D5C1AA6B1D701E3F0015363F /* LoggingTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoggingTests.swift; path = Tests/EvergreenTests/LoggingTests.swift; sourceTree = SOURCE_ROOT; };
+		D5C1AA6C1D701E3F0015363F /* StenographyTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StenographyTestCase.swift; path = Tests/EvergreenTests/StenographyTestCase.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -170,9 +170,9 @@
 		87539B2B19DB23F00084658D /* EvergreenTests */ = {
 			isa = PBXGroup;
 			children = (
-				875160251CB2C12F00E0120D /* LoggerTests.swift */,
-				875160261CB2C12F00E0120D /* LoggingTests.swift */,
-				875160271CB2C12F00E0120D /* StenographyTestCase.swift */,
+				D5C1AA6A1D701E3F0015363F /* LoggerTests.swift */,
+				D5C1AA6B1D701E3F0015363F /* LoggingTests.swift */,
+				D5C1AA6C1D701E3F0015363F /* StenographyTestCase.swift */,
 			);
 			name = EvergreenTests;
 			path = VILogKitTests;
@@ -358,12 +358,14 @@
 					};
 					87515FDB1CB2BBA100E0120D = {
 						CreatedOnToolsVersion = 7.3;
+						LastSwiftMigration = 0800;
 					};
 					87515FF51CB2BEC500E0120D = {
 						CreatedOnToolsVersion = 7.3;
 					};
 					87515FFE1CB2BEC500E0120D = {
 						CreatedOnToolsVersion = 7.3;
+						LastSwiftMigration = 0800;
 					};
 					875160111CB2C00C00E0120D = {
 						CreatedOnToolsVersion = 7.3;
@@ -373,6 +375,7 @@
 					};
 					87539B2919DB23F00084658D = {
 						CreatedOnToolsVersion = 6.0.1;
+						LastSwiftMigration = 0800;
 					};
 				};
 			};
@@ -466,9 +469,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				875160291CB2C12F00E0120D /* LoggerTests.swift in Sources */,
-				8751602F1CB2C12F00E0120D /* StenographyTestCase.swift in Sources */,
-				8751602C1CB2C12F00E0120D /* LoggingTests.swift in Sources */,
+				D5C1AA6E1D701E3F0015363F /* LoggerTests.swift in Sources */,
+				D5C1AA741D701E3F0015363F /* StenographyTestCase.swift in Sources */,
+				D5C1AA711D701E3F0015363F /* LoggingTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -486,9 +489,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8751602A1CB2C12F00E0120D /* LoggerTests.swift in Sources */,
-				875160301CB2C12F00E0120D /* StenographyTestCase.swift in Sources */,
-				8751602D1CB2C12F00E0120D /* LoggingTests.swift in Sources */,
+				D5C1AA6F1D701E3F0015363F /* LoggerTests.swift in Sources */,
+				D5C1AA751D701E3F0015363F /* StenographyTestCase.swift in Sources */,
+				D5C1AA721D701E3F0015363F /* LoggingTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -516,9 +519,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				875160281CB2C12F00E0120D /* LoggerTests.swift in Sources */,
-				8751602E1CB2C12F00E0120D /* StenographyTestCase.swift in Sources */,
-				8751602B1CB2C12F00E0120D /* LoggingTests.swift in Sources */,
+				D5C1AA6D1D701E3F0015363F /* LoggerTests.swift in Sources */,
+				D5C1AA731D701E3F0015363F /* StenographyTestCase.swift in Sources */,
+				D5C1AA701D701E3F0015363F /* LoggingTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -614,6 +617,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -634,6 +638,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -701,6 +706,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 				TVOS_DEPLOYMENT_TARGET = 9.2;
 			};
 			name = Debug;
@@ -719,6 +725,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
+				SWIFT_VERSION = 3.0;
 				TVOS_DEPLOYMENT_TARGET = 9.2;
 			};
 			name = Release;
@@ -817,6 +824,7 @@
 				PRODUCT_NAME = Evergreen;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -856,6 +864,7 @@
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)";
 				PRODUCT_NAME = Evergreen;
 				SDKROOT = iphoneos;
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -909,6 +918,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -922,6 +932,7 @@
 				);
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};

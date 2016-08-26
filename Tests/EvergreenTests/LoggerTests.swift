@@ -30,7 +30,7 @@ class LoggerTests: StenographyTestCase {
         }
         let parentLogger = defaultLogger.childForKeyPath("Parent")
         XCTAssert(parentLogger.parent === defaultLogger, "childForKeyPath() instance method does not establish parent relationship.")
-        defaultLogger.logLevel = .None
+        defaultLogger.logLevel = .none
         XCTAssert(parentLogger.effectiveLogLevel == defaultLogger.logLevel, "Logger with no explicit log level does not inherit parent's log level")
         let childLogger = Logger.loggerForKeyPath("Parent.Child")
         XCTAssert(childLogger.parent === parentLogger, "Child logger created by key path 'Parent.Child' is not a child of 'Parent' logger")
@@ -42,7 +42,7 @@ class LoggerTests: StenographyTestCase {
     }
     
     func testLogLevels() {
-        let debug = LogLevel.Debug
+        let debug = LogLevel.debug
         for description in ["debug", "DEBUG", "Debug"] {
             let logLevelFromDescription = LogLevel(description: description)
             XCTAssert(logLevelFromDescription != nil, "Can't initialize log level from description \(description).")
@@ -55,12 +55,12 @@ class LoggerTests: StenographyTestCase {
             let logLevelFromDescription = LogLevel(description: logLevel.description)
             XCTAssert(logLevelFromDescription != nil, "Can't initialize log level from description \(logLevel.description).")
             XCTAssert(logLevelFromDescription == logLevel, "Log level \(logLevelFromDescription!) initialized from description \(logLevel.description) does not match \(logLevel).")
-            let logLevelFromUppercaseDescription = LogLevel(description: logLevel.description.uppercaseString)
-            XCTAssert(logLevelFromUppercaseDescription != nil, "Can't initialize log level from description \(logLevel.description.uppercaseString).")
+            let logLevelFromUppercaseDescription = LogLevel(description: logLevel.description.uppercased())
+            XCTAssert(logLevelFromUppercaseDescription != nil, "Can't initialize log level from description \(logLevel.description.uppercased()).")
             XCTAssert(logLevelFromUppercaseDescription == logLevel, "Log level \(logLevelFromUppercaseDescription!) initialized from description \(logLevel.description) does not match \(logLevel).")
             i += 1
         }
-        XCTAssert(logLevels.sort(<) == logLevels, "Log levels initialized by sequencial raw values are not ordered by comparison operator.")
+        XCTAssert(logLevels.sorted(by: <) == logLevels, "Log levels initialized by sequencial raw values are not ordered by comparison operator.")
     }
     
     func testErrorTypeLogging() {

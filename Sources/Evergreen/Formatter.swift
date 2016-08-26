@@ -10,76 +10,76 @@ import Foundation
 
 
 public class Formatter {
-    
+
     public let components: [Component]
-    
+
     public init(components: [Component]) {
         self.components = components
     }
-    
+
     public enum Style {
-        case Default, Simple, Full
+        case `default`, simple, full
     }
-    
+
     /// Creates a formatter from any of the predefined styles.
     public convenience init(style: Style) {
         let components: [Component]
         switch style {
-        case .Default:
-            components = [ .Text("["), .Logger, .Text("|"), .LogLevel, .Text("] "), .Message ]
-        case .Simple:
-            components = [ .Message ]
-        case .Full:
-            let dateFormatter = NSDateFormatter()
+        case .default:
+            components = [ .text("["), .logger, .text("|"), .logLevel, .text("] "), .message ]
+        case .simple:
+            components = [ .message ]
+        case .full:
+            let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss.SSS"
-            components = [ .Date(formatter: dateFormatter), .Text(" ["), .Logger, .Text("|"), .LogLevel, .Text("] "), .Message ]
+            components = [ .date(formatter: dateFormatter), .text(" ["), .logger, .text("|"), .logLevel, .text("] "), .message ]
         }
         self.init(components: components)
     }
-    
+
     public enum Component {
-        case Text(String), Date(formatter: NSDateFormatter), Logger, LogLevel, Message, Function, File, Line//, Any(stringForEvent: (event: Event<M>) -> String)
-        
-        public func stringForEvent<M>(event: Event<M>) -> String {
+        case text(String), date(formatter: DateFormatter), logger, logLevel, message, function, file, line//, Any(stringForEvent: (event: Event<M>) -> String)
+
+        public func stringForEvent<M>(_ event: Event<M>) -> String {
             switch self {
-            case .Text(let text):
+            case .text(let text):
                 return text
-            case .Date(let formatter):
-                return formatter.stringFromDate(event.date)
-            case .Logger:
+            case .date(let formatter):
+                return formatter.string(from: event.date as Date)
+            case .logger:
                 return event.logger.description
-            case .LogLevel:
-                return (event.logLevel?.description ?? "Unspecified").uppercaseString
-            case .Message:
+            case .logLevel:
+                return (event.logLevel?.description ?? "Unspecified").uppercased()
+            case .message:
                 switch event.message() {
                 case let error as NSError:
                     return error.localizedDescription
                 case let message:
-                    return String(message)
+                    return String(describing: message)
                 }
-            case .Function:
+            case .function:
                 return event.function
-            case .File:
+            case .file:
                 return event.file
-            case .Line:
+            case .line:
                 return String(event.line)
             }
         }
     }
-    
+
     /// Produces a record from a given event. The record can be subsequently emitted by a handler.
-    public final func recordFromEvent<M>(event: Event<M>) -> Record {
+    public final func recordFromEvent<M>(_ event: Event<M>) -> Record {
         return Record(date: event.date, logLevel: event.logLevel, description: self.stringFromEvent(event))
     }
-    
-    public func stringFromEvent<M>(event: Event<M>) -> String
+
+    public func stringFromEvent<M>(_ event: Event<M>) -> String
     {
-        var string = components.map({ $0.stringForEvent(event) }).joinWithSeparator("")
-        
+        var string = components.map({ $0.stringForEvent(event) }).joined(separator: "")
+
         if let elapsedTime = event.elapsedTime {
             string += " [ELAPSED TIME: \(elapsedTime)s]"
         }
-        
+
         if let error = event.error {
             let errorMessage: String
             switch error {
@@ -88,16 +88,16 @@ public class Formatter {
             case let error as CustomStringConvertible:
                 errorMessage = error.description
             default:
-                errorMessage = String(error)
+                errorMessage = String(describing: error)
             }
             string += " [ERROR: \(errorMessage)]"
         }
-        
+
         if event.once {
             string += " [ONLY LOGGED ONCE]"
         }
-        
+
         return string
     }
-    
+
 }
