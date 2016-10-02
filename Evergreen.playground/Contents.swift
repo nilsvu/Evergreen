@@ -10,16 +10,16 @@ import Evergreen
 log("Hello World!") // Look at the console output!
 
 
-Evergreen.logLevel = .Debug
+Evergreen.logLevel = .debug
 
 // These events will be logged, because their log level is >= .Debug
-Evergreen.log("Debug", forLevel: .Debug)
-Evergreen.log("Info", forLevel: .Info)
-Evergreen.log("Warning", forLevel: .Warning)
-Evergreen.log("Critical", forLevel: .Critical)
+Evergreen.log("Debug", forLevel: .debug)
+Evergreen.log("Info", forLevel: .info)
+Evergreen.log("Warning", forLevel: .warning)
+Evergreen.log("Critical", forLevel: .critical)
 
 // These events will not be logged, because their log level is < .Debug
-Evergreen.log("Verbose", forLevel: .Verbose)
+Evergreen.log("Verbose", forLevel: .verbose)
 
 // Each log level has a corresponding log function alias for convenience
 Evergreen.debug("Debug")
@@ -31,8 +31,8 @@ Evergreen.debug("Some nasty error occured!", error: error)
 
 // Use the logger hierarchy to adjust the logging configuration for specific parts of your software
 let fooLogger = Evergreen.getLogger("MyModule.Foo")
-fooLogger.logLevel = .Verbose
-fooLogger.log("Verbose", forLevel: .Verbose)
+fooLogger.logLevel = .verbose
+fooLogger.log("Verbose", forLevel: .verbose)
 
 
 class Tree: CustomStringConvertible {
@@ -44,16 +44,16 @@ class Tree: CustomStringConvertible {
     let maxHeight: Float = 5
     
     init() {
-        logger.log("You planted a tree: \(self)", forLevel: .Info)
+        logger.info("You planted a tree: \(self)")
     }
     
     func grow() {
-        logger.tic(andLog: "Your tree is growing...", forLevel: .Debug)
+        logger.tic(andLog: "Your tree is growing...", forLevel: .debug)
         while abs(maxHeight - height) > 0.5 {
             height += (maxHeight - height) / 4
-            logger.log("Your tree grew: \(self)", forLevel: .Verbose)
+            logger.verbose("Your tree grew: \(self)")
         }
-        logger.toc(andLog: "Your tree is fully grown: \(self)", forLevel: .Info)
+        logger.toc(andLog: "Your tree is fully grown: \(self)", forLevel: .info)
     }
     
     var description: String {
@@ -72,9 +72,9 @@ class Tree: CustomStringConvertible {
 var 🌳: Tree
 
 🌳 = Tree()
-🌳.logger.logLevel = .Info
+🌳.logger.logLevel = .info
 🌳.grow()
 
 🌳 = Tree()
-🌳.logger.logLevel = .Verbose
+🌳.logger.logLevel = .verbose
 🌳.grow()

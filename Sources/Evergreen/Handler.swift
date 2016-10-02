@@ -22,7 +22,7 @@ public struct Record: CustomStringConvertible {
 
 // MARK: - Handler
 
-public class Handler {
+open class Handler {
 
     public var logLevel: LogLevel?
     public var formatter: Formatter
@@ -31,18 +31,18 @@ public class Handler {
         self.formatter = formatter
     }
 
-    /// Called by a logger to handle an event. The event's log level is checked against the handler's and the given formatter is used to obtain a record from the event. Subsequently, `emitRecord` is called to produce the output.
-    public final func emitEvent<M>(_ event: Event<M>) {
+    /// Called by a logger to handle an event. The event's log level is checked against the handler's and the given formatter is used to obtain a record from the event. Subsequently, `emit` is called to produce the output.
+    public final func emit<M>(_ event: Event<M>) {
         if let handlerLogLevel = self.logLevel,
             let eventLogLevel = event.logLevel,
             eventLogLevel < handlerLogLevel {
             return
         }
-        self.emitRecord(self.formatter.recordFromEvent(event))
+        self.emit(self.formatter.record(from: event))
     }
 
     /// Called to actually produce some output from a record. Override this method to send the record to an output stream of your choice. The default implementation simply prints the record to the console.
-    public func emitRecord(_ record: Record) {
+    open func emit(_ record: Record) {
         print(record)
     }
 
@@ -58,8 +58,8 @@ public class ConsoleHandler: Handler {
         self.init(formatter: Formatter(style: .default))
     }
 
-    override public func emitRecord(_ record: Record) {
-        // TODO: use debugPrintln?
+    override public func emit(_ record: Record) {
+        // TODO: use debugPrint?
         print(record)
     }
 
@@ -95,7 +95,7 @@ public class FileHandler: Handler, CustomStringConvertible {
         self.file = file
     }
 
-    override public func emitRecord(_ record: Record) {
+    override public func emit(_ record: Record) {
         if let recordData = (record.description + "\n").data(using: String.Encoding.utf8, allowLossyConversion: true) {
             self.file.write(recordData)
         } else {
@@ -123,7 +123,7 @@ public class StenographyHandler: Handler {
         self.init(formatter: Formatter(style: .default))
     }
 
-    override public func emitRecord(_ record: Record) {
+    override public func emit(_ record: Record) {
         self.records.append(record)
     }
     

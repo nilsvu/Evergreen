@@ -14,7 +14,7 @@ Integrate Evergreen logging into your Swift project to replace those plain `prin
 ```swift
 import Evergreen
 
-log("Hello World!", forLevel: .Info)
+log("Hello World!", forLevel: .info)
 ```
 
 ```sh
@@ -23,6 +23,22 @@ log("Hello World!", forLevel: .Info)
 
 > Evergreen logging is great to use in any Swift project, but particularly useful when developing a framework. Give the users of your framework the opportunity to easily adjust the verbosity of the output your framework generates.
 
+- [About Logging](#about-logging)
+- [Installation](#installation)
+- [Usage](#usage)
+    - [Logging without configuration](#logging-without-configuration)
+    - [Using Log Levels](#using-log-levels)
+    - [Using the Logger Hierarchy](#using-the-logger-hierarchy)
+    - [Using Environment Variables for Configuration](#using-environment-variables-for-configuration)
+    - [Logging `Error`s alongside your Events](#logging-errors-alongside-your-events)
+    - [Measuring Time](#measuring-time)
+    - [Logging Events only once](#logging-events-only-once)
+- [Advanced Usage](#advanced-usage)
+    - [Using Handlers](#using-handlers)
+    - [Formatting](#formatting)
+- [Contact](#contact)
+- [Roadmap](#roadmap)
+- [License](#license)
 
 ## About Logging
 
@@ -69,9 +85,9 @@ The easiest way to integrate Evergreen into your project is via [CocoaPods](http
 	
 As usual with CocoaPods, make sure to use the `*.xcworkspace` instead of the `*.xcodeproj`.
 
-### Swift Package Manager (currently in beta)
+### Swift Package Manager
 
-You can also use the Swift Package Manager included in the [Xcode 8 beta 6](https://developer.apple.com/xcode). Just add Evergreen as a dependency to your package description, like this:
+You can also use the [Swift Package Manager](https://swift.org/package-manager) included in the [Swift developer releases](https://swift.org/download). Just add Evergreen as a dependency to your package description, like this:
 
 ```swift
 import PackageDescription
@@ -139,24 +155,24 @@ In addition to the log levels above, a logger can have one of the following log 
 For a basic configuration, you can adjust Evergreen's default log level. Read about the *logger hierarchy* below to learn how to control the log level more granually.
 
 ```swift
-Evergreen.logLevel = .Debug
+Evergreen.logLevel = .debug
 
-// These events will be logged, because their log level is >= .Debug
-log("Debug", forLevel: .Debug)
-log("Info", forLevel: .Info)
-log("Warning", forLevel: .Warning)
-log("Error", forLevel: .Error)
-log("Critical", forLevel: .Critical)
+// These events will be logged, because their log level is >= .debug
+log("Debug", forLevel: .debug)
+log("Info", forLevel: .info)
+log("Warning", forLevel: .warning)
+log("Error", forLevel: .error)
+log("Critical", forLevel: .critical)
 
-// These events will not be logged, because their log level is < .Debug
-log("Verbose", forLevel: .Verbose)
+// These events will not be logged, because their log level is < .debug
+log("Verbose", forLevel: .verbose)
 ```
 
 Every log level has a corresponding log function for convenience:
 
 ```swift
-debug("Debug") // equivalent to log("Debug", forLevel: .Debug)
-info("Info") // equivalent to log("Info", forLevel: .Info)
+debug("Debug") // equivalent to log("Debug", forLevel: .debug)
+info("Info") // equivalent to log("Info", forLevel: .info)
 // ...
 ```
 
@@ -172,7 +188,7 @@ Every logger has a `key` to identify the source of any given event. In its hiera
 You can manually build your own hierarchy, of course, but Evergreen provides a convenient way for you to utilize this powerful feature:
 
 - The *default logger* is the root of the logger hierarchy and can be retrieved using the `Evergreen.defaultLogger` constant. Use it to set a default log level. The global variable `Evergreen.logLevel` also refers to the default logger.
-- Retrieve an appropriate logger using the global `Evergreen.getLogger()` function or one of various instance and class methods like `logger.childForKeyPath()`. Provide a key path that describes the part of your software the event is relevant for, such as `"MyModule.MyType"`. These methods will always return the same logger instance for a given key path and establish the logger hierarchy, if it does not yet exist.
+- Retrieve an appropriate logger using the global `Evergreen.getLogger` function or the `Logger.child` instance method. Provide a key path that describes the part of your software the event is relevant for, such as `"MyModule.MyType"`. These methods will always return the same logger instance for a given key path and establish the logger hierarchy, if it does not yet exist.
 
 It is convenient to use a constant stored attribute to make an appropriate logger available for a given type:
 
@@ -193,9 +209,9 @@ class MyType {
 Having established a logger hierarchy, you can adjust the logging configuration for parts of it:
 
 ```swift
-Evergreen.logLevel = .Warning // Set the defaultLogger's log level to .Warning
-let logger = Evergreen.getLogger("MyModule") // Retrieve the logger with key 'MyModule' directly descending from the default logger
-logger.logLevel = .Debug // We are working on this part of the software, so set its log level to .Debug
+Evergreen.logLevel = .warning // Set the `defaultLogger`'s log level to .warning
+let logger = Evergreen.getLogger("MyModule") // Retrieve the logger with key "MyModule" directly descending from the default logger
+logger.logLevel = .debug // We are working on this part of the software, so set its log level to .debug
 ```
 
 > **Note:** A good place to do this configuration for production is in the `AppDelegate`'s `application:didFinishLaunchingWithOptions:` method. Temporary log level adjustments are best configured as environment variables as described in the following section.
@@ -203,31 +219,35 @@ logger.logLevel = .Debug // We are working on this part of the software, so set 
 
 ### Using Environment Variables for Configuration
 
-The preferred way to temporarily configure the logger hierarchy is using environment variables. This way, you can conveniently enable more verbose logging for the parts of your software you are currently working on. In Xcode, choose your target from the dropdown in the toolbar, select `Edit Scheme...` `>` `Run` `>` `Arguments` and add environment variables to the list.
+The preferred way to temporarily configure the logger hierarchy is using environment variables. This way, you can conveniently enable more verbose logging for the parts of your software you are currently working on. In Xcode, choose your target from the dropdown in the toolbar, select `Edit Scheme...` `>` `Run` `>` `Arguments` and add environment variables to the list. Then call:
+
+```
+Evergreen.configureFromEnvironment()
+```
 
 Every environment variable prefixed `Evergreen` is evaluated as a logger key path and assigned a log level corresponding to the variable's value. Values should match the log level descriptions, e.g. `Debug` or `Warning`.
 
 Valid environment variable declarations would be e.g. `Evergreen = Debug` or `Evergreen.MyLogger = Verbose`.
 
 
-### Logging `ErrorType` Errors alongside your Events
+### Logging `Error`s alongside your Events
 
-You can pass any error conforming to Swift's `ErrorType` (such as `NSError`) to Evergreen's logging functions, either as the message or in the separate `error:` argument:
+You can pass any error conforming to Swift's `Error` type (such as `NSError`) to Evergreen's logging functions, either as the message or in the separate `error:` argument:
 
 ```swift
-let error: ErrorType // some error
+let error: Error // some error
 debug("Something unexpected happened here!", error: error)
 ```
 
 
 ### Measuring Time
 
-Easily measure the time between two events:
+Easily measure the time between two events with `tic` and `toc`:
 
 ```swift
-tic(andLog: "Starting expensive operation...", forLevel: .Debug)
+tic(andLog: "Starting expensive operation...", forLevel: .debug)
 // ...
-toc(andLog: "Completed expensive operation!", forLevel: .Info)
+toc(andLog: "Completed expensive operation!", forLevel: .info)
 ```
 
 ```sh
@@ -238,13 +258,13 @@ toc(andLog: "Completed expensive operation!", forLevel: .Info)
 You can also use the `timerKey` argument for nested timing:
 
 ```swift
-tic(andLog: "Starting expensive operation...", forLevel: .Debug, timerKey: "expensiveOperation")
+tic(andLog: "Starting expensive operation...", forLevel: .debug, timerKey: "expensiveOperation")
 for var i=0; i<10; i++ {
-	tic(andLog: "\(i+1). iteration...", forLevel: .Verbose, timerKey: "iteration")
+	tic(andLog: "\(i+1). iteration...", forLevel: .verbose, timerKey: "iteration")
 	// ...
-	toc(andLog: "Done!", forLevel: .Verbose, timerKey: "iteration")
+	toc(andLog: "Done!", forLevel: .verbose, timerKey: "iteration")
 }
-toc(andLog: "Completed expensive operation!", forLevel: .Info, timerKey: "expensiveOperation")
+toc(andLog: "Completed expensive operation!", forLevel: .info, timerKey: "expensiveOperation")
 ```
 
 ### Logging Events only once
@@ -266,7 +286,7 @@ When a logger determines that an event should be handled, it will pass it to its
 - A `FileHandler` writes the records to a file.
 - A `StenographyHandler` appends the record to an array in memory.
 
-> You can override `emitRecord:` in you own subclass to implement any custom behaviour you like, e.g. send it to a server.
+> You can override `emit` in you own subclass to implement any custom behaviour you like, e.g. send it to a server.
 
 Evergreen's `defaultLogger` has a `ConsoleHandler` attached by default, so every event in its hierarchy will be logged to the console. You can easily add additional handlers, by appending them to an appropriate logger's `handlers` array:
 
@@ -282,7 +302,7 @@ You can also set a handler's `logLevel`, to add an additional level of filtering
 
 Evergreen's `Formatter` class implements a convenient way for you to adjust the format of log records.
 
-The default implementation of the `recordFromEvent:` method, that you can also override in a subclass, of course, uses a list `components: [Formatter.Component]` to construct a record from an event using instances of the `Formatter.Component` enumeration:
+The default implementation of the `string(from event: Event<M>)` method, that you can also override in a subclass, uses a list `components: [Formatter.Component]` to construct a record from an event using instances of the `Formatter.Component` enumeration:
 
 ```swift
 let simpleFormatter = Formatter(components: [ .Text("["), .Logger, .Text("|"), .LogLevel, .Text("] "), .Message ])
@@ -293,16 +313,15 @@ Evergreen.defaultLogger.handlers = [ consoleHandler ]
 
 ---
 
+
 ## Contact
 
 Evergreen was created and is maintained by [Nils Fischer](http://www.viwid.com) ([@knlyy](https://twitter.com/knlyy)).
 
 ## Roadmap
 
-The beta status of this framework mostly means that I haven't quite finished writing the documentation yet.
-
-Before finalizing a 1.0 release, I would greatly appreciate some professional opinions on the API and architecture. Any suggestions via Email ([n.fischer@viwid.com](mailto:n.fischer@viwid.com)) or Tweet ([@knlyy](https://twitter.com/knlyy)) are very welcome!
+The beta status of this framework mostly means that I would greatly appreciate some professional opinions on the API and architecture before finalizing a 1.0 release. Any suggestions via Email ([n.fischer@viwid.com](mailto:n.fischer@viwid.com)) or Tweet ([@knlyy](https://twitter.com/knlyy)) are very welcome.
 
 ## License
 
-Evergreen is released under the MIT license. See LICENSE.md for details.
+Evergreen is released under the MIT license. See [LICENSE.md](LICENSE.md) for details.

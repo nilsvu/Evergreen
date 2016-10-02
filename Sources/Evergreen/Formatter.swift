@@ -9,7 +9,7 @@
 import Foundation
 
 
-public class Formatter {
+open class Formatter {
 
     public let components: [Component]
 
@@ -21,7 +21,7 @@ public class Formatter {
         case `default`, simple, full
     }
 
-    /// Creates a formatter from any of the predefined styles.
+    /// Creates a `Formatter` from any of the predefined styles.
     public convenience init(style: Style) {
         let components: [Component]
         switch style {
@@ -40,7 +40,7 @@ public class Formatter {
     public enum Component {
         case text(String), date(formatter: DateFormatter), logger, logLevel, message, function, file, line//, Any(stringForEvent: (event: Event<M>) -> String)
 
-        public func stringForEvent<M>(_ event: Event<M>) -> String {
+        public func string<M>(from event: Event<M>) -> String {
             switch self {
             case .text(let text):
                 return text
@@ -67,14 +67,14 @@ public class Formatter {
         }
     }
 
-    /// Produces a record from a given event. The record can be subsequently emitted by a handler.
-    public final func recordFromEvent<M>(_ event: Event<M>) -> Record {
-        return Record(date: event.date, logLevel: event.logLevel, description: self.stringFromEvent(event))
+    /// Produces a record from a given event. The record can be subsequently `emit`ted by a `Handler`.
+    public final func record<M>(from event: Event<M>) -> Record {
+        return Record(date: event.date, logLevel: event.logLevel, description: self.string(from: event))
     }
 
-    public func stringFromEvent<M>(_ event: Event<M>) -> String
+    open func string<M>(from event: Event<M>) -> String
     {
-        var string = components.map({ $0.stringForEvent(event) }).joined(separator: "")
+        var string = components.map({ $0.string(from: event) }).joined(separator: "")
 
         if let elapsedTime = event.elapsedTime {
             string += " [ELAPSED TIME: \(elapsedTime)s]"

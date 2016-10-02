@@ -15,28 +15,28 @@ class RecordListViewController: UITableViewController {
 
     // MARK: User Interaction
     
-    @IBAction func refreshButtonPressed(sender: AnyObject) {
+    @IBAction func refreshButtonPressed(_ sender: AnyObject) {
         self.tableView.reloadData()
     }
     
-    @IBAction func addButtonPressed(sender: AnyObject) {
-        log(#function, forLevel: .Info)
+    @IBAction func addButtonPressed(_ sender: AnyObject) {
+        Evergreen.info(#function)
         self.tableView.reloadData()
     }
     
     // MARK: Table View Datasource
     
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return stenographyHandler.records.count
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let record = stenographyHandler.records.reverse()[indexPath.row]
-        let cell = tableView.dequeueReusableCellWithIdentifier("recordCell", forIndexPath: indexPath) 
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let record = stenographyHandler.records.reversed()[indexPath.row]
+        let cell = tableView.dequeueReusableCell(withIdentifier: "recordCell", for: indexPath) 
         cell.textLabel?.text = record.description
         return cell
     }

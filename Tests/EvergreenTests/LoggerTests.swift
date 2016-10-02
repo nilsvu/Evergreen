@@ -28,7 +28,7 @@ class LoggerTests: StenographyTestCase {
         for keyPath in ["Default.FirstParent", "SecondParent", ".ThirdParent"] {
             XCTAssert(Logger.loggerForKeyPath(Logger.KeyPath(string: keyPath)).parent === defaultLogger, "Logger for key path string '\(keyPath)' is not a child of the default logger")
         }
-        let parentLogger = defaultLogger.childForKeyPath("Parent")
+        let parentLogger = defaultLogger.child("Parent")
         XCTAssert(parentLogger.parent === defaultLogger, "childForKeyPath() instance method does not establish parent relationship.")
         defaultLogger.logLevel = .none
         XCTAssert(parentLogger.effectiveLogLevel == defaultLogger.logLevel, "Logger with no explicit log level does not inherit parent's log level")

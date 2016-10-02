@@ -21,77 +21,97 @@ public let defaultLogger: Logger = {
 
 /// The default logger's log level
 public var logLevel: LogLevel? {
-get {
-    return defaultLogger.logLevel
-}
-set {
-    defaultLogger.logLevel = newValue
-}
+    get {
+        return defaultLogger.logLevel
+    }
+    set {
+        defaultLogger.logLevel = newValue
+    }
 }
 
-/// Returns the logger for the specified key path.
-/// - seealso: `Logger.loggerForKeyPath(_:)`
+/**
+ Always returns the same logger object for a given key path.
+ 
+ A key path is a dot-separated string of keys like `"MyModule.MyClass"` describing the logger hierarchy relative to the default logger.
+ 
+ A parent-child relationship is established and can be used to set specific settings such as log levels and handlers for only parts of the logger hierarchy.
+ */
 public func getLogger(_ keyPath: Logger.KeyPath) -> Logger {
-    return Logger.loggerForKeyPath(keyPath)
+    let (key, remainingKeyPath) = keyPath.popFirst()
+    if let key = key {
+        if key == defaultLogger.key {
+            return defaultLogger.child(remainingKeyPath)
+        } else {
+            return defaultLogger.child(keyPath)
+        }
+    } else {
+        return defaultLogger
+    }
 }
 
-/// Returns an appropriate logger for the given file.
-/// - seealso: `Logger.loggerForFile(_:)`
-public func getLoggerForFile(_ file: String = #file) -> Logger {
-    return Logger.loggerForFile(file)
+/**
+ Returns an appropriate logger for the given file.
+ 
+ Generally, the logger's key will be the file name and it will be a direct child of the default logger.
+*/
+public func getLogger(forFile file: String = #file) -> Logger {
+    guard let fileURL = URL(string: file) else {
+        return Evergreen.defaultLogger
+    }
+    return Evergreen.getLogger(Logger.KeyPath(components: [ fileURL.lastPathComponent ]))
 }
 
 /// Logs the event using a logger that is appropriate for the caller.
 /// - seealso: `Logger.log(_:, forLevel:)`
-public func log<M>( _ message: @autoclosure @escaping () -> M, error: Error? = nil, forLevel logLevel: LogLevel? = nil, onceForKey key: String? = nil, function: String = #function, file: String = #file, line: Int = #line)
+public func log<M>(_ message: @autoclosure @escaping () -> M, error: Error? = nil, forLevel logLevel: LogLevel? = nil, onceForKey key: String? = nil, function: String = #function, file: String = #file, line: Int = #line)
 {
-    Logger.loggerForFile(file).log(message, error: error, forLevel: logLevel, onceForKey: key, function: function, file: file, line: line)
+    Evergreen.getLogger(forFile: file).log(message, error: error, forLevel: logLevel, onceForKey: key, function: function, file: file, line: line)
 }
 
 /// Logs the event with the Verbose log level using a logger that is appropriate for the caller.
 /// - seealso: `Logger.log(_:, forLevel:)`
-public func verbose<M>( _ message: @autoclosure @escaping () -> M, error: Error? = nil, onceForKey key: String? = nil, function: String = #function, file: String = #file, line: Int = #line) {
+public func verbose<M>(_ message: @autoclosure @escaping () -> M, error: Error? = nil, onceForKey key: String? = nil, function: String = #function, file: String = #file, line: Int = #line) {
     Evergreen.log(message, error: error, forLevel: .verbose, onceForKey: key, function: function, file: file, line: line)
 }
 /// Logs the event with the Debug log level using a logger that is appropriate for the caller.
 /// - seealso: `Logger.log(_:, forLevel:)`
-public func debug<M>( _ message: @autoclosure @escaping () -> M, error: Error? = nil, onceForKey key: String? = nil, function: String = #function, file: String = #file, line: Int = #line) {
+public func debug<M>(_ message: @autoclosure @escaping () -> M, error: Error? = nil, onceForKey key: String? = nil, function: String = #function, file: String = #file, line: Int = #line) {
     Evergreen.log(message, error: error, forLevel: .debug, onceForKey: key, function: function, file: file, line: line)
 }
 /// Logs the event with the Info log level using a logger that is appropriate for the caller.
 /// - seealso: `Logger.log(_:, forLevel:)`
-public func info<M>( _ message: @autoclosure @escaping () -> M, error: Error? = nil, onceForKey key: String? = nil, function: String = #function, file: String = #file, line: Int = #line) {
+public func info<M>(_ message: @autoclosure @escaping () -> M, error: Error? = nil, onceForKey key: String? = nil, function: String = #function, file: String = #file, line: Int = #line) {
     Evergreen.log(message, error: error, forLevel: .info, onceForKey: key, function: function, file: file, line: line)
 }
 /// Logs the event with the Warning log level using a logger that is appropriate for the caller.
 /// - seealso: `Logger.log(_:, forLevel:)`
-public func warning<M>( _ message: @autoclosure @escaping () -> M, error: Error? = nil, onceForKey key: String? = nil, function: String = #function, file: String = #file, line: Int = #line) {
+public func warning<M>(_ message: @autoclosure @escaping () -> M, error: Error? = nil, onceForKey key: String? = nil, function: String = #function, file: String = #file, line: Int = #line) {
     Evergreen.log(message, error: error, forLevel: .warning, onceForKey: key, function: function, file: file, line: line)
 }
 /// Logs the event with the Error log level using a logger that is appropriate for the caller.
 /// - seealso: `Logger.log(_:, forLevel:)`
-public func error<M>( _ message: @autoclosure @escaping () -> M, error: Error? = nil, onceForKey key: String? = nil, function: String = #function, file: String = #file, line: Int = #line) {
+public func error<M>(_ message: @autoclosure @escaping () -> M, error: Error? = nil, onceForKey key: String? = nil, function: String = #function, file: String = #file, line: Int = #line) {
     Evergreen.log(message, error: error, forLevel: .error, onceForKey: key, function: function, file: file, line: line)
 }
 /// Logs the event with the Critical log level using a logger that is appropriate for the caller.
 /// - seealso: `Logger.log(_:, forLevel:)`
-public func critical<M>( _ message: @autoclosure @escaping () -> M, error: Error? = nil, onceForKey key: String? = nil, function: String = #function, file: String = #file, line: Int = #line) {
+public func critical<M>(_ message: @autoclosure @escaping () -> M, error: Error? = nil, onceForKey key: String? = nil, function: String = #function, file: String = #file, line: Int = #line) {
     Evergreen.log(message, error: error, forLevel: .critical, onceForKey: key, function: function, file: file, line: line)
 }
 
 
 /// Alias for `Logger.tic` for a logger that is appropriate for the caller.
 /// - seealso: `Logger.tic`
-public func tic<M>( andLog message: @autoclosure @escaping () -> M, error: Error? = nil, forLevel logLevel: LogLevel? = nil, timerKey: String? = nil, function: String = #function, file: String = #file, line: Int = #line)
+public func tic<M>(andLog message: @autoclosure @escaping () -> M, error: Error? = nil, forLevel logLevel: LogLevel? = nil, timerKey: String? = nil, function: String = #function, file: String = #file, line: Int = #line)
 {
-    Logger.loggerForFile(file).tic(andLog: message, error: error, forLevel: logLevel, timerKey: timerKey, function: function, file: file, line: line)
+    Evergreen.getLogger(forFile: file).tic(andLog: message, error: error, forLevel: logLevel, timerKey: timerKey, function: function, file: file, line: line)
 }
 
 /// Alias for `Logger.toc` for a logger that is appropriate for the caller.
 /// - seealso: `Logger.toc`
-public func toc<M>( andLog message: @autoclosure @escaping () -> M, error: Error? = nil, forLevel logLevel: LogLevel? = nil, timerKey: String? = nil, function: String = #function, file: String = #file, line: Int = #line)
+public func toc<M>(andLog message: @autoclosure @escaping () -> M, error: Error? = nil, forLevel logLevel: LogLevel? = nil, timerKey: String? = nil, function: String = #function, file: String = #file, line: Int = #line)
 {
-    Logger.loggerForFile(file).toc(andLog: message, error: error, forLevel: logLevel, timerKey: timerKey, function: function, file: file, line: line)
+    Evergreen.getLogger(forFile: file).toc(andLog: message, error: error, forLevel: logLevel, timerKey: timerKey, function: function, file: file, line: line)
 }
 
 
@@ -109,7 +129,7 @@ public func configureFromEnvironment()
     var configurations = [(Logger, LogLevel)]()
     for (key, value) in environmentVariables where key.hasPrefix(prefix) {
         let (_, keyPath) = Logger.KeyPath(string: key).popFirst()
-        let logger = Logger.loggerForKeyPath(keyPath)
+        let logger = Evergreen.getLogger(keyPath)
         if let logLevel = LogLevel(description: value) {
             logger.logLevel = logLevel
             configurations.append((logger, logLevel))
@@ -175,7 +195,7 @@ public final class Logger {
     /// The parent in the logger hierarchy
     public let parent: Logger?
     /// The children in the logger hierarchy
-    public private(set) var children = [ String : Logger]()
+    public private(set) var children = [String : Logger]()
     /// The root of the logger hierarchy
     public var root: Logger {
         if let parent = parent {
@@ -217,7 +237,7 @@ public final class Logger {
 
     // MARK: Intial Info
 
-    // TODO: Decide, whether this is useful or not. Clients can just log information about the handlers they set up themselves, e.g. the log file name of a FileHandler.
+    // TODO: Decide, whether this is useful or not. Clients can just log information about the handlers they set up themselves, e.g. the log file name of a FileHandler, as part of their configuration procedure.
     //    private var hasLoggedInitialInfo: Bool = false
     //    /// Logs appropriate information about the logging setup automatically when the first logging call occurs.
     //    private func logInitialInfo() {
@@ -246,7 +266,7 @@ public final class Logger {
      - parameter logLevel: If the event's log level is lower than the receiving logger's `effectiveLogLevel`, the event will not be logged. The event will always be logged, if no log level is provided for either the event or the logger's `effectiveLogLevel`.
      - parameter key: Only logs the message if no logging calls with the same `key` have occured before.
      */
-    public func log<M>( _ message: @autoclosure @escaping () -> M, error: Error? = nil, forLevel logLevel: LogLevel? = nil, onceForKey key: String? = nil, function: String = #function, file: String = #file, line: Int = #line)
+    public func log<M>(_ message: @autoclosure @escaping () -> M, error: Error? = nil, forLevel logLevel: LogLevel? = nil, onceForKey key: String? = nil, function: String = #function, file: String = #file, line: Int = #line)
     {
         if let key = key {
             if keysLoggedOnce.contains(key) {
@@ -256,67 +276,68 @@ public final class Logger {
             }
         }
         let event = Event(logger: self, message: message, error: error, logLevel: logLevel, date: Date(), elapsedTime: nil, once: key != nil, function: function, file: file, line: line)
-        self.logEvent(event)
+        // TODO: Handle the case when `M` is `Event`
+        self.log(event: event)
     }
 
     /// Logs the event with the Verbose log level.
     /// - seealso: `log(_:, forLevel:)`
-    public func verbose<M>( _ message: @autoclosure @escaping () -> M, error: Error? = nil, onceForKey key: String? = nil, function: String = #function, file: String = #file, line: Int = #line) {
+    public func verbose<M>(_ message: @autoclosure @escaping () -> M, error: Error? = nil, onceForKey key: String? = nil, function: String = #function, file: String = #file, line: Int = #line) {
         self.log(message, error: error, forLevel: .verbose, onceForKey: key, function: function, file: file, line: line)
     }
     /// Logs the event with the Debug log level.
     /// - seealso: `log(_:, forLevel:)`
-    public func debug<M>( _ message: @autoclosure @escaping () -> M, error: Error? = nil, onceForKey key: String? = nil, function: String = #function, file: String = #file, line: Int = #line) {
+    public func debug<M>(_ message: @autoclosure @escaping () -> M, error: Error? = nil, onceForKey key: String? = nil, function: String = #function, file: String = #file, line: Int = #line) {
         self.log(message, error: error, forLevel: .debug, onceForKey: key, function: function, file: file, line: line)
     }
     /// Logs the event with the Info log level.
     /// - seealso: `log(_:, forLevel:)`
-    public func info<M>( _ message: @autoclosure @escaping () -> M, error: Error? = nil, onceForKey key: String? = nil, function: String = #function, file: String = #file, line: Int = #line) {
+    public func info<M>(_ message: @autoclosure @escaping () -> M, error: Error? = nil, onceForKey key: String? = nil, function: String = #function, file: String = #file, line: Int = #line) {
         self.log(message, error: error, forLevel: .info, onceForKey: key, function: function, file: file, line: line)
     }
     /// Logs the event with the Warning log level.
     /// - seealso: `log(_:, forLevel:)`
-    public func warning<M>( _ message: @autoclosure @escaping () -> M, error: Error? = nil, onceForKey key: String? = nil, function: String = #function, file: String = #file, line: Int = #line) {
+    public func warning<M>(_ message: @autoclosure @escaping () -> M, error: Error? = nil, onceForKey key: String? = nil, function: String = #function, file: String = #file, line: Int = #line) {
         self.log(message, error: error, forLevel: .warning, onceForKey: key, function: function, file: file, line: line)
     }
     /// Logs the event with the Error log level.
     /// - seealso: `log(_:, forLevel:)`
-    public func error<M>( _ message: @autoclosure @escaping () -> M, error: Error? = nil, onceForKey key: String? = nil, function: String = #function, file: String = #file, line: Int = #line) {
+    public func error<M>(_ message: @autoclosure @escaping () -> M, error: Error? = nil, onceForKey key: String? = nil, function: String = #function, file: String = #file, line: Int = #line) {
         self.log(message, error: error, forLevel: .error, onceForKey: key, function: function, file: file, line: line)
     }
     /// Logs the event with the Critical log level.
     /// - seealso: `log(_:, forLevel:)`
-    public func critical<M>( _ message: @autoclosure @escaping () -> M, error: Error? = nil, onceForKey key: String? = nil, function: String = #function, file: String = #file, line: Int = #line) {
+    public func critical<M>(_ message: @autoclosure @escaping () -> M, error: Error? = nil, onceForKey key: String? = nil, function: String = #function, file: String = #file, line: Int = #line) {
         self.log(message, error: error, forLevel: .critical, onceForKey: key, function: function, file: file, line: line)
     }
 
     var keysLoggedOnce = Set<String>()
 
     /// Logs the given event. Use `log(_:, forLevel:)` instead for convenience.
-    public func logEvent<M>(_ event: Event<M>)
+    public func log<M>(event: Event<M>)
     {
         // self.logInitialInfo()
 
-        if let effectiveLogLevel = self.effectiveLogLevel, let eventLogLevel = event.logLevel , eventLogLevel < effectiveLogLevel {
+        if let effectiveLogLevel = self.effectiveLogLevel, let eventLogLevel = event.logLevel, eventLogLevel < effectiveLogLevel {
             return
         } else {
-            self.handleEvent(event)
+            self.handle(event)
         }
     }
 
     /// Passes the event to this logger's `handlers` and then up the logger hierarchy, given `shouldPropagate` is set to `true`.
-    private func handleEvent<M>(_ event: Event<M>, wasHandled: Bool = false)
+    private func handle<M>(_ event: Event<M>, wasHandled: Bool = false)
     {
         var wasHandled = wasHandled
         for handler in handlers {
-            handler.emitEvent(event)
+            handler.emit(event)
             wasHandled = true
         }
-        if let parent = self.parent , shouldPropagate {
-            parent.handleEvent(event, wasHandled: wasHandled)
+        if let parent = self.parent, shouldPropagate {
+            parent.handle(event, wasHandled: wasHandled)
         } else {
             if !wasHandled {
-                // TODO: use println() directly? Using log() will cause an endless loop when defaultLogger does not have any handlers.
+                // TODO: use print() directly? Using log() will cause an endless loop when defaultLogger does not have any handlers.
                 print("Tried to log an event for logger '\(event.logger)', but no handler was found in the logger hierarchy to emit the event: \(event.file):\(event.line) \(event.function)")
             }
         }
@@ -337,7 +358,7 @@ public final class Logger {
      - seealso: `log(_:, forLevel:)`
      - seealso: `toc`
      */
-    public func tic<M>( andLog message: @autoclosure @escaping () -> M, error: Error? = nil, forLevel logLevel: LogLevel? = nil, timerKey: String? = nil, function: String = #function, file: String = #file, line: Int = #line)
+    public func tic<M>(andLog message: @autoclosure @escaping () -> M, error: Error? = nil, forLevel logLevel: LogLevel? = nil, timerKey: String? = nil, function: String = #function, file: String = #file, line: Int = #line)
     {
         if let timerKey = timerKey {
             startDates[timerKey] = Date()
@@ -353,7 +374,7 @@ public final class Logger {
 
      - seealso: `tic`
      */
-    public func toc<M>( andLog message: @autoclosure @escaping () -> M, error: Error? = nil, forLevel logLevel: LogLevel? = nil, timerKey: String? = nil, function: String = #function, file: String = #file, line: Int = #line)
+    public func toc<M>(andLog message: @autoclosure @escaping () -> M, error: Error? = nil, forLevel logLevel: LogLevel? = nil, timerKey: String? = nil, function: String = #function, file: String = #file, line: Int = #line)
     {
         var startDate: Date?
         if let timerKey = timerKey {
@@ -364,7 +385,7 @@ public final class Logger {
         if let startDate = startDate {
             let elapsedTime = Date().timeIntervalSince(startDate)
             let event = Event(logger: self, message: message, error: error, logLevel: logLevel, date: Date(), elapsedTime: elapsedTime, once: false, function: function, file: file, line: line)
-            self.logEvent(event)
+            self.log(event: event)
         }
     }
 
@@ -372,7 +393,7 @@ public final class Logger {
     // MARK: Logger Hierarchy
 
     /// The root of the logger hierarchy
-    public class func defaultLogger() -> Logger {
+    @available(*, deprecated: 0.10, message: "Use the global `Evergreen.defaultLogger` instead.") public class func defaultLogger() -> Logger {
         return Evergreen.defaultLogger
     }
 
@@ -381,11 +402,8 @@ public final class Logger {
 
      Generally, the logger's key will be the file name and it will be a direct child of the default logger.
      */
-    public class func loggerForFile(_ file: String = #file) -> Logger {
-        guard let fileURL = URL(string: file) else {
-            return Evergreen.defaultLogger
-        }
-        return self.loggerForKeyPath(KeyPath(components: [ fileURL.lastPathComponent ]))
+    @available(*, deprecated: 0.10, message: "Use the global `Evergreen.getLogger(forFile:)` function instead.") public class func loggerForFile(_ file: String = #file) -> Logger {
+        return Evergreen.getLogger(forFile: file)
     }
 
     /**
@@ -395,25 +413,16 @@ public final class Logger {
 
      A parent-child relationship is established and can be used to set specific settings such as log levels and handlers for only parts of the logger hierarchy.
      */
-    public class func loggerForKeyPath(_ keyPath: Logger.KeyPath) -> Logger {
-        let (key, remainingKeyPath) = keyPath.popFirst()
-        if let key = key {
-            if key == self.defaultLogger().key {
-                return self.defaultLogger().childForKeyPath(remainingKeyPath)
-            } else {
-                return self.defaultLogger().childForKeyPath(keyPath)
-            }
-        } else {
-            return self.defaultLogger()
-        }
+    @available(*, deprecated: 0.10, message: "Use the global `Evergreen.getLogger()` function instead.") public class func loggerForKeyPath(_ keyPath: Logger.KeyPath) -> Logger {
+        return Evergreen.getLogger(keyPath)
     }
 
     /// Returns a logger with a given key path relative to the receiver.
-    public func childForKeyPath(_ keyPath: KeyPath) -> Logger {
+    public func child(_ keyPath: KeyPath) -> Logger {
         let (key, remainingKeyPath) = keyPath.popFirst()
         if let key = key {
             let child = children[key] ?? Logger(key: key, parent: self)
-            return child.childForKeyPath(remainingKeyPath)
+            return child.child(remainingKeyPath)
         } else {
             return self
         }
