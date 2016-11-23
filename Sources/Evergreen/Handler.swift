@@ -24,8 +24,8 @@ public struct Record: CustomStringConvertible {
 
 open class Handler {
 
-    public var logLevel: LogLevel?
-    public var formatter: Formatter
+    open var logLevel: LogLevel?
+    open var formatter: Formatter
 
     public init(formatter: Formatter) {
         self.formatter = formatter
