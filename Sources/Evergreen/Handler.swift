@@ -82,9 +82,9 @@ public class FileHandler: Handler, CustomStringConvertible {
         self.fileURL = fileURL
         super.init(formatter: formatter)
         let fileManager = FileManager.default
-		guard fileURL.isFileURL else {
-			return nil
-		}
+        guard fileURL.isFileURL else {
+            return nil
+        }
         let path = fileURL.absoluteString
         guard fileManager.createFile(atPath: path, contents: nil, attributes: nil) else {
             return nil
