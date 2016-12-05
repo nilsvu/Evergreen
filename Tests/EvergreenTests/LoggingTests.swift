@@ -60,7 +60,7 @@ class LoggingTests: StenographyTestCase {
         XCTAssert(records[expectedRecordCount - 1].description.contains("TIME"))
     }
 
-	static var allTests : [(String, (LoggerTests) -> () throws -> Void)] {
+	static var allTests : [(String, (LoggingTests) -> () throws -> Void)] {
 		return [
 			("testLogLevels",		testLogLevels),
 			("testErrorLogging",	testErrorLogging),
