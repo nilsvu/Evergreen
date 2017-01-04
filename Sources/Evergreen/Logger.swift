@@ -489,8 +489,8 @@ extension Logger: CustomStringConvertible {
     }
 
     public func description(_ keyPathSeparator: String? = nil) -> String {
-        var keyPath = self.keyPath(upToParent: defaultLogger)
-        if self.root !== defaultLogger {
+        var keyPath = self.keyPath(upToParent: Evergreen.defaultLogger)
+        if self.root !== Evergreen.defaultLogger {
             keyPath = keyPath.keyPathByPrependingComponent("DETACHED")
         }
         return keyPath.description(separator: keyPathSeparator)
