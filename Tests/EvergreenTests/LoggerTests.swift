@@ -63,9 +63,19 @@ class LoggerTests: StenographyTestCase {
         XCTAssert(logLevels.sorted(by: <) == logLevels, "Log levels initialized by sequencial raw values are not ordered by comparison operator.")
     }
     
+    #if !os(Linux)
     func testErrorTypeLogging() {
         let error = NSError(domain: "error_domain", code: 0, userInfo: nil)
         Evergreen.verbose("Something failed", error: error)
     }
-    
+    #endif
+
+    static var allTests : [(String, (LoggerTests) -> () throws -> Void)] {
+        return [
+            ("testDefaultLoggerIdentity",	testDefaultLoggerIdentity),
+            ("testHierarchy",				testHierarchy),
+            ("testDetachedLogger",			testDetachedLogger),
+            ("testLogLevels",				testLogLevels),
+        ]
+    }
 }
