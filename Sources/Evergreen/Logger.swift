@@ -564,19 +564,19 @@ public func < (lhs: LogLevel, rhs: LogLevel) -> Bool {
 public struct Event<M> {
 
     /// The logger that originally logged the event
-    let logger: Logger
+    public let logger: Logger
     /// The log message
-    let message: () -> M
+    public let message: () -> M
     /// An error that occured alongside the event
-    let error: Error?
+    public let error: Error?
     /// The log level. A logger will only log events with equal or higher log levels than its own. Events that don't specify a log level will always be logged.
-    let logLevel: LogLevel?
-    let date: Date
-    let elapsedTime: TimeInterval?
-    let once: Bool
+    public let logLevel: LogLevel?
+    public let date: Date
+    public let elapsedTime: TimeInterval?
+    public let once: Bool
 
-    let function: String
-    let file: String
-    let line: Int
+    public let function: String
+    public let file: String
+    public let line: Int
     
 }
