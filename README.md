@@ -2,10 +2,10 @@
 
 > Most *natural* Swift logging
 
-[![Build Status](https://travis-ci.org/viWiD/Evergreen.svg?branch=master)](https://travis-ci.org/viWiD/Evergreen)
+[![Build Status](https://travis-ci.org/knly/Evergreen.svg?branch=master)](https://travis-ci.org/knly/Evergreen)
 [![CocoaPods Compatible](https://img.shields.io/cocoapods/v/Evergreen.svg)](https://img.shields.io/cocoapods/v/Evergreen.svg)
 [![Platform](https://img.shields.io/cocoapods/p/Evergreen.svg?style=flat)](http://cocoadocs.org/docsets/Evergreen)
-[![Gitter](https://badges.gitter.im/viWiD/Evergreen.svg)](https://gitter.im/viWiD/Evergreen?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+[![Gitter](https://badges.gitter.im/evergreen-swift/evergreen.svg)](https://gitter.im/evergreen-swift/evergreen?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 Evergreen is a logging framework written in Swift. It is designed to work just as you would expect, yet so versatile you can make it work however you wish.
 
@@ -37,7 +37,6 @@ log("Hello World!", forLevel: .info)
     - [Using Handlers](#using-handlers)
     - [Formatting](#formatting)
 - [Contact](#contact)
-- [Roadmap](#roadmap)
 - [License](#license)
 
 ## About Logging
@@ -95,7 +94,7 @@ import PackageDescription
 let package = Package(
     name: "HelloWorld",
     dependencies: [
-        .Package(url: "https://github.com/viWiD/Evergreen.git", majorVersion: 0),
+        .Package(url: "https://github.com/knly/Evergreen.git", majorVersion: 0),
         // ...
     ]
 )
@@ -108,7 +107,7 @@ You can also integrate Evergreen into you project manually:
 1. Add Evergreen as a [submodule](http://git-scm.com/docs/git-submodule):
 
 	```sh
-	$ git submodule add https://github.com/viWiD/Evergreen.git
+	$ git submodule add https://github.com/knly/Evergreen.git
 	```
 
 2. Drag `Evergreen.xcodeproj` into the file navigator of your project.
@@ -316,11 +315,9 @@ Evergreen.defaultLogger.handlers = [ consoleHandler ]
 
 ## Contact
 
-Evergreen was created and is maintained by [Nils Fischer](http://www.viwid.com) ([@knlyy](https://twitter.com/knlyy)).
+Evergreen was created and is maintained by [Nils Leif Fischer](http://nilsleiffischer.de).
 
-## Roadmap
-
-The beta status of this framework mostly means that I would greatly appreciate some professional opinions on the API and architecture before finalizing a 1.0 release. Any suggestions via Email ([n.fischer@viwid.com](mailto:n.fischer@viwid.com)) or Tweet ([@knlyy](https://twitter.com/knlyy)) are very welcome.
+I would greatly appreciate some professional opinions on the API and architecture. Please let me know any suggestions via Email ([hello@nilsleiffischer.de](mailto:hello@nilsleiffischer.de)), on [Gitter](https://gitter.im/evergreen-swift/evergreen) or by [opening an issue](https://github.com/knly/Evergreen/issues).
 
 ## License
 
