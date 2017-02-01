@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "Evergreen"
-  s.version      = "1.0.0"
+  s.version      = "1.0.1"
   s.summary      = "Most natural Swift logging."
   s.description  = <<-DESC
     Evergreen is a logging framework written in Swift.
