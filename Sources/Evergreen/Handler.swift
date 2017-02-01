@@ -85,7 +85,7 @@ public class FileHandler: Handler, CustomStringConvertible {
         guard fileURL.isFileURL else {
             return nil
         }
-        let path = fileURL.absoluteString
+        let path = fileURL.path
         guard fileManager.createFile(atPath: path, contents: nil, attributes: nil) else {
             return nil
         }
