@@ -5,7 +5,6 @@
 [![Build Status](https://travis-ci.org/knly/Evergreen.svg?branch=master)](https://travis-ci.org/knly/Evergreen)
 [![CocoaPods Compatible](https://img.shields.io/cocoapods/v/Evergreen.svg)](https://img.shields.io/cocoapods/v/Evergreen.svg)
 [![Platform](https://img.shields.io/cocoapods/p/Evergreen.svg?style=flat)](http://cocoadocs.org/docsets/Evergreen)
-[![Gitter](https://badges.gitter.im/evergreen-swift/evergreen.svg)](https://gitter.im/evergreen-swift/evergreen?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 Evergreen is a logging framework written in Swift. It is designed to work just as you would expect, yet so versatile you can make it work however you wish.
 
@@ -71,7 +70,6 @@ The easiest way to integrate Evergreen into your project is via [CocoaPods](http
 2. Create a `Podfile` in you project's directory or add Evergreen to your existing `Podfile`:
 
 	```
-	source 'https://github.com/CocoaPods/Specs.git'
 	platform :ios, '8.0'
 	use_frameworks!
 
@@ -96,7 +94,7 @@ import PackageDescription
 let package = Package(
     name: "HelloWorld",
     dependencies: [
-        .Package(url: "https://github.com/knly/Evergreen.git", majorVersion: 0),
+        .Package(url: "https://github.com/knly/Evergreen.git", majorVersion: 1),
         // ...
     ]
 )
@@ -319,7 +317,7 @@ Evergreen.defaultLogger.handlers = [ consoleHandler ]
 
 Evergreen was created and is maintained by [Nils Leif Fischer](http://nilsleiffischer.de).
 
-I would greatly appreciate some professional opinions on the API and architecture. Please let me know any suggestions via Email ([hello@nilsleiffischer.de](mailto:hello@nilsleiffischer.de)), on [Gitter](https://gitter.im/evergreen-swift/evergreen) or by [opening an issue](https://github.com/knly/Evergreen/issues).
+I would greatly appreciate some professional opinions on the API and architecture. Please let me know any suggestions via Email ([hello@nilsleiffischer.de](mailto:hello@nilsleiffischer.de)) or by [opening an issue](https://github.com/knly/Evergreen/issues).
 
 ## License
 
