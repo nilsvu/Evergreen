@@ -39,6 +39,8 @@ log("Hello World!", forLevel: .info)
 - [Contact](#contact)
 - [License](#license)
 
+> **For Swift 4 development use the [`swift4`](https://github.com/knly/Evergreen/tree/swift4) branch.**
+
 ## About Logging
 
 > **Logging** is a means of tracking events that happen when some software runs. The software’s developer adds logging calls to their code to indicate that certain events have occurred. An event is described by a descriptive message which can optionally contain variable data (i.e. data that is potentially different for each occurrence of the event). Events also have an importance which the developer ascribes to the event; the importance can also be called the *level* or *severity*.
@@ -81,7 +83,7 @@ The easiest way to integrate Evergreen into your project is via [CocoaPods](http
 	```sh
 	$ pod install
 	```
-	
+
 As usual with CocoaPods, make sure to use the `*.xcworkspace` instead of the `*.xcodeproj`.
 
 ### Swift Package Manager
@@ -195,13 +197,13 @@ It is convenient to use a constant stored attribute to make an appropriate logge
 import Evergreen
 
 class MyType {
-	
+
 	let logger = Evergreen.getLogger("MyModule.MyType")
-	
+
 	init() {
 		self.logger.debug("Initializing...")
 	}
-	
+
 }
 ```
 
